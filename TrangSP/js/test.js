@@ -5,5 +5,4 @@ const Drop = Menu.querySelector('i');
 console.log(none);
 Drop.onclick = function() {
     none.classList.toggle('none');
-
 }
