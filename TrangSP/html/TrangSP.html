@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/sp1.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.6/css/lightslider.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+
+    <link rel="icon" type="image/x-png" href="images/logo image/Logo image.png">
+</head>
+
+<body>
+    <div class="header">
+        <div class="head-container">
+            <div class="top-bar">
+                <a href="index.html" class="logo">
+                    <img src="/images/logo image/Logo image.png" alt="boardgame logo">
+                </a>
+                <div class="nav-top">
+                    <ul class="nav-bar">
+                        <li><a href="#">Trang chủ</a></li>
+                        <li><a href="#">Cửa Hàng</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div class="nav-icon">
+                    <a href="#"><i class='bx bx-search'></i></a>
+                    <a href="#"><i class='bx bx-cart'></i></a>
+                    <a href="#"><i class='bx bx-user'></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="border-top">
+        <div class="container">
+            <div class="box-menu">
+                <div class="main-text">
+                    Danh mục sản phẩm
+                    <a href="#">
+                        <i class='bx bx-menu'></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="menu-list">
+        <div class="container">
+            <div class="cover">
+                <ul class="menu-link none">
+                    <li>
+                        <a href="#">
+                    Chiến lược 
+                </a>
+                        <a href="#"><span>></span></a>
+                    </li>
+                    <li>
+                        <a href="#">
+                    Các loại cờ
+                </a>
+                        <a href=""><span>></span></a>
+                    </li>
+                    <li>
+                        <a href="#">
+                    Gia đình
+                </a>
+                        <a href="#"><span>></span></a>
+                    </li>
+                    <li>
+                        <a href="#">
+                    Vận may
+                </a>
+                        <a href="#"><span>></span></a>
+                    </li>
+                    <li>
+                        <a href="#">
+                    Nhập vai
+                </a>
+                        <a href="#"><span>></span></a>
+                    </li>
+                    <li>
+                        <a href="#">
+                    Nhóm bạn
+                </a>
+                        <a href="#"><span>></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
+    <main role="main">
+        <!-- Block content - Đục lỗ trên giao diện bố cục chung, đặt tên là `content` -->
+        <div class="container mt-4">
+            <div id="thongbao" class="alert alert-danger d-none face" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="card">
+                <div class="container-fliud">
+                    <form name="frmsanphamchitiet" id="frmsanphamchitiet" method="post" action="/php/twig/frontend/giohang/themvaogiohang">
+                        <input type="hidden" name="sp_ma" id="sp_ma" value="5">
+                        <input type="hidden" name="sp_ten" id="sp_ten" value="Samsung Galaxy Tab 10.1 3G 16G">
+                        <input type="hidden" name="sp_gia" id="sp_gia" value="10990000.00">
+                        <input type="hidden" name="hinhdaidien" id="hinhdaidien" value="samsung-galaxy-tab-10.jpg">
+
+                        <div class="wrapper row">
+                            <div class="preview col-md-6">
+                                <div class="preview-pic tab-content">
+                                    <div class="tab-pane" id="pic-1">
+                                        <img src="/images/product images/chien luoc/alma mater 1tr750.webp">
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="details col-md-6">
+                                <h3 class="product-title">ALMA MATER</h3>
+                                <div class="rating">
+                                    <div class="stars">
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                    </div>
+                                    <span class="review-no">456 reviews</span>
+                                </div>
+
+                                <small class="text-muted">Giá cũ: <s><span>1.750.000Đ</span></s></small>
+                                <h4 class="price">Giá hiện tại: <span>1.750.000Đ</span></h4>
+                                <p class="vote"><strong>100%</strong> hàng <strong>Chất lượng</strong>, đảm bảo <strong>Uy tín</strong>!</p>
+
+                                <div class="form-group">
+                                    <label for="soluong">Số lượng đặt mua:</label>
+                                    <input type="number" class="form-control" id="soluong" name="soluong">
+                                </div>
+                                <div class="action">
+                                    <a class="add-to-cart btn btn-default" id="btnThemVaoGioHang">Thêm vào giỏ hàng</a>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+    </main>
+
+
+
+
+</body>
+
+</html>
+
+<script src="/js/test.js"></script>
