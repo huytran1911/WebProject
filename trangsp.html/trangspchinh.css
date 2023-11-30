@@ -37,7 +37,12 @@ body {
     margin: 0 auto;
 }
 
-.container {
+.menu-container {
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.product-container {
     max-width: 1300px;
     margin: 0 auto;
 }
@@ -165,9 +170,15 @@ body {
     display: flex;
     width: 100%;
 }
+
+.none {
+    display: none;
+}
+
 .menu-link {
+    position: absolute;
     background-color: aliceblue;
-    top: 0;
+    top: 145px;
     padding-left: 1em ;
     width: 219px;
     justify-content: space-between;
@@ -193,4 +204,106 @@ body {
     position: relative;
     right:16px;
     padding-left:16px;
+}
+
+.product-container {
+    border: 10px;
+    background-color: gray;
+}
+
+.product-box{
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 390px;
+    text-decoration: none;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin: 20px;
+    box-sizing: border-box;
+}
+
+.product-info {
+    width: 100%;
+    margin-top: 3px;
+}
+
+.product-name span {
+    padding-top: 200px;
+    margin-left: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 15px;
+    width: 27%;
+    background: orange;
+    padding-top: 3px;
+    height: 28px;
+}
+
+.product-name {
+    display: flex;
+    color: #29292c;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    padding-left: 15px;
+    height: 20%;
+}
+
+.product-box img{
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+}
+
+.product-box a {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.de-font {
+    height: 80px;
+    font-size: 14px;
+    padding: 10px 10px 1px 10px;
+}
+
+.product-box .price {
+    padding: 0px 10px ;
+    display: flex;
+    justify-content: space-between;
+}
+
+.lSPager{
+    display:none;
+}
+
+.lSAction > a {
+    background-color:#00000033;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    opacity:5;
+    background-image:none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.lSAction > a::after{
+    position:absoult;
+    content:'';
+    margin:auto;
+    border: solid #ffffff;
+    border-width: 0 4px 4px 0;
+    display: inline-block;
+    padding: 5px;
+}
+.lSAction > .lSPrev::after {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.lSAction > .lSNext::after {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
 }
