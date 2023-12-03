@@ -65,6 +65,12 @@ body {
     opacity: .8;
 }
 
+.login-card-footer {
+    margin-top: 1.5rem;
+    font-size: calc(1rem * .8);
+    text-align: center;
+}
+
 #register {
     display: flex;
     flex-direction: column;
