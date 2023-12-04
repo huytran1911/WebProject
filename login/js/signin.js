@@ -6,7 +6,7 @@ function getInfo() {
 
     for (var i = 0; i < stored_accounts.length; i++) {
         if (user_name == stored_accounts[i].name && password == stored_accounts[i].password) {
-            window.location.href = 'home.html'
+            window.location.href = '/WebProject/index.html'
             flag = 1
             stored_accounts[i].state = 1;
             alert('Chào mừng đến với Snake Boardgame ')
