@@ -3,7 +3,11 @@
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
+<<<<<<< Updated upstream:assets/css/main.css
     font-family:sans-serif ;
+=======
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+>>>>>>> Stashed changes:style.css
     list-style: none;
 
 }
@@ -13,7 +17,11 @@ body {
     overflow-x: hidden;
 }
 
+<<<<<<< Updated upstream:assets/css/main.css
 .del {
+=======
+del {
+>>>>>>> Stashed changes:style.css
     text-decoration: line-through;
 }
 
@@ -28,22 +36,38 @@ body {
 }
 
 .images {
+<<<<<<< Updated upstream:assets/css/main.css
 
     width: 1300px;
     height: 450px;
+=======
+    width: 1200px;
+    height: 450px;
+    right: 145px;
+    position:absolute;
+>>>>>>> Stashed changes:style.css
 }
 
 .product-images {
-    width: 100%;
+    width: 90%;
     height: 280px;
 }
 
+.footer-img {
+    width: 100%;
+}
+
 .head-container {
+<<<<<<< Updated upstream:assets/css/main.css
     width: 84%;
+=======
+    max-width: 85%;
+>>>>>>> Stashed changes:style.css
     margin: 0 auto;
 }
 
 .border-container {
+<<<<<<< Updated upstream:assets/css/main.css
     width: 84%;
     margin: 0 auto;
 }
@@ -55,6 +79,14 @@ body {
 
 .footer-container {
     width: 84%;
+=======
+    max-width: 85%;
+    margin: 0 auto;
+}
+
+.foot-container {
+    max-width: 85%;
+>>>>>>> Stashed changes:style.css
     margin: 0 auto;
 }
 
@@ -74,7 +106,12 @@ body {
 
 .nav-bar {
     display: flex;
+<<<<<<< Updated upstream:assets/css/main.css
     margin-bottom: 0;
+=======
+    padding-left: 0px;
+    margin-bottom: 0px;
+>>>>>>> Stashed changes:style.css
 }
 
 
@@ -85,10 +122,12 @@ body {
     font-weight: 400px;
     transition: all .42s ease;
     color: #2c2c2c;
+    text-decoration: none;
 }
 
 .nav-bar a:hover {
     color: orange;
+    text-decoration: none;
 }
 
 .nav-icon {
@@ -110,9 +149,14 @@ body {
 }
 
 .border-top {
+<<<<<<< Updated upstream:assets/css/main.css
     position: relative;
     background-color: red;
     height: 80px;
+=======
+    margin-top: 69px;
+    background-color: red;
+>>>>>>> Stashed changes:style.css
 }
 
 .wrapper{
@@ -157,10 +201,15 @@ body {
     position: absolute;
     margin-top: 15px;
     width: 219px;
+<<<<<<< Updated upstream:assets/css/main.css
     height: 50px;
     padding: 0.75em 1em;
     background-color: green;
     border-radius: 5px 5px 0px 0px;
+=======
+    padding: 0.75em 1em;
+    background-color: green;
+>>>>>>> Stashed changes:style.css
 }
 
 .main-text {
@@ -173,36 +222,41 @@ body {
 }
 
 .bx-chevron-right {
-    margin-left: 100px;
-    justify-content: right;
+    padding-left: 50px;
 }
 
 .cover{
     display: flex;
     width: 100%;
 }
+
 .menu-link {
     background-color: aliceblue;
     top: 0;
     padding-left: 1em ;
     width: 219px;
-    justify-content: space-between;
 }
+
 .menu-link span {
-    padding-left: 50px;
     width:auto;
     margin: 0 auto;
 }
+
 .menu-link a {
     text-decoration: none;
     display: flex;
     width: 200px;
     text-align: center;
+<<<<<<< Updated upstream:assets/css/main.css
+=======
+    text-decoration: none;
+>>>>>>> Stashed changes:style.css
     color: black;
 }
+
 .menu-link li{
     align-items: center;
-    display: flex;   
+    display: flex;
     width: 219px;
     height: 75px;
     border-bottom: 2px solid #0a0505;
@@ -212,17 +266,19 @@ body {
 }
 
 .feature{ 
-    width: 100%;
-    
+    width: 100%; 
 }
 
 .ft-cover {
     width: 84%;
     display: flex;
     justify-content: space-between;
+<<<<<<< Updated upstream:assets/css/main.css
     margin: 0 auto;
+=======
+    margin-left: 125px;
+>>>>>>> Stashed changes:style.css
     padding-top: 40px;
-    padding-bottom: 40px;
 }
 
 .ft-box {
@@ -234,7 +290,7 @@ body {
     width: 150px;
 }
 
-.ft-box h5 {
+.ft-box h6 {
     display: inline-block;
     padding: 9px 8px 6px 8px;
     line-height: 1;
@@ -243,30 +299,45 @@ body {
     background-color: #fddde4;
 }
 
-.ft-box:nth-child(2) h5 {
+.ft-box:nth-child(2) h6 {
     background-color: #cdebbc;
 }
 
-.ft-box:nth-child(3) h5 {
+.ft-box:nth-child(3) h6 {
     background-color: #d1e8f2;
 }
 
-.ft-box:nth-child(4) h5 {
+.ft-box:nth-child(4) h6 {
     background-color: #cdd4f8;
 }
 
-.ft-box:nth-child(5) h5 {
+.ft-box:nth-child(5) h6 {
     background-color: #fff2e5;
 }
 
+<<<<<<< Updated upstream:assets/css/main.css
+=======
+
+
+
+
+
+
+
+
+>>>>>>> Stashed changes:style.css
 .product-cover {
     width: 100%;
-    padding-bottom: 80px;
+    padding-top: 40px;
 }
 
 .products-slider{
     height: 555px;
+<<<<<<< Updated upstream:assets/css/main.css
     width: 84%;
+=======
+    width: 85%;
+>>>>>>> Stashed changes:style.css
     margin: 0 auto;
     background-color: #f5f5f7;
     padding: 0px 20px;
@@ -323,7 +394,7 @@ body {
     font-size: 20px;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 600;
-    padding-left: 15px;
+    padding-left: 9px;
     height: 20%;
 }
 
@@ -375,6 +446,7 @@ body {
     display: inline-block;
     padding: 5px;
 }
+
 .lSAction > .lSPrev::after {
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
@@ -385,6 +457,7 @@ body {
     -webkit-transform: rotate(-45deg);
 }
 
+<<<<<<< Updated upstream:assets/css/main.css
 
 
 footer {
@@ -406,10 +479,66 @@ footer {
 	color: #fff;
 }
 
+=======
+.block-contact {
+    width: 25%;
+    height: 90%;
+    flex-direction: column;
+}
+
+.footer-box {
+    background-color: #088178;
+    margin-top: 40px;
+    height: 400px;
+}
+
+.footer-cover {
+    padding-top: 50px;
+    height: 400px;
+    display: flex;
+}
+
+.hotline p{
+    font-size: 36px;
+}
+
+.time-working{
+    padding-top: 5px;
+}
+
+.email {
+    padding-top: 8px;
+}
+
+.block-policy p {
+    margin-top: 10px;
+}
+
+
+
+
+footer {
+	background: #D3D3D3; 
+	padding: 40px 0;
+}
+
+.single-box p {
+	line-height: 1.9;
+}
+.single-box h3 {
+	font-size: 16px;
+	font-weight: 700;
+}
+.single-box .card-area i {
+	font-size: 20px;
+	margin-right: 10px;
+}
+>>>>>>> Stashed changes:style.css
 .single-box ul {
 	list-style: none;
 	padding: 0;
 }
+<<<<<<< Updated upstream:assets/css/main.css
 
 .single-box span {
     font-size: 36px;
@@ -418,10 +547,16 @@ footer {
 .single-box ul li a {
 	text-decoration: none;
 	color: blue;
+=======
+.single-box ul li a {
+    font-family: sans-serif;
+	text-decoration: none;
+>>>>>>> Stashed changes:style.css
 	line-height: 2.5;
 	font-weight: 100;
 }
 .single-box h2 {
+<<<<<<< Updated upstream:assets/css/main.css
 	color: blue;
 	font-size: 19px;
 	font-weight: 800;
@@ -429,13 +564,30 @@ footer {
 #basic-addon2 {
 	background: #fe1e4f;
 	color: #fff;
+=======
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.single-box1 h2 {
+    margin-bottom: 7px;
+    text-align: center;
+}
+
+#basic-addon2 {
+	background: #fe1e4f;
+>>>>>>> Stashed changes:style.css
 }
 .socials i {
 	font-size: 18px;
 	margin-right: 15px;
 }
 
+<<<<<<< Updated upstream:assets/css/main.css
 .footer-img {
     align-items: center;
     width: 100%;
 }
+=======
+
+>>>>>>> Stashed changes:style.css
