@@ -67,9 +67,9 @@ switchMode.addEventListener('change', function () {
 // Simulated user data
 // Simulated user data
 let users = [
-    { name: 'Trần Diệp Bảo Huy', email: 'huytran@gmail.com', phone: '123456789', address: '123 tp hcm', locked: false },
-    { name: 'Đỗ Anh Triết', email: 'anhtriet@gmail.com', phone: '123456789', address: '123 tp hcm', locked: false },
-    { name: 'Nguyễn Võ Minh Thư', email: 'minhthu@gmail.com', phone: '123456789', address: '123 tp hcm', locked: false },
+    { name: 'Trần Diệp Bảo Huy', email: 'huytran@gmail.com', phone: '123456789', address: '123 tp hcm',role: 'Giám đốc' ,locked: false },
+    { name: 'Đỗ Anh Triết', email: 'anhtriet@gmail.com', phone: '123456789', address: '123 tp hcm',role: 'Lao công' ,locked: false },
+    { name: 'Nguyễn Võ Minh Thư', email: 'minhthu@gmail.com', phone: '123456789', address: '123 tp hcm',role: 'Giám đốc' ,locked: false },
     // Other users...
 ];
 
@@ -95,6 +95,7 @@ function displayUsers() {
             <td>${user.email}</td>
             <td>${user.phone}</td>
             <td>${user.address}</td>
+            <td>${user.role}</td>
             <td>
                 <button onclick="toggleLock(${index})" class="${user.locked ? 'lock-btn locked' : 'lock-btn'}">
                     ${user.locked ? 'Bỏ khoá' : 'Khoá'}
@@ -120,6 +121,7 @@ function editUser(index) {
     document.getElementById('editEmail').value = users[index].email;
     document.getElementById('editPhone').value = users[index].phone;
     document.getElementById('editAddress').value = users[index].address;
+    document.getElementById('editRole').value = users[index].role;
 
     editUserModal.style.display = 'block';
 
@@ -130,6 +132,7 @@ function editUser(index) {
         users[index].email = document.getElementById('editEmail').value;
         users[index].phone = document.getElementById('editPhone').value;
         users[index].address = document.getElementById('editAddress').value;
+        users[index].role = document.getElementById('editRole').value;
 
         editUserModal.style.display = 'none';
         displayUsers();
@@ -149,6 +152,7 @@ function addUser() {
     const newEmail = document.getElementById('addEmail').value;
     const newPhone = document.getElementById('addPhone').value;
     const newAddress = document.getElementById('addAddress').value;
+    const newRole = document.getElementById('addRole').value;
     
 
     // Tạo người dùng mới và thêm vào danh sách
@@ -157,6 +161,7 @@ function addUser() {
         email: newEmail,
         phone: newPhone,
         address: newAddress,
+        role: newRole,
         locked: false // Không khóa mặc định  
     };
 
@@ -191,6 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
             email: document.getElementById('addEmail').value,
             phone: document.getElementById('addPhone').value,
             address: document.getElementById('addAddress').value,
+            role: document.getElementById('addRole').value,
             locked: false // Set locked status for the new user
         };
 
