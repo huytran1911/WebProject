@@ -67,9 +67,9 @@ switchMode.addEventListener('change', function () {
 // Simulated user dataimage:
 // Simulated user data
 let products = [
-    {image:'/WebProject/images/product images/chien luoc/alma mater 1tr750.webp' , name: 'Alma mater', menu: 'john@example.com', phone: '123456789', address: '123 Main St', quantity: 20, locked: false },
-    {image: '/WebProject/images/product images/gia dinh _ tre em/co co tich 350k.webp', name: 'Cờ cổ tích', menu: 'john@example.com', phone: '123456789', address: '123 Main St', quantity: 20, locked: false },
-    {image: '/WebProject/images/product images/co/co tuong 50k.jpg', name: 'Cờ tướng', menu: 'john@example.com', phone: '123456789', address: '123 Main St', quantity: 20, locked: false },
+    {image:'/WebProject/images/product images/chien luoc/alma mater 1tr750.webp' , id: '113' , name: 'Alma mater', menu: 'Chiến lược', price: '1.750.000', quantity: 20, locked: false },
+    {image:'/WebProject/images/product images/gia dinh _ tre em/co co tich 350k.webp' , id: '114' ,name: 'Cờ cổ tích', menu: 'Gia đình & trẻ em', price: '350.000', quantity: 14, locked: false },
+    {image: '/WebProject/images/product images/co/co tuong 50k.jpg',id: '115' , name: 'Cờ tướng', menu: 'Cờ', price: '50.000', quantity: 28, locked: false },
     // Other users...
 ];
 
@@ -83,17 +83,18 @@ function cancelEditProduct() {
 }
 
 function displayProducts() {
-    const tableBody = document.querySelector('#customerTable tbody');
+    const tableBody = document.querySelector('#productTable tbody');
     tableBody.innerHTML = '';
 
     products.forEach((product, index) => {
         const row = document.createElement('tr');
         row.innerHTML = `
-        <td><img src="${product.image}" alt="Product Image" class="product-image"></td>
+            
+            <td><img src="${product.image}" alt="Product Image" class="product-image"></td>
+            <td>${product.id}</td>
             <td>${product.name}</td>
             <td>${product.menu}</td>
-            <td>${product.phone}</td>
-            <td>${product.address}</td>
+            <td>${product.price}</td>
             <td>${product.quantity}</td>
             <td>
                 <button onclick="toggleLock(${index})" class="${product.locked ? 'lock-btn locked' : 'lock-btn'}">
@@ -117,19 +118,38 @@ function editProduct(index) {
     const editProductForm = document.getElementById('editForm');
 
     document.getElementById('editName').value = products[index].name;
-    document.getElementById('editEmail').value = products[index].email;
-    document.getElementById('editPhone').value = products[index].phone;
-    document.getElementById('editAddress').value = products[index].address;
+    document.getElementById('editID').value = products[index].id;
+    document.getElementById('editMenu').value = products[index].menu;
+    document.getElementById('editPrice').value = products[index].price;
+    document.getElementById('editQuantity').value = products[index].quantity;
+
+    // Set image preview
+    const editImageInput = document.getElementById('editImage');
+    const imagePreview = document.getElementById('editImagePreview');
+    imagePreview.src = products[index].image;
 
     editProductModal.style.display = 'block';
+
+    editImageInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 
     editProductForm.addEventListener('submit', function(event) {
         event.preventDefault();
 
         products[index].name = document.getElementById('editName').value;
-        products[index].email = document.getElementById('editEmail').value;
-        products[index].phone = document.getElementById('editPhone').value;
-        products[index].address = document.getElementById('editAddress').value;
+        products[index].id = document.getElementById('editID').value;
+        products[index].menu = document.getElementById('editMenu').value;
+        products[index].price = document.getElementById('editPrice').value;
+        products[index].quantity = document.getElementById('editQuantity').value;
+        // You might want to update the 'image' property as well if needed
 
         editProductModal.style.display = 'none';
         displayProducts();
@@ -140,26 +160,49 @@ function editProduct(index) {
         event.preventDefault();
         cancelEditProduct();
     });
-
 }
 
+
+
 function addProduct() {
+    const newImage = document.getElementById('addImage').value;
+    const newID = document.getElementById('addID').value;
     const newName = document.getElementById('addName').value;
-    const newEmail = document.getElementById('addEmail').value;
-    const newPhone = document.getElementById('addPhone').value;
-    const newAddress = document.getElementById('addAddress').value;
+    const newMenu = document.getElementById('addMenu').value;
+    const newPrice = document.getElementById('addPrice').value;
+    const newQuantity = document.getElementById('addQuantity').value;
 
     const newProduct = {
+        image: newImage,
+        id: newID, // Sửa từ idp thành id
         name: newName,
-        email: newEmail,
-        phone: newPhone,
-        address: newAddress,
+        menu: newMenu,
+        price: newPrice,
+        quantity: newQuantity,
         locked: false // Không khóa mặc định  
     };
 
     products.push(newProduct);
     alert("Thêm thành công");
     displayProducts();
+}
+
+function chooseFile() {
+    const fileInput = document.getElementById('addImage');
+    fileInput.click();
+
+    fileInput.addEventListener('change', function() {
+        const file = this.files[0];
+        const imagePreview = document.getElementById('addImagePreview');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -178,10 +221,12 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
 
         const newProduct = {
+            image: document.getElementById('addImage').value,
+            id: document.getElementById('addID').value,
             name: document.getElementById('addName').value,
-            email: document.getElementById('addEmail').value,
-            phone: document.getElementById('addPhone').value,
-            address: document.getElementById('addAddress').value,
+            menu: document.getElementById('addMenu').value,
+            price: document.getElementById('addPrice').value,
+            quantity: document.getElementById('addQuantity').value,
             locked: false // Set locked status for the new Product
         };
 
@@ -196,6 +241,9 @@ document.addEventListener('DOMContentLoaded', function() {
         addProductModal.style.display = 'none';
         addProductForm.reset();
     });
+
+    // Gọi hàm chooseFile() sau khi DOM hoàn tất tải
+    chooseFile();
 });
 
 

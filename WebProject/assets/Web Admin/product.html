@@ -34,13 +34,13 @@
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="/WebProject/assets/Web Admin/order.html">
 					<i class='bx bxs-doughnut-chart' ></i>
-					<span class="text">giỏ hàng</span>
+					<span class="text">Giỏ hàng</span>
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="/WebProject/assets/Web Admin/istrator.html">
 					<i class='bx bxs-group' ></i>
 					<span class="text">Quản trị viên</span>
 				</a>
@@ -48,7 +48,7 @@
 		</ul>
 		<ul class="side-menu">
 			<li>
-				<a href="#" class="logout">
+				<a href="/index.html" class="logout">
 					<i class='bx bxs-log-out-circle' ></i>
 					<span class="text">Đăng xuất</span>
 				</a>
@@ -83,22 +83,26 @@
 			<div class="head-title">
 				<div class="left">
 					<h1>Sản phẩm</h1>
-					<button class="add-btn">Thêm</button> <!-- Nút Add User -->
+					<button class="add-btn">Thêm</button> 
 				</div>
 					<div id="addModal" class="modal">
 						<div class="modal-content">
 							<h2>Thêm Sản phẩm</h2>
 							<form id="addForm">
+								<label for="addID">Mã sản phẩm:</label>
+								<input type="text" id="addID" name="addID"><br><br>
 								<label for="addImage">Hình ảnh:</label>
-								<input type="file" id="addImage" name="addImage"><br><br>
+								<input type="file" id="addImage" name="addImage" style="display: none;">
+								<img id="addImagePreview" src="" alt="Preview" width="100" height="100">
+								<button onclick="chooseFile()">Chọn ảnh</button>
 								<label for="addName">Tên sản phẩm:</label>
 								<input type="text" id="addName" name="addName"><br><br>								
 								<label for="addMenu">mục:</label>
 								<input type="text" id="addMenu" name="addMenu"><br><br>
-								<label for="addPhone">Số điện thoại:</label>
-								<input type="text" id="addPhone" name="addPhone"><br><br>
-								<label for="addAddress">Địa chỉ:</label>
-								<input type="text" id="addAddress" name="addAddress"><br><br>
+								<label for="addPrice">Giá:</label>
+								<input type="text" id="addPrice" name="addPrice"><br><br>
+								<label for="addQuantity">Địa chỉ:</label>
+								<input type="text" id="addQuantity" name="addQuantity"><br><br>
 								<div class="button-group">
 									<button class="add-btn">Thêm</button>
 									<button type="button" id="cancelAdd">Huỷ</button>
@@ -112,7 +116,6 @@
 
 			<div id="DetailsModal" class="modal">
 				<div class="modal-content" id="DetailsContent">
-					<!-- User details will be displayed here -->
 				</div>
 			</div>
 		
@@ -120,14 +123,20 @@
 				<div class="modal-content">
 					<h2>Chỉnh sửa sản phẩm</h2>
 					<form id="editForm">
-						<label for="editName">Tên:</label>
+						<label for="editID">Mã sản phẩm:</label>
+						<input type="text" id="editID" name="editID"><br><br>
+						<label for="editImage">Hình ảnh:</label>
+						<input type="file" id="editImage" name="editImage" style="display: none;">
+						<img id="editImagePreview" src="" alt="Preview" width="100" height="100">
+						<button onclick="chooseFile('addImage')" type="button">Chọn ảnh</button>
+						<label for="editName">Tên sản phẩm:</label>
 						<input type="text" id="editName" name="editName"><br><br>
-						<label for="editEmail">Email:</label>
-						<input type="text" id="editEmail" name="editEmail"><br><br>
-						<label for="editPhone">Số điên thoại:</label>
-						<input type="text" id="editPhone" name="editPhone"><br><br>
-						<label for="editAddress">Địa chỉ:</label>
-						<input type="text" id="editAddress" name="editAddress"><br><br>
+						<label for="editMenu">Menu:</label>
+						<input type="text" id="editMenu" name="editMenu"><br><br>
+						<label for="editPrice">Giá</label>
+						<input type="text" id="editPrice" name="editPrice"><br><br>
+						<label for="editQuantity">Số lượng</label>
+						<input type="text" id="editQuantity" name="editQuantity"><br><br>
 						<div class="button-group">
 							<input type="submit" value="Lưu">
 							<button type="button" id="cancelEdit">Huỷ</button>
@@ -135,7 +144,7 @@
 					</form>
 				</div>
 			</div>
-			<table id="customerTable">
+			<table id="productTable">
 				<!-- Table content -->
 			</table>
 			<div class="table-data">
@@ -145,9 +154,10 @@
 						<i class='bx bx-search' ></i>
 						<i class='bx bx-filter' ></i>
 					</div>
-					<table id="customerTable">
+					<table id="productTable">
 						<thead>
 							<tr>
+								<th>Mã sản phẩm</th>
 								<th>Hình ảnh</th>
 								<th>Tên sản phẩm</th>
 								<th>Mục</th>

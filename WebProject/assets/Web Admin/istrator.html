@@ -7,7 +7,7 @@
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
-	<link rel="stylesheet" href="/WebProject/assets/Web Admin/css/admin-user.css">
+	<link rel="stylesheet" href="/WebProject/assets/Web Admin/css/admin-istrator.css">
 
 	<title>Snake Boardgame</title>
 </head>
@@ -41,7 +41,7 @@
 			</li>
 			<li>
 				<a href="/WebProject/assets/Web Admin/istrator.html">
-					<i class='bx bxs-group' ></i>
+					<i class='bx bxs-group'></i>
 					<span class="text">Quản trị viên</span>
 				</a>
 			</li>
@@ -82,12 +82,12 @@
 		<main>
 			<div class="head-title">
 				<div class="left">
-					<h1>Khách hàng</h1>
+					<h1>Quản trị viên</h1>
 					<button class="add-btn">Thêm</button> <!-- Nút Add User -->
 				</div>
 					<div id="addModal" class="modal">
 						<div class="modal-content">
-							<h2>Thêm Khách hàng</h2>
+							<h2>Thêm quản trị viên</h2>
 							<form id="addForm">
 								<label for="addName">Tên:</label>
 								<input type="text" id="addName" name="addName"><br><br>
@@ -97,6 +97,8 @@
 								<input type="text" id="addPhone" name="addPhone"><br><br>
 								<label for="addAddress">Địa chỉ:</label>
 								<input type="text" id="addAddress" name="addAddress"><br><br>
+                                <label for="addRole">Chức vụ:</label>
+								<input type="text" id="addRole" name="addRole"><br><br>
 								<div class="button-group">
 									<button class="add-btn">Thêm</button>
 									<button type="button" id="cancelAdd">Huỷ</button>
@@ -126,6 +128,8 @@
 						<input type="text" id="editPhone" name="editPhone"><br><br>
 						<label for="editAddress">Địa chỉ:</label>
 						<input type="text" id="editAddress" name="editAddress"><br><br>
+                        <label for="editRole">Chức vụ:</label>
+						<input type="text" id="editRole" name="editRole"><br><br>
 						<div class="button-group">
 							<input type="submit" value="Lưu">
 							<button type="button" id="cancelEdit">Huỷ</button>
@@ -139,7 +143,7 @@
 			<div class="table-data">
 				<div class="order">
 					<div class="head">
-						<h3>Danh sách khách hàng</h3>
+						<h3>Danh sách quản trị viên</h3>
 						<i class='bx bx-search' ></i>
 						<i class='bx bx-filter' ></i>
 					</div>
@@ -150,6 +154,7 @@
 								<th>Email</th>
 								<th>Số điện thoại</th>
 								<th>Địa chỉ</th>
+                                <th>Chức vụ</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -165,6 +170,6 @@
 	<!-- CONTENT -->
 	
 
-	<script src="/WebProject/assets/Web Admin/js/admin-user.js"></script>
+	<script src="/WebProject/assets/Web Admin/js//admin-istrator.js"></script>
 </body>
 </html>
