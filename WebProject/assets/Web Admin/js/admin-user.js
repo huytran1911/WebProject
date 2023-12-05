@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function cancelEditUser() {
-    const editUserModal = document.getElementById('editUserModal');
+    const editUserModal = document.getElementById('editModal');
     editUserModal.style.display = 'none'; // Hide the edit user modal
     
 }
@@ -113,8 +113,8 @@ function toggleLock(index) {
 }
 
 function editUser(index) {
-    const editUserModal = document.getElementById('editUserModal');
-    const editUserForm = document.getElementById('editUserForm');
+    const editUserModal = document.getElementById('editModal');
+    const editUserForm = document.getElementById('editForm');
 
     document.getElementById('editName').value = users[index].name;
     document.getElementById('editEmail').value = users[index].email;
@@ -171,8 +171,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
 
     const addUserButton = document.querySelector('.add-btn');
-    const addUserModal = document.getElementById('addUserModal');
-    const addUserForm = document.getElementById('addUserForm');
+    const addUserModal = document.getElementById('addModal');
+    const addUserForm = document.getElementById('addForm');
     const cancelAddButton = document.getElementById('cancelAdd');
 
     addUserButton.addEventListener('click', function() {

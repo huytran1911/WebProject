@@ -7,7 +7,7 @@
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
-	<link rel="stylesheet" href="/WebProject/assets/Web Admin/Menu/css/admin-user.css">
+	<link rel="stylesheet" href="/WebProject/assets/Web Admin/css/admin-store.css">
 
 	<title>Snake Boardgame</title>
 </head>
@@ -85,16 +85,16 @@
 					<h1>Sản phẩm</h1>
 					<button class="add-btn">Thêm</button> <!-- Nút Add User -->
 				</div>
-					<div id="addUserModal" class="modal">
+					<div id="addModal" class="modal">
 						<div class="modal-content">
 							<h2>Thêm Sản phẩm</h2>
-							<form id="addUserForm">
-								<label for="addName">Tên:</label>
-								<input type="text" id="addName" name="addName"><br><br>
-								<label for="addEmail">Email:</label>
-								<input type="text" id="addEmail" name="addEmail"><br><br>
-								<label for="addPhone">Số điện thoại:</label>
-								<input type="text" id="addPhone" name="addPhone"><br><br>
+							<form id="addForm">
+								<label for="addImage">Hình ảnh:</label>
+								<input type="file" id="addImage" name="addImage"><br><br>
+								<label for="addName">Tên sản phẩm:</label>
+								<input type="text" id="addName" name="addName"><br><br>								
+								<label for="addMenu">mục:</label>
+								<input type="text" id="addMenu" name="addMenu"><br><br>
 								<label for="addPhone">Số điện thoại:</label>
 								<input type="text" id="addPhone" name="addPhone"><br><br>
 								<label for="addAddress">Địa chỉ:</label>
@@ -110,16 +110,16 @@
 			
 			
 
-			<div id="userDetailsModal" class="modal">
-				<div class="modal-content" id="userDetailsContent">
+			<div id="DetailsModal" class="modal">
+				<div class="modal-content" id="DetailsContent">
 					<!-- User details will be displayed here -->
 				</div>
 			</div>
 		
-			<div id="editUserModal" class="modal">
+			<div id="editModal" class="modal">
 				<div class="modal-content">
 					<h2>Chỉnh sửa sản phẩm</h2>
-					<form id="editUserForm">
+					<form id="editForm">
 						<label for="editName">Tên:</label>
 						<input type="text" id="editName" name="editName"><br><br>
 						<label for="editEmail">Email:</label>
@@ -155,9 +155,8 @@
 								<th>Số lượng</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-							</tr>
+						<tbody id="productTableBody">
+							<!-- Dữ liệu sản phẩm sẽ được thêm ở đây -->
 						</tbody>
 					</table>
 				</div>
@@ -168,6 +167,6 @@
 	<!-- CONTENT -->
 	
 
-	<script src="/WebProject/assets/Web Admin/Menu/js/admin-product.js"></script>
+	<script src="/WebProject/assets/Web Admin/js/admin-product.js"></script>
 </body>
 </html>
