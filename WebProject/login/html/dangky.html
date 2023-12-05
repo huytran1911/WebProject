@@ -41,7 +41,7 @@
                     <input type="text" placeholder="Số điện thoại" id="phoneNumber">
                 </div>
 
-                <button class="btn" type="submit" onclick="getInfo1()">Sign Up</button>
+                <button class="btn" type="submit" id="myButton">Sign Up</button>
 
             </form>
         </div>
@@ -49,7 +49,17 @@
             Bạn đã có tài khoản ?<a href="/WebProject/login/html/dangnhap.html">Đăng nhập</a>
         </div>
     </div>
-    <script src="/js/signin.js"></script>
+    <script>
+        var myButton = document.getElementById("myButton");
+
+
+        myButton.addEventListener("click", function() {
+            window.location.href = "/index.html";
+            alert("Bạn đã đăng ký thành công");
+
+
+        });
+    </script>
 
 </body>
 

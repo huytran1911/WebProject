@@ -36,7 +36,7 @@
                     </div>
                     <a onclick="forgotPW()" style="cursor: pointer;">Quên mật khẩu |</a>
                 </div>
-                <button class="btn" type="submit" onclick="getInfo()"> Đăng Nhập</button>
+                <button class="btn" type="submit" id="myButton"> Đăng Nhập</button>
 
             </form>
 
@@ -50,7 +50,17 @@
     </div>
     </div>
     </div>
-    <script src="/js/signin.js"></script>
+    <script>
+        var myButton = document.getElementById("myButton");
+
+
+        myButton.addEventListener("click", function() {
+            window.location.href = "/index.html";
+            alert("Bạn đã đăng nhập thành công");
+
+
+        });
+    </script>
 </body>
 
 </html>
