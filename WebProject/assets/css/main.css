@@ -343,6 +343,8 @@ body {
 }
 
 .product-box .price {
+    font-size: 18px;
+    font-weight: bolder;
     padding: 0px 10px ;
     display: flex;
     justify-content: space-between;
