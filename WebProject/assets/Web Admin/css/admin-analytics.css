@@ -58,6 +58,14 @@ body {
 
 
 
+.hide {
+    display: none;
+}
+
+.main-section {
+	
+}
+
 #cancelAdd {
 	padding: 8px 16px;
     background-color: #3498db;
