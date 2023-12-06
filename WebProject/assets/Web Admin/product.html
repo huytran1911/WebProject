@@ -7,7 +7,7 @@
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
-	<link rel="stylesheet" href="/WebProject/assets/Web Admin/css/admin-store.css">
+	<link rel="stylesheet" href="/WebProject/assets/Web Admin/css/admin-product.css">
 
 	<title>Snake Boardgame</title>
 </head>
@@ -83,7 +83,7 @@
 			<div class="head-title">
 				<div class="left">
 					<h1>Sản phẩm</h1>
-					<button class="add-btn">Thêm</button> 
+					<button class="add-btn">Thêm sản phẩm</button> 
 				</div>
 					<div id="addModal" class="modal">
 						<div class="modal-content">
@@ -93,8 +93,8 @@
 								<input type="text" id="addID" name="addID"><br><br>
 								<label for="addImage">Hình ảnh:</label>
 								<input type="file" id="addImage" name="addImage" style="display: none;">
-								<img id="addImagePreview" src="" alt="Preview" width="100" height="100">
-								<button onclick="chooseFile()">Chọn ảnh</button>
+								<button class="button" id="chooseImageBtn">Chọn ảnh</button>
+								<span id="imageStatus"></span>
 								<label for="addName">Tên sản phẩm:</label>
 								<input type="text" id="addName" name="addName"><br><br>								
 								<label for="addMenu">mục:</label>
@@ -111,7 +111,8 @@
 						</div>
 					</div>
 				</div>
-			
+
+	
 			
 
 			<div id="DetailsModal" class="modal">
@@ -125,10 +126,13 @@
 					<form id="editForm">
 						<label for="editID">Mã sản phẩm:</label>
 						<input type="text" id="editID" name="editID"><br><br>
+
 						<label for="editImage">Hình ảnh:</label>
-						<input type="file" id="editImage" name="editImage" style="display: none;">
-						<img id="editImagePreview" src="" alt="Preview" width="100" height="100">
-						<button onclick="chooseFile('addImage')" type="button">Chọn ảnh</button>
+                		<input type="file" id="editImage" name="editImage" style="display: none;">
+						<img id="editImagePreview" src="" alt="Preview" width="200" height="200">
+                		<button id="chooseEditImageBtn">Chọn ảnh mới</button>
+                		<span id="editImageStatus"></span>
+
 						<label for="editName">Tên sản phẩm:</label>
 						<input type="text" id="editName" name="editName"><br><br>
 						<label for="editMenu">Menu:</label>
@@ -138,7 +142,7 @@
 						<label for="editQuantity">Số lượng</label>
 						<input type="text" id="editQuantity" name="editQuantity"><br><br>
 						<div class="button-group">
-							<input type="submit" value="Lưu">
+							<button id="editButton">Sửa</button>
 							<button type="button" id="cancelEdit">Huỷ</button>
 						</div>
 					</form>
