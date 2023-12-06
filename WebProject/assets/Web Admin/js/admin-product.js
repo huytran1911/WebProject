@@ -63,18 +63,16 @@ switchMode.addEventListener('change', function () {
 
 
 
-// Simulated user data
-// Simulated user dataimage:
-// Simulated user data
+
 let products = [
     {image:'/WebProject/images/product images/chien luoc/alma mater 1tr750.webp' , id: '113' , name: 'Alma mater', menu: 'Chiến lược', price: '1.750.000', quantity: 20, locked: false },
     {image:'/WebProject/images/product images/gia dinh _ tre em/co co tich 350k.webp' , id: '114' ,name: 'Cờ cổ tích', menu: 'Gia đình & trẻ em', price: '350.000', quantity: 14, locked: false },
     {image: '/WebProject/images/product images/co/co tuong 50k.jpg',id: '115' , name: 'Cờ tướng', menu: 'Cờ', price: '50.000', quantity: 28, locked: false },
-    // Other users...
+
 ];
 
 document.addEventListener('DOMContentLoaded', function() {
-    displayProducts(); // Display users on page load
+    displayProducts();
 });
 
 function cancelEditProduct() {
@@ -118,68 +116,60 @@ function deleteProduct(index) {
 function editProduct(index) {
     const editProductModal = document.getElementById('editModal');
     const editProductForm = document.getElementById('editForm');
+    
     const editImageInput = document.getElementById('editImage');
     const imagePreview = document.getElementById('editImagePreview');
-    const chooseEditImageBtn = document.getElementById('chooseEditImageBtn');
-    const editButton = document.getElementById('editButton');
-    const cancelEditButton = document.getElementById('cancelEdit');
+    const editImageStatusLabel = document.getElementById('editImageStatus');
 
-    let modalVisible = false;
+    // Gán các giá trị sản phẩm đang chỉnh sửa vào form
+    document.getElementById('editName').value = products[index].name;
+    document.getElementById('editID').value = products[index].id;
+    document.getElementById('editMenu').value = products[index].menu;
+    document.getElementById('editPrice').value = products[index].price;
+    document.getElementById('editQuantity').value = products[index].quantity;
 
-    const showEditModal = () => {
-        document.getElementById('editName').value = products[index].name;
-        document.getElementById('editID').value = products[index].id;
-        document.getElementById('editMenu').value = products[index].menu;
-        document.getElementById('editPrice').value = products[index].price;
-        document.getElementById('editQuantity').value = products[index].quantity;
-        imagePreview.src = products[index].image;
+    // Gán đường dẫn hình ảnh của sản phẩm vào imagePreview
+    imagePreview.src = products[index].image;
 
-        editProductModal.style.display = 'block';
-        modalVisible = true;
-    };
+    // Hiển thị modal chỉnh sửa
+    editProductModal.style.display = 'block';
 
-    editButton.addEventListener('click', function(event) {
-        event.preventDefault();
-        showEditModal();
-    });
-
-    chooseEditImageBtn.addEventListener('click', function(event) {
-        event.preventDefault();
-        editImageInput.click();
-    });
-
+    // Xử lý sự kiện thay đổi hình ảnh
     editImageInput.addEventListener('change', function() {
         const file = this.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 imagePreview.src = e.target.result;
+                editImageStatusLabel.textContent = 'Đã chọn ảnh mới!'; // Hiển thị thông báo đã chọn ảnh
             };
             reader.readAsDataURL(file);
         }
     });
 
+    // Xử lý khi submit form chỉnh sửa sản phẩm
     editProductForm.addEventListener('submit', function(event) {
         event.preventDefault();
 
+        // Cập nhật thông tin sản phẩm
         products[index].name = document.getElementById('editName').value;
         products[index].id = document.getElementById('editID').value;
         products[index].menu = document.getElementById('editMenu').value;
         products[index].price = document.getElementById('editPrice').value;
         products[index].quantity = document.getElementById('editQuantity').value;
 
+        // Đóng modal sau khi lưu thông tin và hiển thị lại sản phẩm
         editProductModal.style.display = 'none';
-        modalVisible = false;
         displayProducts();
     });
 
+    // Xử lý khi cancel chỉnh sửa sản phẩm
+    const cancelEditButton = document.getElementById('cancelEdit');
     cancelEditButton.addEventListener('click', function(event) {
         event.preventDefault();
-        editProductModal.style.display = 'none';
-        modalVisible = false;
+        cancelEditProduct();
     });
 }
-
 
 
 function addProduct() {

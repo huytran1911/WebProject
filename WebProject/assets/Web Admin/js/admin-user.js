@@ -11,7 +11,7 @@ allSideMenu.forEach(item=> {
 	})
 });
 
-// TOGGLE SIDEBAR
+
 const menuBar = document.querySelector('#content nav .bx.bx-menu');
 const sidebar = document.getElementById('sidebar');
 
@@ -63,24 +63,22 @@ switchMode.addEventListener('change', function () {
 
 
 
-// Simulated user data
-// Simulated user data
-// Simulated user data
+
 let users = [
     { name: 'Trần Diệp Bảo Huy', email: 'huytran@gmail.com', phone: '123456789', address: '123 tp hcm', locked: false },
     { name: 'Đỗ Anh Triết', email: 'anhtriet@gmail.com', phone: '123456789', address: '123 tp hcm', locked: false },
     { name: 'Nguyễn Võ Minh Thư', email: 'minhthu@gmail.com', phone: '123456789', address: '123 tp hcm', locked: false },
-    // Other users...
+
 ];
 
 document.addEventListener('DOMContentLoaded', function() {
-    displayUsers(); // Display users on page load
+    displayUsers(); 
     
 });
 
 function cancelEditUser() {
     const editUserModal = document.getElementById('editModal');
-    editUserModal.style.display = 'none'; // Hide the edit user modal
+    editUserModal.style.display = 'none';
     
 }
 
@@ -109,7 +107,7 @@ function displayUsers() {
 
 function toggleLock(index) {
     users[index].locked = !users[index].locked;
-    displayUsers(); // Update table after locking/unlocking
+    displayUsers(); 
 }
 
 function editUser(index) {
@@ -144,25 +142,25 @@ function editUser(index) {
 }
 
 function addUser() {
-    // Lấy thông tin từ các input
+  
     const newName = document.getElementById('addName').value;
     const newEmail = document.getElementById('addEmail').value;
     const newPhone = document.getElementById('addPhone').value;
     const newAddress = document.getElementById('addAddress').value;
     
 
-    // Tạo người dùng mới và thêm vào danh sách
+
     const newUser = {
         name: newName,
         email: newEmail,
         phone: newPhone,
         address: newAddress,
-        locked: false // Không khóa mặc định  
+        locked: false 
     };
 
-    users.push(newUser); // Thêm người dùng mới vào danh sách
+    users.push(newUser); 
     alert("Thêm thành công");
-    displayUsers(); // Hiển thị lại danh sách người dùng
+    displayUsers(); 
 }
 
 
@@ -191,20 +189,20 @@ document.addEventListener('DOMContentLoaded', function() {
             email: document.getElementById('addEmail').value,
             phone: document.getElementById('addPhone').value,
             address: document.getElementById('addAddress').value,
-            locked: false // Set locked status for the new user
+            locked: false 
         };
 
-        users.push(newUser); // Add the new user to the array
-        displayUsers(); // Update the table
-        addUserModal.style.display = 'none'; // Hide the modal after adding user
-        addUserForm.reset(); // Clear form fields after submission
+        users.push(newUser); 
+        displayUsers(); 
+        addUserModal.style.display = 'none'; 
+        addUserForm.reset(); 
         
     });
 
     cancelAddButton.addEventListener('click', function(event) {
         event.preventDefault();
-        addUserModal.style.display = 'none'; // Hide the modal if canceled
-        addUserForm.reset(); // Clear form fields after cancellation
+        addUserModal.style.display = 'none'; 
+        addUserForm.reset(); 
     });
 });
 
