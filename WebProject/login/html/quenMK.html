@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang đăng nhập</title>
+    <link rel="stylesheet" href="../css/styledn.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,300,0,0" />
+</head>
+
+<body>
+    <div class="login-card-container" id="account">
+
+        <div class="form-container">
+
+            <div class="login-card-header">
+                <h1> Vui lòng đăng nhập </h1>
+
+            </div>
+            <form id="login">
+                <div class="form-item">
+                    <span class="form-item-icon material-symbols-rounded">person</span>
+                    <input type="text" placeholder="Tên đăng nhập " id="username">
+
+
+                </div>
+                <div class="form-item">
+                    <span class="form-item-icon material-symbols-rounded">lock</span>
+                    <input type="password" placeholder="Mật khẩu " id="password">
+                </div>
+                <div class="form-item-other">
+                    <div class="checkbox">
+                        <input type="checkbox" id="rememberMeCheckbox">
+                        <label for="rememberMeCheckbox">Nhớ mật khẩu</label>
+                    </div>
+                    <a style="cursor: pointer;">Quên mật khẩu |</a>
+                </div>
+                <button class="btn" type="submit" onclick="login()"> Đăng Nhập</button>
+
+            </form>
+
+
+
+        </div>
+        <div class="login-card-footer">
+            Bạn chưa có tài khoản ?<a href="/WebProject/login/html/dangky.html">Đăng ký</a>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <script>
+        function login() {
+            // Lấy giá trị từ các ô nhập liệu
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            // Kiểm tra thông tin đăng nhập
+            if (username === 'minhthu2004' && password === '1') {
+                window.location.href = "/index.html";
+                // Thông báo đăng nhập thành công
+                alert('Đăng nhập thành công! Chuyển hướng đến trang chính...');
+                // Thực hiện chuyển hướng hoặc các hành động khác sau khi đăng nhập thành công
+            } else {
+                // Thông báo đăng nhập không thành công
+                alert('Tên đăng nhập hoặc mật khẩu không đúng. Vui lòng thử lại.');
+            }
+        }
+    </script>
+</body>
+
+</html>
