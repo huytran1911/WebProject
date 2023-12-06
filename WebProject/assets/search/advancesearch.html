@@ -19,19 +19,17 @@
     <div class="header">
         <div class="head-container">
             <div class="top-bar">
-                <a href="/index.html" class="logo">
+                <a href="/ChuaDN.html" class="logo">
                     <img src="/WebProject/images/logo image/Logo image.png" alt="boardgame logo">
                 </a>
                 <ul class="nav-bar">
-                    <li><a href="/index.html">Trang chủ</a></li>
-                    <li><a href="/WebProject/trangsp.html/trangspchinh/usertrangsanphamchinh.html">Cửa Hàng</a></li>
-                    <li><a href="/WebProject/Lienhe/UserLienhe.html">Liên hệ</a></li>
-
+                    <li><a href="/ChuaDN.html">Trang chủ</a></li>
+                    <li><a href="/WebProject/trangsp.html/trangspchinh/trangspchinh.html">Cửa Hàng</a></li>
+                    <li><a href="/WebProject/Lienhe/Lienhe.html">Liên hệ</a></li>
                 </ul>
                 <div class="nav-icon">
-                    <a href="/WebProject/assets/cart/cart.html"><i class='bx bx-cart'></i></a>
-                    <span style="padding-top: 10px; padding-right: 5px; ">minh thư</span>
-                    <a href="/WebProject/assets/users/users.html"><i class='bx bx-user'> </i></a>
+                    <a href="/WebProject/login/html/dangnhap.html"><i class='bx bx-cart'></i></a>
+                    <a href="/WebProject/login/html/dangnhap.html"><i class='bx bx-user'></i></a>
                 </div>
             </div>
         </div>
@@ -49,8 +47,8 @@
             </div>
             <div class="wrapper">
                 <div class="search-input">
-                    <input type="text" placeholder="Tìm kiếm">
-                    <div class="icon"><a href="/WebProject/assets/search/usersearch.html"><i class="fas fa-search"></i></a></div>
+                    <input type="text" placeholder="Type to search..">
+                    <div class="icon"><i class="fas fa-search"></i></div>
                 </div>
             </div>
         </div>
@@ -102,60 +100,19 @@
         </div>
     </div>
     </div>
-    <div class="Results">
+    <!-- <div class="Results">
         <div class="results-container">
-            <h3 style="font-weight: bold;">Kết quả tìm kiếm:</h3>
+            <h3 style="font-weight: bold;">Tìm ra 9 kết quả: </h3>
         </div>
-    </div>
+    </div> -->
     <div class="product-container">
-        <form class="filter">
-            <div class="item">
-                <label>Thể Loại</label>
-                <select name="category">
-                    <option value="">---</option>
-                    <option value="Chiến lược">Chiến lược</option>
-                    <option value="Các loại cờ">Các loại cờ</option>
-                    <option value="Gia Đình">Gia Đình</option>
-                    <option value="Vận may">Vận may</option>
-                    <option value="Nhập vai">Nhập vai</option>
-                    <option value="Nhóm bạn">Nhóm bạn</option>
-                    
-                    
-                </select>
-            </div>
-            <div class="item">
-                <label>Lứa tuổi</label>
-                <select name="age">
-                    <option value="">---</option>
-                    <option value="white">2+</option>
-                    <option value="white">4+</option>
-                    <option value="white">6+</option>
-                    <option value="white">7+</option>
-                    <option value="white">8+</option>
-                    <option value="white">12+</option>
-                    <option value="white">16+</option>
-                    <option value="white">18+</option>
-                   
-                </select>
-            </div>
-            <div class="item">
-                <label>Name</label>
-                <input name="name" type="text">
-            </div>
-            <div class="item">
-                <label>Giá thấp nhất </label>
-                <input name="minPrice" type="text">
-            </div>
-            <div class="item">
-                <label>Giá cao nhất</label>
-                <input name="maxPrice" type="text">
-            </div>
-            <div class="item submit">
-                <a href="/WebProject/assets/search/useradvancesearch.html" class="text-white fw-bold"> Tìm </a>
 
-            </div>
-        </form>
+        <div class="countResults">
+            Tìm thấy <b id="count">9</b> Kết quả
+        </div>
+        <div id="list">
 
+        </div>
         <div class="row">
             <div class="col-md-3 col-sm-6">
                 <li class="item-a">
@@ -370,192 +327,7 @@
             </div>
         </div>
         <div class="row ">
-            <div class="col-md-3 col-sm-6 ">
-                <li class="item-a ">
-                    <div class="product-box ">
-                        <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product17.html">
-                            <img alt=" " src="/WebProject/images/product images/nhap vai/cluedo 350k.jpg ">
-                        </a>
-                        <div class="product-info ">
-                            <div class="product-name ">
-                                <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product17.html ">Cluedo</a>
-                            </div>
-                            <div class="de-font ">
-                                Bấm vào hình ảnh để xem thông tin chi tiết.
-                            </div>
-                            <div class="price ">
-                                <span>350.000đ</span>
-                                <div class="detail-action">
-                                    <button class="d-flex btn btn-outline-danger add-cart-btn fw-bold " type="submit">
-                                        <i class="fas fa-cart-shopping fs-1 me-0"></i>
-                                            THÊM VÀO GIỎ
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </div>
-            <div class="col-md-3 col-sm-6 ">
-                <li class="item-a ">
-                    <div class="product-box ">
-                        <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product3.html">
-                            <img alt=" " src="/WebProject/images/product images/nhap vai/avalon 160k.jpg ">
-                        </a>
-                        <div class="product-info ">
-                            <div class="product-name ">
-                                <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product3.html ">Avalon</a>
-                            </div>
-                            <div class="de-font ">
-                                Bấm vào hình ảnh để xem thông tin chi tiết.
-                            </div>
-                            <div class="price ">
-                                <span>160.000đ</span>
-                                <div class="detail-action">
-                                    <button class="d-flex btn btn-outline-danger add-cart-btn fw-bold " type="submit">
-                                        <i class="fas fa-cart-shopping fs-1 me-0"></i>
-                                            THÊM VÀO GIỎ
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </div>
-            <div class="col-md-3 col-sm-6 ">
-                <li class="item-a ">
-                    <div class="product-box ">
-                        <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product2.html">
-                            <img alt=" " src="/WebProject/images/product images/nhap vai/coup 120k.jpg ">
-                        </a>
-                        <div class="product-info ">
-                            <div class="product-name ">
-                                <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product2.html ">Coup</a>
-                            </div>
-                            <div class="de-font ">
-                                Bấm vào hình ảnh để xem thông tin chi tiết.
-                            </div>
-                            <div class="price ">
-                                <span>120.000đ</span>
-                                <div class="detail-action">
-                                    <button class="d-flex btn btn-outline-danger add-cart-btn fw-bold " type="submit">
-                                        <i class="fas fa-cart-shopping fs-1 me-0"></i>
-                                            THÊM VÀO GIỎ
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </div>
-            <div class="col-md-3 col-sm-6 ">
-                <li class="item-a ">
-                    <div class="product-box ">
-                        <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product4.html ">
-                            <img alt=" " src="/WebProject/images/product images/chien luoc/ModernArt 350k.jpg ">
-                        </a>
-                        <div class="product-info ">
-                            <div class="product-name ">
-                                <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product4.html ">ModernArt</a>
-                            </div>
-                            <div class="de-font ">
-                                Bấm vào hình ảnh để xem thông tin chi tiết.
-                            </div>
-                            <div class="price ">
-                                <span>1.200.000đ</span>
-                                <div class="detail-action">
-                                    <button class="d-flex btn btn-outline-danger add-cart-btn fw-bold " type="submit">
-                                        <i class="fas fa-cart-shopping fs-1 me-0"></i>
-                                            THÊM VÀO GIỎ
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </div>
-        </div>
 
-
-        <div class="row ">
-            <div class="col-md-3 col-sm-6 ">
-                <li class="item-a ">
-                    <div class="product-box ">
-                        <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product14.html ">
-                            <img class="product-images " alt="hỉnh ảnh Alma Mater " src="/WebProject/images/product images/lucky/cuoc chien hoa qua 135k.jpg ">
-                        </a>
-                        <div class="product-info ">
-                            <div class="product-name ">
-                                <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product14.html">Cuộc chiến hoa quả</a>
-                            </div>
-                            <div class="de-font ">
-                                Bấm vào hình ảnh để xem thông tin chi tiết.
-                            </div>
-                            <div class="price ">
-                                <span>135.000đ</span>
-                                <div class="detail-action">
-                                    <button class="d-flex btn btn-outline-danger add-cart-btn fw-bold " type="submit">
-                                        <i class="fas fa-cart-shopping fs-1 me-0"></i>
-                                            THÊM VÀO GIỎ
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-            </div>
-            <div class="col-md-3 col-sm-6 ">
-                <li class="item-a ">
-                    <div class="product-box ">
-                        <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product15.html ">
-                            <img alt=" " src="/WebProject/images/product images/lucky/kham rang ca sau 65k.jpg ">
-                        </a>
-                        <div class="product-info ">
-                            <div class="product-name ">
-                                <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product15.html ">Khám răng cá sấu</a>
-                            </div>
-                            <div class="de-font ">
-                                Bấm vào hình ảnh để xem thông tin chi tiết.
-                            </div>
-                            <div class="price ">
-                                <span>65.000đ</span>
-                                <div class="detail-action">
-                                    <button class="d-flex btn btn-outline-danger add-cart-btn fw-bold " type="submit">
-                                        <i class="fas fa-cart-shopping fs-1 me-0"></i>
-                                            THÊM VÀO GIỎ
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </div>
-            <div class="col-md-3 col-sm-6 ">
-                <li class="item-a ">
-                    <div class="product-box ">
-                        <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product6.html ">
-                            <img alt=" " src="/WebProject/images/product images/co/co tuong 50k.jpg ">
-                        </a>
-                        <div class="product-info ">
-                            <div class="product-name ">
-                                <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product6.html">Cờ tướng</a>
-                            </div>
-                            <div class="de-font ">
-                                Bấm vào hình ảnh để xem thông tin chi tiết.
-                            </div>
-                            <div class="price ">
-                                <span>50.000đ</span>
-                                <div class="detail-action">
-                                    <button class="d-flex btn btn-outline-danger add-cart-btn fw-bold " type="submit">
-                                        <i class="fas fa-cart-shopping fs-1 me-0"></i>
-                                            THÊM VÀO GIỎ
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </div>
             <div class="col-md-3 col-sm-6 ">
                 <li class="item-a ">
                     <div class="product-box ">
@@ -654,7 +426,8 @@
 
     addCartBtns.forEach(element => {
         element.addEventListener('click', function cartAdded() {
-            alert('Thêm vào giỏ hàng thành công!')
+            window.location.href = "/WebProject/login/html/dangnhap.html"
+            alert('Bạn chưa đăng nhập!')
         })
     });
 </script>

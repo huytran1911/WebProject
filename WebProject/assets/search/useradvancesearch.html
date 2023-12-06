@@ -18,17 +18,19 @@
     <div class="header">
         <div class="head-container">
             <div class="top-bar">
-                <a href="/ChuaDN.html" class="logo">
+                <a href="/index.html" class="logo">
                     <img src="/WebProject/images/logo image/Logo image.png" alt="boardgame logo">
                 </a>
                 <ul class="nav-bar">
-                    <li><a href="/ChuaDN.html">Trang chủ</a></li>
-                    <li><a href="/WebProject/trangsp.html/trangspchinh/trangspchinh.html">Cửa Hàng</a></li>
-                    <li><a href="/WebProject/Lienhe/Lienhe.html">Liên hệ</a></li>
+                    <li><a href="/index.html">Trang chủ</a></li>
+                    <li><a href="/WebProject/trangsp.html/trangspchinh/usertrangsanphamchinh.html">Cửa Hàng</a></li>
+                    <li><a href="/WebProject/Lienhe/UserLienhe.html">Liên hệ</a></li>
+
                 </ul>
                 <div class="nav-icon">
-                    <a href="/WebProject/login/html/dangnhap.html"><i class='bx bx-cart'></i></a>
-                    <a href="/WebProject/login/html/dangnhap.html"><i class='bx bx-user'></i></a>
+                    <a href="/WebProject/assets/cart/cart.html"><i class='bx bx-cart'></i></a>
+                    <span style="padding-top: 10px; padding-right: 5px; ">minh thư</span>
+                    <a href="/WebProject/assets/users/users.html"><i class='bx bx-user'> </i></a>
                 </div>
             </div>
         </div>
@@ -46,8 +48,8 @@
             </div>
             <div class="wrapper">
                 <div class="search-input">
-                    <input type="text" placeholder="Type to search..">
-                    <div class="icon"><i class="fas fa-search"></i></div>
+                    <input type="text" placeholder="Tìm kiếm">
+                    <div class="icon"><a href="/WebProject/assets/search/usersearch.html"><i class="fas fa-search"></i></a></div>
                 </div>
             </div>
         </div>
@@ -319,22 +321,21 @@
             </div>
         </div>
         <div class="row ">
-           
             <div class="col-md-3 col-sm-6 ">
                 <li class="item-a ">
                     <div class="product-box ">
-                        <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product13.html ">
-                            <img alt=" " src="/WebProject/images/product images/nhom ban/lên 90k.webp ">
+                        <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product17.html">
+                            <img alt=" " src="/WebProject/images/product images/nhap vai/cluedo 350k.jpg ">
                         </a>
                         <div class="product-info ">
                             <div class="product-name ">
-                                <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product13.html ">Lên</a>
+                                <a href="/WebProject/trangsp.html/Chitietsp/chitietsphtml/product17.html ">Cluedo</a>
                             </div>
                             <div class="de-font ">
                                 Bấm vào hình ảnh để xem thông tin chi tiết.
                             </div>
                             <div class="price ">
-                                <span>90.000đ</span>
+                                <span>350.000đ</span>
                                 <div class="detail-action">
                                     <button class="d-flex btn btn-outline-danger add-cart-btn fw-bold " type="submit">
                                         <i class="fas fa-cart-shopping fs-1 me-0"></i>
@@ -345,11 +346,12 @@
                         </div>
                     </div>
                 </li>
-
-
-
             </div>
+
+
+
         </div>
+
 
         <ul class="listPage ">
 
@@ -418,8 +420,7 @@
 
     addCartBtns.forEach(element => {
         element.addEventListener('click', function cartAdded() {
-            window.location.href = "/WebProject/login/html/dangnhap.html"
-            alert('Bạn chưa đăng nhập!')
+            alert('Thêm vào giỏ hàng thành công!')
         })
     });
 </script>
