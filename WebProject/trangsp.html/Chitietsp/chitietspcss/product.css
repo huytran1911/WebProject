@@ -304,7 +304,7 @@ body {
     width: 250px;
     height: 390px;
     text-decoration: none;
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(198, 223, 255, 0.575);
     border-radius: 10px;
     margin: 20px;
     box-sizing: border-box;
