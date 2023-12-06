@@ -21,7 +21,7 @@
             <form id="login">
                 <div class="form-item">
                     <span class="form-item-icon material-symbols-rounded">person</span>
-                    <input type="text" placeholder="Tên đăng nhập " id="user_name">
+                    <input type="text" placeholder="Tên đăng nhập " id="username">
 
 
                 </div>
@@ -34,9 +34,9 @@
                         <input type="checkbox" id="rememberMeCheckbox">
                         <label for="rememberMeCheckbox">Nhớ mật khẩu</label>
                     </div>
-                    <a onclick="forgotPW()" style="cursor: pointer;">Quên mật khẩu |</a>
+                    <p id="clickMeText" style="cursor: pointer; color: black;">Quên mật khẩu |</p>
                 </div>
-                <button class="btn" type="submit" id="myButton"> Đăng Nhập</button>
+                <button class="btn" type="submit" onclick="login()"> Đăng Nhập</button>
 
             </form>
 
@@ -50,15 +50,29 @@
     </div>
     </div>
     </div>
+
     <script>
-        var myButton = document.getElementById("myButton");
+        function login() {
+            // Lấy giá trị từ các ô nhập liệu
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
 
-
-        myButton.addEventListener("click", function() {
-            window.location.href = "/index.html";
-            alert("Bạn đã đăng nhập thành công");
-
-
+            // Kiểm tra thông tin đăng nhập
+            if (username === 'minhthu2004' && password === '123456') {
+                window.location.href = "/index.html";
+                // Thông báo đăng nhập thành công
+                alert('Đăng nhập thành công! Chuyển hướng đến trang chính...');
+                // Thực hiện chuyển hướng hoặc các hành động khác sau khi đăng nhập thành công
+            } else {
+                // Thông báo đăng nhập không thành công
+                alert('Tên đăng nhập hoặc mật khẩu không đúng. Vui lòng thử lại.');
+            }
+        }
+    </script>
+    <script>
+        document.getElementById('clickMeText').addEventListener('click', function() {
+            window.location.href = "/WebProject/login/html/quenMK.html";
+            alert('Mật khẩu của bạn đã thay đổi thành "1"');
         });
     </script>
 </body>
