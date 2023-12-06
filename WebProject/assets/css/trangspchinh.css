@@ -279,6 +279,10 @@ body {
     padding: 10px 10px 1px 10px;
 }
 
+.price span {
+    padding-top: 7px;
+}
+
 .product-box .price {
     padding: 0px 10px;
     display: flex;
