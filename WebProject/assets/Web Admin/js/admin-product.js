@@ -65,9 +65,9 @@ switchMode.addEventListener('change', function () {
 
 
 let products = [
-    {image:'/WebProject/images/product images/chien luoc/alma mater 1tr750.webp' , id: '113' , name: 'Alma mater', menu: 'Chiến lược', price: '1.750.000', quantity: 20, locked: false },
-    {image:'/WebProject/images/product images/gia dinh _ tre em/co co tich 350k.webp' , id: '114' ,name: 'Cờ cổ tích', menu: 'Gia đình & trẻ em', price: '350.000', quantity: 14, locked: false },
-    {image: '/WebProject/images/product images/co/co tuong 50k.jpg',id: '115' , name: 'Cờ tướng', menu: 'Cờ', price: '50.000', quantity: 28, locked: false },
+    {image:'../../../../WebProject/images/product images/chien luoc/alma mater 1tr750.webp' , id: '113' , name: 'Alma mater', menu: 'Chiến lược', price: '1.750.000', quantity: 20, locked: false },
+    {image:'../../../images/product images/gia dinh _ tre em/co co tich 350k.webp' , id: '114' ,name: 'Cờ cổ tích', menu: 'Gia đình & trẻ em', price: '350.000', quantity: 14, locked: false },
+    {image:'../../../images/product images/co/co tuong 50k.jpg',id: '115' , name: 'Cờ tướng', menu: 'Cờ', price: '50.000', quantity: 28, locked: false },
 
 ];
 
