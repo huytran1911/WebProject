@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <title>Admin</title>
-    <link rel="stylesheet" href="/admin/admin-css/admin.css">
+    <link rel="stylesheet" href="./admin-css/admin.css">
     <link rel="icon" type="image/png" href="assets/img/LOGO.webp">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
@@ -25,35 +25,35 @@
        </div>
 
        <div class="side-menu">
-           <ul>
-               <li style="margin-bottom: 15px;">
-                   <a href="/admin/admin.html">
-                        <span class="las la-address-card" style="color: #74767d;"></span>
-                        <h3 style="color: #74767d; font-weight: bold;">Người Quản Trị</h3>
-                    </a>
-                </li>
-               <li style="margin-bottom: 15px;" >
-                  <a href="/admin/admin-user.html">
-                       <span class="las la-user-alt" style="color:#74767d;"></span>
-                       <h3 style="color: #74767d; font-weight: bold;">Khách Hàng</h3>
-                   </a>
-               </li>
-            
-               <li style="margin-bottom: 15px;">
-                  <a href="/admin/admin-product.html">
-                       <span class="las la-clipboard-list" style="color:#74767d;"></span>
-                       <h3 style="color: #74767d; font-weight: bold;">Sản Phẩm</h3>
-                   </a>
-               </li>
-               <li style="margin-bottom: 15px;">
-                  <a href="/admin/admin-order.html">
-                       <span class="las la-shopping-cart" style="color:#74767d;"></span>
-                       <h3 style="color: #74767d; font-weight: bold;">Đơn Hàng</h3>
-                   </a>
-               </li>
-         
-           </ul>
-       </div>
+             <ul>
+                 <li style="margin-bottom: 15px;">
+                     <a href="./admin.php">
+                          <span class="las la-address-card" style="color: #74767d;"></span>
+                          <h3 style="color: #74767d; font-weight: bold;">Người Quản Trị</h3>
+                      </a>
+                  </li>
+                 <li style="margin-bottom: 15px;" >
+                    <a href="./admin-user.php">
+                         <span class="las la-user-alt" style="color:#74767d;"></span>
+                         <h3 style="color: #74767d; font-weight: bold;">Khách Hàng</h3>
+                     </a>
+                 </li>
+              
+                 <li style="margin-bottom: 15px;">
+                    <a href="./admin-product.php">
+                         <span class="las la-clipboard-list" style="color:#74767d;"></span>
+                         <h3 style="color: #74767d; font-weight: bold;">Sản Phẩm</h3>
+                     </a>
+                 </li>
+                 <li style="margin-bottom: 15px;">
+                    <a href="./admin-order.php">
+                         <span class="las la-shopping-cart" style="color:#74767d;"></span>
+                         <h3 style="color: #74767d; font-weight: bold;">Đơn Hàng</h3>
+                     </a>
+                 </li>
+           
+             </ul>
+         </div>
    </div>
 </div>
 

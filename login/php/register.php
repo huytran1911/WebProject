@@ -1,3 +1,78 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $usernameValue = trim($_POST['user_name1']);
+    $password1Value = trim($_POST['password1']);
+    $password2Value = trim($_POST['password2']);
+    $emailValue = trim($_POST['email']);
+    $phoneNumberValue = trim($_POST['phoneNumber']);
+    $usernamePattern = '/^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/';
+    $emailPattern = '/^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/';
+    $phoneNumberPattern = '/^(0[1-9])+([0-9]{8,9})\b/';
+
+    function setError($element, $message) {
+        echo "<script>document.getElementById('$element').classList.add('error');</script>";
+        echo "<script>document.getElementById('$element').classList.remove('success');</script>";
+        echo "<script>document.querySelector('#$element + .error').innerText = '$message';</script>";
+    }
+
+    function setSuccess($element) {
+        echo "<script>document.getElementById('$element').classList.add('success');</script>";
+        echo "<script>document.getElementById('$element').classList.remove('error');</script>";
+        echo "<script>document.querySelector('#$element + .error').innerText = '';</script>";
+    }
+
+    if (empty($usernameValue)) {
+        setError('user_name1', 'Không được bỏ trống tên đăng ký');
+        return false;
+    } elseif (!preg_match($usernamePattern, $usernameValue)) {
+        setError('user_name1', 'Tên đăng ký không hợp lệ');
+        return false;
+    } else {
+        setSuccess('user_name1');
+    }
+
+    if (empty($emailValue)) {
+        setError('email', 'Không được bỏ trống email');
+        return false;
+    } elseif (!preg_match($emailPattern, $emailValue)) {
+        setError('email', 'Email không hợp lệ');
+        return false;
+    } else {
+        setSuccess('email');
+    }
+
+    if (empty($password1Value)) {
+        setError('password1', 'Không được bỏ trống mật khẩu');
+        return false;
+    } elseif (strlen($password1Value) < 6) {
+        setError('password1', 'Mật khẩu phải lớn hơn 6 ký tự');
+        return false;
+    } else {
+        setSuccess('password1');
+    }
+
+    if (empty($password2Value)) {
+        setError('password2', 'Hãy xác nhận lại mật khẩu');
+        return false;
+    } elseif ($password2Value !== $password1Value) {
+        setError('password2', 'Xác nhận mật khẩu không khớp');
+        return false;
+    } else {
+        setSuccess('password2');
+    }
+
+    if (empty($phoneNumberValue)) {
+        setError('phoneNumber', 'Không được bỏ trống số điện thoại');
+        return false;
+    } elseif (!preg_match($phoneNumberPattern, $phoneNumberValue)) {
+        setError('phoneNumber', 'Số điện thoại không hợp lệ');
+        return false;
+    } else {
+        setSuccess('phoneNumber');
+    }
+}
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -60,90 +135,3 @@
 
 </html>
 
-<script>
-    const register = document.getElementById('register');
-    const username = document.getElementById('user_name1');
-    const password1 = document.getElementById('password1');
-    const password2 = document.getElementById('password2');
-    const email = document.getElementById('email');
-    const phoneNumber = document.getElementById('phoneNumber');
-
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        if (validateInputs()) {
-            register.submit();
-        }
-    });
-
-    const setError = (element, message) => {
-        const inputControl = element.parentElement;
-        const errorDisplay = inputControl.querySelector('.error');
-
-        errorDisplay.innerText = message;
-        inputControl.classList.add('error');
-        inputControl.classList.remove('success');
-    }
-
-    const setSuccess = (element) => {
-        const inputControl = element.parentElement;
-        const errorDisplay = inputControl.querySelector('.error');
-
-        errorDisplay.innerText = '';
-        inputControl.classList.add('success');
-        inputControl.classList.remove('error');
-    }
-
-    function validateInputs() {
-        
-        const usernameValue = username.value.trim();
-        const password1Value = password1.value.trim();
-        const password2Value = password2.value.trim();
-        const emailValue = email.value.trim();
-        const phoneNumberValue = phoneNumber.value.trim();
-        const usernamePattern = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/;
-        const emailPattern = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/;
-        const phoneNumberPattern = /^(0[1-9])+([0-9]{8,9})\b/;
-
-        if (usernameValue === '') {
-            setError(username, 'Không được bỏ trống tên đăng ký');
-        } else if (!usernamePattern.test(usernameValue)) {
-            setError(username, 'Tên đăng ký không hợp lệ');
-        } else {
-            setSuccess(username);
-        }
-
-        if (emailValue === ''){
-            setError(email, 'Không được bỏ trống email');
-        } else if (!emailPattern.test(emailValue)) {
-            setError(email, 'Email không hợp lệ');
-        } else {
-            setSuccess(email);
-        }    
-
-        if (password1Value === ''){
-            setError(password1, 'Không được bỏ trống mật khẩu');
-        } else if (password1Value.length < 6) {
-            setError(password1, 'Mật khẩu phải lớn hơn 6 ký tự');
-        } else {
-            setSuccess(password1);
-        }
-
-        if (password2Value === ''){
-            setError(password2, 'Hãy xác nhận lại mật khẩu');
-        } else if (password2Value !== password1Value) {
-            setError(password2, 'Xác nhận mật khẩu không khớp');
-        } else {
-            setSuccess(password2)
-        }
-
-        if (phoneNumberValue === ''){
-            setError(phoneNumber, 'Không được bỏ trống số điện thoại');
-        } else if (!phoneNumberPattern.test(phoneNumberValue)) {
-            setError(phoneNumber, 'Số điện thoại không hợp lệ');
-        } else {
-            setSuccess(phoneNumber);
-        }
-
-    };
-</script>
