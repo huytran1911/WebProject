@@ -1,10 +1,16 @@
+<?php
+  
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <title>Admin</title>
-    <link rel="stylesheet" href="./admin-css/admin.css">
+    <link rel="stylesheet" href="../admin-css/admin.css">
     <link rel="icon" type="image/png" href="assets/img/LOGO.webp">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
@@ -113,345 +119,46 @@
     </div>
 </div>
           
-<div class="records table-responsive" >
+          <div class="records table-responsive" >
 
-<div class="record-header">
-<div class="add">
-<span>Mục</span>
-<select name="" id="">
-<option value="">ID</option>
-</select>
+            <div class="record-header">
+            
+            </div>
 
-</div>
+            <div>
+            <table width="100%" id="table-product">
+            <thead>
+            <tr>
+                <th> Mã Sản Phẩm</th>
+                <th> Hình Ảnh Sản Phẩm</th>
+                <th> Tên sản phẩm</th>
+                <th> Giá</th>
+                <th> Danh mục</th>
+                <th> Mô tả</th> 
+                <th> Sửa </th> 
+                <th> Xoá</th> 
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th> Mã Sản Phẩm</th>
+                <th> Hình Ảnh Sản Phẩm</th>
+                <th> Tên sản phẩm</th>
+                <th> Giá</th>
+                <th> Danh mục</th>
+                <th> Mô tả</th> 
+                <th> Sửa </th> 
+                <th> Xoá</th> 
+            </tr>
 
-<div class="browse">
-<input type="search" placeholder="Tìm kiếm" class="record-search">
+            
+            </tbody>
+            </table>
+            </div>
 
-</div>
-</div>
-
-<div>
-<table width="100%" id="table-product">
-<thead>
-<tr>
-    <th>Mã Sản Phẩm</th>
-    <th> Hình Ảnh Sản Phẩm</th>
-    <th> Tên sản phẩm</th>
-    <th> Giá</th>
-    <th> Số Lượng</th>
-    <th> Ngày Thêm</th> 
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>#1</td>
-<td>
-
-   <div class="image-product-admin">
-    <div>
-   <img src="/asset/images/thucanchocho/thucanchoconcolon.webp" id="productImage">
-    </div>
-  <div>
-    <input type="file" name="image5"  accept="image/png, image/jpeg, image/jpg" id="imageInput">  
-  </div>
-        
-   </div>
- 
-</td>
-<td>
-
-  Thức ăn cho chó con cỡ lớn ROYAL CANIN Maxi Puppy
-
-</td>
-<td>200.000vnđ</td>
-<td>300</td>
-<td>1/11/2023</td>
-
-
-</tr>
-<tr>
-<td>#2</td>
-<td>
-
-    <div class="image-product-admin">
-     <div>
-    <img src="/asset/images/thucanchomeo/supchomeovicangunuong.jpg
-    " id="productImage">
-     </div>
-   <div>
-     <input type="file" name="image5"  accept="image/png, image/jpeg, image/jpg" id="imageInput">   
-   </div>
-         
-    </div>
-  
- </td>
-<td>
-
-
-  Súp cho mèo CIAO vị cá ngừ nướng
-
-</td>
-<td>25.000vnđ</td>
-<td>190</td>
-<td>5/11/2023</td>
-
-</tr>
-<tr>
-<td>#3</td>
-<td>
-
-    <div class="image-product-admin">
-     <div>
-    <img src="/asset/images/thucanchocho/banhthuongchochovidautay.jpg" id="productImage">
-     </div>
-   <div>
-     <input type="file" id="imageInput" name="image5"  accept="image/png, image/jpeg, image/jpg">  
-   </div>
-         
-    </div>
-  
- </td>
-<td>
-  Bánh thưởng cho chó vị dâu tây JERHIGH Strawberry Sticks
-</td>
-<td>55.000vnđ</td>
-<td>200</td>
-<td>7/11/2023</td>
-        
-
-</tr>
-
-
-<tr>
-<td>#4</td>
-<td>
-
-    <div class="image-product-admin">
-     <div>
-    <img src="/asset/images/thucanchomeo/patechomeovicangucacom.jpg" id="productImage">
-     </div>
-
-   <div>
-     <input type="file" id="imageInput" name="image5"  accept="image/png, image/jpeg, image/jpg">  
-
-   </div>
-         
-    </div>
-  
- </td>
-<td>
-  Pate cho mèo vị cá ngừ cá cơm CAT SEA FISH
-</td>
-<td>30.000vnđ</td>
-<td>145</td>
-<td>6/11/2023</td>
-
-      
- 
-</tr>
-
-</tbody>
-</table>
-</div>
-
-</div>
+          </div>
 </main>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-<script>
- window.addEventListener("DOMContentLoaded", function() {
-        var predefinedContent = '<div class="image-product-admin"><div><img src="assets/images/sp/cocaori.png" id="productImage"></div><div><input id="imageInput" type="file" name="image5"  accept="image/png, image/jpeg, image/jpg"></div></div>';
-        document.getElementById("fimage").value = predefinedContent;
-      });
-   
-    var rIndex,
-        table1 = document.getElementById("table-product");
-    
-    // kiểm tra đầu vào 
-    function checkEmptyInput1()
-    {
-        var isEmpty = false,
-        idproduct = document.getElementById("id-product").value,
-        fproduct = document.getElementById("fproduct").value,
-            quantity = document.getElementById("quantity").value,
-          dateadd = document.getElementById("dateadd").value,
-            price= document.getElementById("price").value;
-          
-            if(idproduct === ""){
-            alert("không được để trống");
-            isEmpty = true;
-        }
-        else if(fproduct === ""){
-            alert("không được để trống");
-            isEmpty = true;
-        }
-        else if(quantity === ""){
-            alert("không được để trống");
-            isEmpty = true;
-        }
-        else if(dateadd === ""){
-            alert("không được để trống");
-            isEmpty = true;
-        }
-        else if(price === ""){
-            alert("không được để trống");
-            isEmpty = true;
-        }
-      
-        return isEmpty;
-    }
-    
-    // add Row
-    function addHtmlTableRow1()
-    {
-   
-        if(!checkEmptyInput1()){
-        var newRow = table1.insertRow(table1.length),
-            cell1 = newRow.insertCell(0),
-            cell2 = newRow.insertCell(1),
-            cell3 = newRow.insertCell(2),
-            cell4 = newRow.insertCell(3),
-            cell5 = newRow.insertCell(4),
-            cell6 = newRow.insertCell(5),
-          
-            idproduct = document.getElementById("id-product").value,
-            fimage=document.getElementById("fimage").value,
-            fproduct = document.getElementById("fproduct").value,
-            quantity = document.getElementById("quantity").value,
-           dateadd = document.getElementById("dateadd").value,
-            price = document.getElementById("price").value;
-           
-            cell1.innerHTML = idproduct;
-            cell2.innerHTML = fimage;
-            cell3.innerHTML = fproduct;
-        cell4.innerHTML = quantity;
-        cell5.innerHTML = dateadd;
-        cell6.innerHTML = price;
-       
-        // call the function to set the event to the new row
-        selectedRowToInput1();
-    }
-    }
-    
-    // display selected row data into input text
-    function selectedRowToInput1()
-    {
-        
-        for(var i = 1; i < table1.rows.length; i++)
-        {
-            
-            table1.rows[i].onclick = function()
-            {
 
-              rIndex = this.rowIndex;
-              document.getElementById("id-product").value = this.cells[0].innerHTML;
-              document.getElementById("fimage").value = this.cells[1].innerHTML;
-              document.getElementById("fproduct").value = this.cells[2].innerHTML;
-              document.getElementById("quantity").value = this.cells[3].innerHTML;
-              document.getElementById("dateadd").value = this.cells[4].innerHTML;
-              document.getElementById("price").value = this.cells[5].innerHTML;
-           
-             
-            };
-        }
-    }
-    selectedRowToInput1();
-    
-    function editHtmlTbleSelectedRow1()
-    {
-        var     idproduct = document.getElementById("id-product").value,
-        fimage = document.getElementById("fimage").value,
-            fproduct = document.getElementById("fproduct").value,
-            quantity = document.getElementById("quantity").value,
-           dateadd = document.getElementById("dateadd").value,
-            price = document.getElementById("price").value;
-            
-       if(!checkEmptyInput1()){
-        table1.rows[rIndex].cells[0].innerHTML = idproduct;
-        table1.rows[rIndex].cells[1].innerHTML = fimage;
-        table1.rows[rIndex].cells[2].innerHTML = fproduct;
-        table1.rows[rIndex].cells[3].innerHTML = quantity;
-        table1.rows[rIndex].cells[4].innerHTML = dateadd;
-        table1.rows[rIndex].cells[5].innerHTML = price;
-      
-      }
-    }
-    
-    function removeSelectedRow1() {
-  // Check if the row index is greater than 0
-  if (rIndex > 0) {
-    // Prompt the user to confirm the deletion
-    var result = confirm("Bạn có muốn xóa?");
-
-    // If the user confirms the deletion, then delete the row
-    if (result == true) {
-      table1.deleteRow(rIndex);
-    } else {
-      // If the user cancels the deletion, then prevent the default action
-      event.preventDefault();
-    }
-  }
-
-  // Clear input text
-  document.getElementById("id-product").value = "";
-  document.getElementById("fimage").value = "";
-  document.getElementById("fproduct").value = "";
-  document.getElementById("quantity").value = "";
-  document.getElementById("dateadd").value = "";
-  document.getElementById("price").value = "";
-}
-
-</script>
-
-<script>
-    const fileInputs = document.querySelectorAll('input[type="file"]');
- 
- // Add a change event listener to each file input element
- fileInputs.forEach(fileInput => {
-   fileInput.addEventListener('change', function(event) {
-     // Get the image element associated with the file input element
-     const img = event.target.closest('.client').querySelector('img');
- 
-     // Get the new image file
-     const newImageFile = event.target.files[0];
- 
-     // Create a new FileReader object
-     const reader = new FileReader();
- 
-     // Load the new image file
-     reader.onload = function() {
-       // Set the src attribute of the image element to the new image file
-       img.src = reader.result;
-     };
- 
-     // Read the new image file
-     reader.readAsDataURL(newImageFile);
-   });
- });
- 
-
-
- const imageProductAdminDivs = document.querySelectorAll('.image-product-admin');
-
-for (const imageProductAdminDiv of imageProductAdminDivs) {
-  const imageInput = imageProductAdminDiv.querySelector('#imageInput');
-  const image = imageProductAdminDiv.querySelector('#productImage');
-
-  imageInput.addEventListener('change', function() {
-    const file = this.files[0];
-
-    // Create a new FileReader object
-    const reader = new FileReader();
-
-    // Read the selected file
-    reader.onload = function() {
-      // Set the image src attribute to the selected file
-      image.src = reader.result;
-    };
-
-    // Start reading the selected file
-    reader.readAsDataURL(file);
-  });
-}
-   </script>
