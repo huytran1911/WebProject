@@ -1,5 +1,5 @@
 <?php
-include "./require/connect.php";
+include "../../require/connect.php";
 
 
 if (isset($_POST['username'], $_POST['password1'], $_POST['email'], $_POST['phoneNumber'])) {

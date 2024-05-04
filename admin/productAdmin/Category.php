@@ -1,19 +1,51 @@
 <?php
-  
+require "../function.php";
+require "../../require/connect.php";
+
+// Kiểm tra nếu dữ liệu từ form đã được gửi đi
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Kiểm tra xem key "category_name" có tồn tại trong mảng $_POST hay không
+    if (isset($_POST["add"]) && $_POST["add"]) {
+        $category_name = $_POST["category_name"];
+
+        
+        if (!empty($category_name)) {
+           
+            $sql = "INSERT INTO tbl_category (categoryName) VALUES (?)";
+
+            if ($stmt = mysqli_prepare($conn, $sql)) {
+                mysqli_stmt_bind_param($stmt, "s", $param_categoryName);
+
+                // Cung cấp giá trị cho $param_categoryName
+                $param_categoryName = $category_name;
+
+                // Thực thi câu lệnh SQL và kiểm tra kết quả
+                if (mysqli_stmt_execute($stmt)) {
+                    // Khi thực thi thành công thì sẽ quay về trang admin-user.php
+                    redirect("./Category.php");
+                    exit();
+                } else {
+                    echo "Đã xảy ra lỗi.";
+                }
+                mysqli_stmt_close($stmt); // Đóng statement
+            }
+        }
+     }
+}
+
 ?>
 
 
 
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="../admin-css/admin.css">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <title>Admin</title>
-    <link rel="stylesheet" href="../admin-css/admin.css">
-    <link rel="icon" type="image/png" href="assets/img/LOGO.webp">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 </head>
 <body style="background-color: #f3f8ff;">
   <input type="checkbox" id="menu-toggle">
@@ -45,9 +77,9 @@
                      </a>
                  </li>
                  <li style="margin-bottom: 15px;">
-                     <a href="./addCategory.php">
+                     <a href="./admin.php">
                           <span class="las la-address-card" style="color: #74767d;"></span>
-                          <h3 style="color: #74767d; font-weight: bold;">Danh Mục</h3>
+                          <h3 style="color: #74767d; font-weight: bold;">Người Quản Trị</h3>
                       </a>
                   </li>
               
@@ -91,35 +123,17 @@
         <main >
 <div class="page-content">
         
-    <h1 style="padding: 1.3rem 0rem;color: #74767d; margin-left: 55px;" id="product">Sản Phẩm Muốn Thêm</h1>
+    <h1 style="padding: 1.3rem 0rem;color: #74767d; margin-left: 55px;" id="product">Danh Mục Sản Phẩm</h1>
     <div class="user-tab" style="margin-left: 55px;">
-        <div class="user-input">
-   
-             
-        </div>
-        <div class="user-input" style="display: none;">
-           
-    
-                 </div>
-        <div class="user-input">
-           
-        
-        </div>
-        <div class="user-input">
        
-       
-        </div>
-        <div class="user-input">
-          
-
-        </div>
 
    
 
        <div>
-        <a href="./addProduct.php"><button onclick="addHtmlTableRow1();">Thêm +</button></a>
-                <button onclick="editHtmlTbleSelectedRow1();">Chỉnh <span class="las la-edit"></span></button>
-                <button onclick="removeSelectedRow1();">Xóa <span class="las la-trash"></span></button>
+        <form method="post">
+            <input type="text" name="category_name" placeholder="Nhập tên danh mục" required>
+            <input name="add" type="submit" value="Thêm">
+        </form>
 </div>
 
     </div>
@@ -133,38 +147,48 @@
 
             <div>
             <table width="100%" id="table-product">
-            <thead>
-            <tr>
-                <th> Mã Sản Phẩm</th>
-                <th> Tên sản phẩm</th>
-                <th> Hình Ảnh Sản Phẩm</th>               
-                <th> Giá</th>
-                <th> Danh mục</th>
-                <th> Mô tả</th> 
-                <th> Sửa </th> 
-                <th> Xoá</th> 
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th> Mã Sản Phẩm</th>
-                <th> Tên sản phẩm</th>
-                <th> Hình Ảnh Sản Phẩm</th>               
-                <th> Giá</th>
-                <th> Danh mục</th>
-                <th> Mô tả</th> 
-                <th> Sửa </th> 
-                <th> Xoá</th> 
-            </tr>
-
+          
             
-            </tbody>
+            <?php
+            // Kết nối CSDL và truy vấn danh sách danh mục sản phẩm
+            // Duyệt qua kết quả và hiển thị trong bảng
+            $sql_select = "SELECT * FROM tbl_category";
+            $result = mysqli_query($conn, $sql_select);
+            if(mysqli_num_rows($result) > 0) {
+                echo "<table width='100%' id='table-user'>";
+                    echo "<thead>";
+                        echo "<tr>";
+                            echo "<th> Mã Danh Mục</th>";
+                            echo "<th> Tên Danh Mục </th>";
+                            echo "<th> Hành động </th>";
+                        echo "</tr>";
+                    echo "</thead>";
+                    echo "<tbody>";
+
+                    // Lặp qua các hàng dữ liệu
+                    while($row = mysqli_fetch_array($result)) {
+                        echo "<tr>";
+                            echo "<td>" . $row['cid'] . "</td>";
+                            echo "<td>" . $row['categoryName'] . "</td>";
+                            echo '<td>
+                                    <a onclick="return confirm(\'Bạn có chắc chắn muốn xóa ?\')" href="./deleteCategory.php?cid=' . $row['cid'] . '">
+                                        <button class="btn btn-danger">Xóa</button>
+                                    </a>
+                                </td>';
+                        echo "</tr>";
+                }
+                    echo "</tbody>";
+                    echo "</table>"; 
+            } else {
+                echo "<p> Không có dữ liệu </p>";
+            }
+            ?>
+ 
+ 
             </table>
             </div>
 
           </div>
 </main>
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
-
+</body>
+</html>

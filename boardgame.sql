@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 30, 2024 at 12:12 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th5 04, 2024 lúc 04:10 PM
+-- Phiên bản máy phục vụ: 10.4.28-MariaDB
+-- Phiên bản PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `boardgame`
+-- Cơ sở dữ liệu: `boardgame`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_category`
+-- Cấu trúc bảng cho bảng `tbl_category`
 --
 
 CREATE TABLE `tbl_category` (
@@ -32,10 +32,19 @@ CREATE TABLE `tbl_category` (
   `categoryName` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `tbl_category`
+--
+
+INSERT INTO `tbl_category` (`cid`, `categoryName`) VALUES
+(14, 'Gia đình'),
+(15, 'Chiến lược'),
+(16, 'Gia đình');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_products`
+-- Cấu trúc bảng cho bảng `tbl_products`
 --
 
 CREATE TABLE `tbl_products` (
@@ -51,7 +60,7 @@ CREATE TABLE `tbl_products` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_users`
+-- Cấu trúc bảng cho bảng `tbl_users`
 --
 
 CREATE TABLE `tbl_users` (
@@ -65,7 +74,7 @@ CREATE TABLE `tbl_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Dumping data for table `tbl_users`
+-- Đang đổ dữ liệu cho bảng `tbl_users`
 --
 
 INSERT INTO `tbl_users` (`id`, `username`, `password`, `email`, `phonenumber`, `address`, `role`) VALUES
@@ -79,61 +88,58 @@ INSERT INTO `tbl_users` (`id`, `username`, `password`, `email`, `phonenumber`, `
 (14, 'huy', 'huytran123', 'tranhuy19112004@gmail.com', 905046373, '850thd', 0),
 (15, 'huy', 'huytran123', 'tranhuy19112004@gmail.com', 905046373, '850thd', 0),
 (16, 'huy', 'huytran123', 'tranhuy19112004@gmail.com', 905046373, '850thd', 0),
-(17, 'huy', 'huytran123', 'tranhuy19112004@gmail.com', 905046373, '850thd', 0);
+(17, 'huy', 'huytran123', 'tranhuy19112004@gmail.com', 905046373, '850thd', 0),
+(18, '', '', '', 0, '', 0),
+(19, '', '$2y$10$kccnLGrNQWHKc80VsQRCUem1la5yrwan/52NO/xemPCSJOiU9x4xy', '', 0, '', 0);
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `tbl_category`
+-- Chỉ mục cho bảng `tbl_category`
 --
 ALTER TABLE `tbl_category`
   ADD PRIMARY KEY (`cid`);
 
 --
--- Indexes for table `tbl_products`
+-- Chỉ mục cho bảng `tbl_products`
 --
 ALTER TABLE `tbl_products`
-  ADD PRIMARY KEY (`pid`);
+  ADD PRIMARY KEY (`pid`),
+  ADD KEY `fk_products_category` (`cid`);
 
 --
--- Indexes for table `tbl_users`
+-- Chỉ mục cho bảng `tbl_users`
 --
 ALTER TABLE `tbl_users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `tbl_category`
+-- AUTO_INCREMENT cho bảng `tbl_category`
 --
 ALTER TABLE `tbl_category`
-  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT for table `tbl_products`
---
-ALTER TABLE `tbl_products`
-  MODIFY `pid` int(10) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tbl_users`
+-- AUTO_INCREMENT cho bảng `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `tbl_products`
+-- Các ràng buộc cho bảng `tbl_products`
 --
 ALTER TABLE `tbl_products`
-  ADD CONSTRAINT `fk_products_category` FOREIGN KEY (`pid`) REFERENCES `tbl_category` (`cid`);
+  ADD CONSTRAINT `fk_products_category` FOREIGN KEY (`cid`) REFERENCES `tbl_category` (`cid`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
