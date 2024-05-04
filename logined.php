@@ -18,12 +18,12 @@
     <div class="header">
         <div class="head-container">
             <div class="top-bar">
-                <a href="./logined.html" class="logo">
+                <a href="./logined.php" class="logo">
                     <img src="images/logo image/Logo image.png" alt="boardgame logo">
                 </a>
                 <ul class="nav-bar">
-                    <li><a href="./logined.html">Trang chủ</a></li>
-                    <li><a href="trangsp.html/trangspchinh/usertrangsanphamchinh.html">Cửa Hàng</a></li>
+                    <li><a href="./logined.php">Trang chủ</a></li>
+                    <li><a href="trangsp.html/trangspchinh/usertrangsanphamchinh.php">Cửa Hàng</a></li>
                     <li><a href="Lienhe/UserLienhe.html">Liên hệ</a></li>
 
                 </ul>
