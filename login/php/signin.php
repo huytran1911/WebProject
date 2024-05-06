@@ -1,28 +1,26 @@
 <?php
 session_start();
-include '../../require/connect.php';
+include "../../require/connect.php";
 
-if (isset($_POST['username'], $_POST['password'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+$errors = []; // Khởi tạo mảng lưu trữ các thông báo lỗi
 
-    // Truy vấn cơ sở dữ liệu để kiểm tra tên người dùng và mật khẩu
-    $sql = "SELECT * FROM tbl_users WHERE username='$username' AND password='$password'";
-    $result = $conn->query($sql);
 
-    if ($result->num_rows == 1) {
-        // Tên người dùng và mật khẩu hợp lệ, chuyển hướng người dùng đến trang chính của ứng dụng
-        $_SESSION['username'] = $username;
-        header("Location: ../../../../logined.html"); // Điều hướng đến trang chính của ứng dụng
-        exit();
+
+if(isset($_POST['dangnhap'])){
+    $taikhoan = $_POST['username'];
+    $matkhau = $_POST['password'];
+    $sql = "SELECT * FROM tbl_users WHERE username='".$taikhoan. "' AND password='".$matkhau. "' ";
+    $row = mysqli_query($conn,$sql); // Sử dụng biến kết nối $conn ở đây
+    $count = mysqli_num_rows($row);
+    if ($count>0){
+        $_SESSION['dangnhap']= $taikhoan;
+        header("Location:./../../index.php");
+        exit(); // Thêm lệnh exit() sau khi chuyển hướng
     } else {
-        // Tên người dùng hoặc mật khẩu không hợp lệ, hiển thị thông báo lỗi
-        $error = "Tên người dùng hoặc mật khẩu không chính xác";
+        $errors['login'] = 'Tên đăng nhập hoặc mật khẩu không chính xác';
     }
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,39 +42,29 @@ if (isset($_POST['username'], $_POST['password'])) {
                 <h1> Vui lòng đăng nhập </h1>
 
             </div>
-            <form id="login">
+            <form id="login" action="" method="POST">
                 <div class="form-item">
                     <span class="form-item-icon material-symbols-rounded">person</span>
-                    <input type="text" placeholder="Tên đăng nhập " id="username">
-
-
+                    <input type="text" placeholder="Tên đăng nhập" id="username" name="username"> <!--Thêm thuộc tính name-->
                 </div>
                 <div class="form-item">
                     <span class="form-item-icon material-symbols-rounded">lock</span>
-                    <input type="password" placeholder="Mật khẩu " id="password">
+                    <input type="password" placeholder="Mật khẩu" id="password" name="password"> <!--Thêm thuộc tính name-->
                 </div>
                 <div class="form-item-other">
                   
                 </div>
-                <button class="btn" type="submit" onclick="login()"> Đăng Nhập</button>
+                <button name="dangnhap" value="Đăng nhập" class="btn" type="submit" > Đăng Nhập</button>
+                <div  class="error-message" style="color: red;">
+    <?php if(isset($errors['login'])) { echo $errors['login']; } ?>
+</div>
 
             </form>
-
-
-
         </div>
         <div class="login-card-footer">
             Bạn chưa có tài khoản ?<a href="../php/register.php">Đăng ký</a>
         </div>
     </div>
-    </div>
-    </div>
-    </div>
-
-    <script>
-        
-    </script>
-
 </body>
 
 </html>

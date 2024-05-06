@@ -29,7 +29,7 @@
                 </ul>
                 <div class="nav-icon">
                     <a href="login/html/dangnhap.html"><i class='bx bx-cart'></i></a>
-                    <a href="login/html/dangnhap.html"><i class='bx bx-user'> </i></a>
+                    <a href="login/php/signin.php"><i class='bx bx-user'> </i></a>
                 </div>
             </div>
         </div>
