@@ -11,14 +11,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         if (!empty($category_name)) {
            
-            $sql = "INSERT INTO tbl_category (categoryName) VALUES (?)";
+            $sql = "INSERT INTO tbl_category (cateid, categoryName) VALUES (?, ?)";
 
             if ($stmt = mysqli_prepare($conn, $sql)) {
-                mysqli_stmt_bind_param($stmt, "s", $param_categoryName);
+                mysqli_stmt_bind_param($stmt, "is",$param_cid, $param_categoryName);
 
                 // Cung cấp giá trị cho $param_categoryName
                 $param_categoryName = $category_name;
-
+                $param_cid = $cid;
                 // Thực thi câu lệnh SQL và kiểm tra kết quả
                 if (mysqli_stmt_execute($stmt)) {
                     // Khi thực thi thành công thì sẽ quay về trang admin-user.php
@@ -168,10 +168,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // Lặp qua các hàng dữ liệu
                     while($row = mysqli_fetch_array($result)) {
                         echo "<tr>";
-                            echo "<td>" . $row['cid'] . "</td>";
+                            echo "<td>" . $row['cateid'] . "</td>";
                             echo "<td>" . $row['categoryName'] . "</td>";
                             echo '<td>
-                                    <a onclick="return confirm(\'Bạn có chắc chắn muốn xóa ?\')" href="./deleteCategory.php?cid=' . $row['cid'] . '">
+                                    <a onclick="return confirm(\'Bạn có chắc chắn muốn xóa ?\')" href="./deleteCategory.php?cateid=' . $row['cateid'] . '">
                                         <button class="btn btn-danger">Xóa</button>
                                     </a>
                                 </td>';

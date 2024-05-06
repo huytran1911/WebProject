@@ -14,14 +14,15 @@
     box-sizing: border-box;
     font-family: 'Merriweather', sans-serif;
 }
-html{
-    scroll-behavior: smooth;
 
+html {
+    scroll-behavior: smooth;
 }
 
-a{
+a {
     cursor: pointer;
 }
+
 #menu-toggle {
     display: none;
 }
@@ -39,15 +40,15 @@ a{
 }
 
 .side-header {
-    box-shadow: 0px 5px 5px -5px rgb(0 0 0 /10%);
-   background-color: #f3f8ff;
+    box-shadow: 0px 5px 5px -5px rgb(0 0 0 / 10%);
+    background-color: #f3f8ff;
     height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.side-header h3, side-head span {
+.side-header h3, .side-header span {
     color: #fff;
     font-weight: 400;
 }
@@ -59,24 +60,24 @@ a{
 
 /* width */
 .side-content::-webkit-scrollbar {
-  width: 5px;
+    width: 5px;
 }
 
 /* Track */
 .side-content::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey; 
-  border-radius: 10px;
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
 }
 
 /* Handle */
 .side-content::-webkit-scrollbar-thumb {
-  background: #b0b0b0; 
-  border-radius: 10px;
+    background: #b0b0b0; 
+    border-radius: 10px;
 }
 
 /* Handle on hover */
 .side-content::-webkit-scrollbar-thumb:hover {
-  background: #b30000; 
+    background: #b30000; 
 }
 
 .profile {
@@ -154,7 +155,6 @@ a{
     font-size: 1.3rem;
 }
 
-
 .main-content {
     margin-left: 165px;
     width: calc(100% - 165px);
@@ -168,7 +168,7 @@ header {
     left: 165px;
     z-index: 100;
     height: 60px;
-    box-shadow: 0px 5px 5px -5px rgb(0 0 0 /10%);
+    box-shadow: 0px 5px 5px -5px rgb(0 0 0 / 10%);
     background: #f3f8ff;
     transition: left 300ms;
 }
@@ -182,8 +182,6 @@ header {
     justify-content: space-between;
     padding: 0rem 1rem;
 }
-
-
 
 .header-content label {
     cursor: pointer;
@@ -385,11 +383,12 @@ input, button, select {
 
 .table-responsive {
     width: 100%;
-    overflow: auto;
+
 }
 
 table {
     border-collapse: collapse;
+    width: 100%;
 }
 
 table thead tr {
@@ -428,13 +427,10 @@ table tbody tr {
     align-items: center;
 }
 
-.client-img img{
- bottom:10px;
- position: relative;
+.client-img img {
     width: 60px;
     object-fit: cover;
 }
-
 
 .client-info h4 {
     color: #555;
@@ -449,7 +445,7 @@ table tbody tr {
     display: inline-block;
     font-size: 1.5rem;
     margin-right: .5rem;
-
+    cursor: pointer;
 }
 
 .paid {
@@ -466,9 +462,9 @@ table tbody tr {
 .pagination {
     margin-top: 20px;
     text-align: center;
-  }
-  
-  .pagination a {
+}
+
+.pagination a {
     display: inline-block;
     padding: 8px 16px;
     text-decoration: none;
@@ -476,19 +472,19 @@ table tbody tr {
     border: 1px solid #007bff;
     border-radius: 5px;
     margin-right: 5px;
-  }
-  
-  .pagination a.current {
+}
+
+.pagination a.current {
     background-color: #007bff;
     color: white;
-  }
-  
-  .pagination a:hover {
+}
+
+.pagination a:hover {
     background-color: #007bff;
     color: white;
-  }
-  
-  .pagination span.current {
+}
+
+.pagination span.current {
     background-color: #007bff;
     color: white;
     display: inline-block;
@@ -496,15 +492,14 @@ table tbody tr {
     border: 1px solid #007bff;
     border-radius: 5px;
     margin-right: 5px;
-  }
-  
-  .pagination a:disabled {
+}
+
+.pagination a:disabled {
     color: #ccc;
     pointer-events: none;
-  }
-  
+}
 
-  .dropdown {
+.dropdown {
     position: relative;
     display: inline-block;
 }
@@ -529,8 +524,6 @@ table tbody tr {
 .dropdown-menu li:hover {
     background-color: #ddd;
 }
-
-
 
 @media only screen and (max-width: 1200px) {
     .analytics {
@@ -584,141 +577,18 @@ table tbody tr {
     }
 
 }
-@media(max-width:768px){
-    #table-user{
-        width:200%;
+
+@media (max-width: 768px) {
+    #table-product td:nth-child(4),
+    #table-product td:nth-child(5) {
+        width: auto;
     }
-}
-@media(max-width:480px){
-   table{
-        width: 210%;
-    }
-    #table-user{
-        width: 320%;
-    }
-}
-@media(width>768px){
-    #bar-admin{
-        visibility: hidden;
+
+    #table-product td:nth-child(2) {
+        display: none;
     }
 }
 
-@media(width<=768px){
-    #bar-admin{
-        visibility: visible;
-    }
-}
-.actions span{
-    cursor: pointer;
-}
-body{
-
+body {
     background: #F1F4F9;
-      }
-      #table-user td:nth-child(2) {
-
-  width: 15%;
-    }
-    #table-user td:nth-child(3) {
-
-  width: 20%;
-    }
-    #table-user th:nth-child(4), #table-user th:nth-child(5){
-      width: 15%;   
-    }
-    #table-user th:nth-child(6){
-        width: 16%;
-    } 
-    #table-user th:nth-child(7) {
-width: 9%;
-    }
-
-    #table-user th:nth-child(1){
-        width: 10%;
-    }
-
-
-    .user-tab{
-   float: left;
-   margin-bottom: 15px;
-
 }
-    .user-input{
-        display: flex;
-        justify-content: space-between;
-        margin-right: 10px;
-        margin-bottom: 12px;
-    }
-    .user-input input{
-        margin-left: 5px;
-       width: 220px;
-        text-align: left;
-        text-indent: 0;
-    }
-    .user-tab button{
-        padding: 5px 12px;
-        border: 1px solid black;
-        font-size: 17px;
-        font-weight: 500;
-        cursor: pointer;
-        margin-right: 4px;
-
-    }
-
-   #table-adminstrator td:nth-child(1){
-    width: 20%;
-   }
-   #table-adminstrator td:nth-child(2){
-    width: 30%;
-   }
-   #table-adminstrator td:nth-child(3){
-    width: 20%;
-   }
-   #table-adminstrator td:nth-child(4){
-    width: 28%;
-   }
-   #table-order th:nth-child(1){
-width: 12%;
-   } 
-    #table-order th:nth-child(2),#table-order th:nth-child(3){
-    width: 30%;
-       }
-       #table-order th:nth-child(4){
-        width: 28%;
-       }
-.image-product-admin img{
-width: 30%;
-}
-
-#table-product td:nth-child(1){
-    width: 15%;
-}
-#table-product td:nth-child(4),#table-product td:nth-child(5){
-    width: 18.5%;
-
-}
-#table-product td:nth-child(3){
-    width: 25%;
-
-  }
-  #table-product td:nth-child(2){
-    width:0%;
-  }
-  #table-product td:nth-child(6){
-width: 23%;
-  }
-
-  @media(width <= 768px){
-    #table-product td:nth-child(4),#table-product td:nth-child(5){
-        width: 18.5%;
-        text-align: center;
-    }
-    #table-product{
-        width: 210%;
-    }
-  }
-  @media(768px < width <= 1000px){
-    #table-product{
-        width: 150%;
-    }
-  }

@@ -14,6 +14,18 @@
     <link rel="icon" type="image/png" href="assets/img/LOGO.webp">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <style>
+        
+        /* CSS cho hình ảnh sản phẩm */
+        .product-image {
+            max-width: 200px; /* Giới hạn chiều rộng tối đa của hình ảnh */
+            max-height: 200px; /* Giới hạn chiều cao tối đa của hình ảnh */
+            width: auto; /* Cho phép chiều rộng tự động điều chỉnh theo chiều cao để giữ tỷ lệ hình ảnh */
+            height: auto; /* Cho phép chiều cao tự động điều chỉnh theo chiều rộng để giữ tỷ lệ hình ảnh */
+            display: block; /* Hiển thị hình ảnh dưới dạng block để căn chỉnh nội dung xung quanh */
+            margin: 0 auto; /* Canh giữa hình ảnh trong khung chứa */
+        }
+    </style>
 </head>
 <body style="background-color: #f3f8ff;">
   <input type="checkbox" id="menu-toggle">
@@ -125,39 +137,64 @@
     </div>
 </div>
           
-          <div class="records table-responsive" >
+          <div class="table-responsive" >
 
-            <div class="record-header">
+            <div class=".record-header">
             
             </div>
 
             <div>
-            <table width="100%" id="table-product">
+            <table  id="table-product">
             <thead>
-            <tr>
-                <th> Mã Sản Phẩm</th>
-                <th> Tên sản phẩm</th>
-                <th> Hình Ảnh Sản Phẩm</th>               
-                <th> Giá</th>
-                <th> Danh mục</th>
-                <th> Mô tả</th> 
-                <th> Sửa </th> 
-                <th> Xoá</th> 
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th> Mã Sản Phẩm</th>
-                <th> Tên sản phẩm</th>
-                <th> Hình Ảnh Sản Phẩm</th>               
-                <th> Giá</th>
-                <th> Danh mục</th>
-                <th> Mô tả</th> 
-                <th> Sửa </th> 
-                <th> Xoá</th> 
-            </tr>
+            <?php   
+            require_once "../../require/connect.php";
+            $sql = "SELECT p.pid, p.img, p.productName, p.price, p.quantity, p.detail, c.categoryName
+                    FROM tbl_products AS p
+                    INNER JOIN tbl_category AS c ON p.cid = c.cateid;";
+            $result = mysqli_query($conn, $sql);
+            if(mysqli_num_rows($result) > 0) {
 
-            
+                echo "<table id='table-product' style='width: 100%;'>";
+                echo "<thead>";
+                echo "<tr>";
+                echo "<th style='text-align: center; width: 10%;'>Mã Sản Phẩm</th>";
+                echo "<th style='text-align: center; width: 10%;'>Hình Ảnh Sản Phẩm</th>";
+                echo "<th style='text-align: center; width: 20%;'>Tên Sản Phẩm</th>";
+                echo "<th style='text-align: center; width: 10%;'>Giá</th>";
+                echo "<th style='text-align: center; width: 10%;'>Danh Mục</th>";
+                echo "<th style='text-align: center; width: 20%;'>Mô tả</th>";
+                echo "<th style='text-align: center; width: 5;'>Số lượng</th>";
+                echo "<th style='text-align: center; width: 8%;'>Hành động</th>";
+                echo "</tr>";
+                echo "</thead>";
+                echo "<tbody>";
+
+                // Lặp qua các hàng dữ liệu
+                while($row = mysqli_fetch_array($result)) {
+                    echo "<tr>";
+                    echo "<td style='text-align: center'>" . $row['pid'] . "</td>";
+                    echo "<td style='text-align: center'><img class='product-image' src='/WebProject/admin/productAdmin/uploads/" . $row['img'] . "' alt='Hình ảnh sản phẩm'></td>";
+                    echo "<td style='text-align: center'>" . $row['productName'] . "</td>";
+                    echo "<td style='text-align: center'>" . $row['price'] . "</td>";
+                    echo "<td style='text-align: center'>" . $row['categoryName'] . "</td>";
+                    echo "<td style='text-align: center'>" . $row['detail'] . "</td>";
+                    echo "<td style='text-align: center'>" . $row['quantity'] . "</td>";
+                    echo '<td style="text-align: center;">
+                            <a href="./updateProduct.php?pid=' . $row['pid'] . '"><button class="btn btn-primary">Sửa</button></a>
+                            <a onclick="return confirm(\'Bạn có chắc chắn muốn xóa ?\')" href="./deleteProduct.php?pid=' . $row['pid'] . '">
+                                <button class="btn btn-danger">Xóa</button>
+                            </a>
+                        </td>';
+                    echo "</tr>";
+                }
+                echo "</tbody>";
+                echo "</table>"; 
+                echo "</div>"; // Kết thúc phần tử có khả năng cuộn
+            } else {
+                echo "<p>Không có dữ liệu</p>";
+            }
+            ?>
+
             </tbody>
             </table>
             </div>
@@ -166,5 +203,3 @@
 </main>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
-

@@ -2,17 +2,18 @@
 require "../../require/connect.php"; // Kết nối đến cơ sở dữ liệu
 require "../function.php"; // Import các hàm cần thiết
 
-$p_name = $price = $category = $description = $image = ""; // Khởi tạo các biến
+$quantity = $cid = $p_name = $price = $description = $image = ""; // Khởi tạo các biến
 
 // Kiểm tra xem biểu mẫu đã được gửi đi chưa
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
+    if (isset($_POST["btn_sbm"]) && $_POST["btn_sbm"]) {
     // Lấy dữ liệu từ biểu mẫu
     $p_name = $_POST["p_name"];
     $price = $_POST["price"];
-    $category = $_POST["category"];
     $description = $_POST["description"];
     $image = $_FILES["image"]["name"];
+    $cid = $_POST["category"];
+    $quantity = $_POST["quantity"];
     
     // Đường dẫn lưu trữ ảnh
     $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/WebProject/admin/productAdmin/uploads/";
@@ -32,21 +33,22 @@ if (!file_exists($target_dir)) {
     } else {
         echo "Có lỗi xảy ra khi tải lên ảnh.";
     }
-    
+
+
     // Insert dữ liệu vào cơ sở dữ liệu
-    $sql = "INSERT INTO tbl_products (productName, price, category, detail, img) VALUES (?, ?, ?, ?, ?)";
-    
+    $sql = "INSERT INTO tbl_products (cid, img, productName, price, detail, quantity) VALUES (?, ?, ?, ?, ?, ?)";
+
     if ($stmt = mysqli_prepare($conn, $sql)) {
-        mysqli_stmt_bind_param($stmt, "sssss",  $param_p_name, $param_price, $param_category, $param_description, $param_image);
-        
+        mysqli_stmt_bind_param($stmt, "issssi", $param_cid, $param_image, $param_p_name, $param_price, $param_description, $param_quantity);
+
         // Thiết lập các tham số và thực thi câu lệnh
-     
+        $param_quantity = $quantity;
         $param_p_name = $p_name;
         $param_price = $price;
-        $param_category = $category;
+        $param_cid = $cid;
         $param_description = $description;
         $param_image = $image;
-        
+
         if (mysqli_stmt_execute($stmt)) {
             echo "Sản phẩm đã được thêm vào cơ sở dữ liệu thành công.";
             redirect("./admin-product.php"); // Chuyển hướng đến trang quản lý sản phẩm sau khi thêm thành công
@@ -57,11 +59,13 @@ if (!file_exists($target_dir)) {
     } else {
         echo "Đã xảy ra lỗi khi chuẩn bị câu lệnh SQL.";
     }
-    
-    // Đóng câu lệnh và kết nối
-    mysqli_stmt_close($stmt);
-    mysqli_close($conn);
+
+// Đóng câu lệnh và kết nối
+mysqli_stmt_close($stmt);
+mysqli_close($conn);
+
 }
+}    
 ?>
 
 
@@ -133,6 +137,24 @@ if (!file_exists($target_dir)) {
                             </div>
 
                             <div class="form-group">
+                                <label>Mô tả</label>
+                                <input type="text" name="description" id="description" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Số lượng</label>
+                                <input type="text" name="quantity" id="quantity" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Hình ảnh</label>
+                                <div id="preview-container">
+                                    <img id="preview" src="#" alt="Hình ảnh" style="display: none;">
+                                </div>
+                                <input type="file" id="image" class="form-control" name="image">
+                            </div>
+
+                            <div class="form-group">
                                 <label for="category">Danh mục</label>
                                 <select class="form-select" id="category" name="category">
                                     <option value="">Chọn danh mục</option>
@@ -144,7 +166,7 @@ if (!file_exists($target_dir)) {
                                         // Kiểm tra và hiển thị danh mục trong dropdown menu
                                         if (mysqli_num_rows($result) > 0) {
                                             while ($row = mysqli_fetch_assoc($result)) {
-                                                echo '<option value="' . $row["cid"] . '">' . $row["categoryName"] . '</option>';
+                                                echo '<option value="' . $row["cateid"] . '">' . $row["categoryName"] . '</option>';
                                             }
                                         } else {
                                             echo '<option value="">Không có danh mục nào</option>';
@@ -156,19 +178,8 @@ if (!file_exists($target_dir)) {
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label>Mô tả</label>
-                                <input type="text" name="description" id="description" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Hình ảnh</label>
-                                <div id="preview-container">
-                                    <img id="preview" src="#" alt="Hình ảnh" style="display: none;">
-                                </div>
-                                <input type="file" id="image" class="form-control" name="image">
-                            </div>
-
+                            
+                            
                             <input type="submit" name="btn_sbm" class="btn btn-primary" value="Thêm">
                             <a href="admin-user.php" class="btn btn-default">Huỷ</a>
                         </form>
