@@ -42,7 +42,7 @@ if(isset($_POST['dangnhap'])){
                 <h1> Vui lòng đăng nhập </h1>
 
             </div>
-            <form id="login" action="" method="POST">
+            <form id="login" action="signin.php" method="post">
                 <div class="form-item">
                     <span class="form-item-icon material-symbols-rounded">person</span>
                     <input type="text" placeholder="Tên đăng nhập" id="username" name="username"> <!--Thêm thuộc tính name-->
