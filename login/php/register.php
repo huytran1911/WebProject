@@ -63,6 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (mysqli_query($conn, $sql)) {
             echo "Lưu dữ liệu thành công";
+            header('Location:./signin.php');
         } else {
             echo "Lỗi: " . $sql . "<br>" . mysqli_error($conn);
         }
