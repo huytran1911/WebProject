@@ -14,9 +14,26 @@
 
 </head>
 <?php 
-include('page/header.php');
+include('page/header-in.php');
+include('page/header-out.php');
 include('page/main.php');
 include('page/footer.php');
+
+    require 'connect.php';
+    session_start();
+
+
+        $isLogined = false;
+        if (isset($_SESSION['dangnhap'])) {
+            // Người dùng đã đăng nhập
+            require_once 'page/header-in.php';
+            $isLogined = true;
+        } else {
+            // Người dùng chưa đăng nhập
+            require_once 'page/header-out.php';
+        }
+   
+
 
 
 ?>
