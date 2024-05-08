@@ -1,3 +1,48 @@
+<?php
+    // Step 1: Fetch products from the database
+    require_once "../../require/connect.php";
+
+    // Số sản phẩm trên mỗi trang
+    $records_per_page = 8;
+
+    // Xác định trang hiện tại
+    if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+        $page = $_GET['page'];
+    } else {
+        $page = 1;
+    }
+
+    // Tính offset cho truy vấn
+    $offset = ($page - 1) * $records_per_page;
+
+    // Truy vấn để lấy tổng số bản ghi
+    $sql_count = "SELECT COUNT(*) AS total FROM tbl_products";
+    $result_count = mysqli_query($conn, $sql_count);
+    $row_count = mysqli_fetch_assoc($result_count);
+    $total_records = $row_count['total'];
+
+    // Tính tổng số trang
+    $total_pages = ceil($total_records / $records_per_page);
+
+    // Truy vấn lấy dữ liệu với phân trang
+    $sql = "SELECT p.pid, p.img, p.productName, p.price, p.quantity, p.detail, c.categoryName
+            FROM tbl_products AS p
+            INNER JOIN tbl_category AS c ON p.cid = c.cateid
+            LIMIT $offset, $records_per_page;";
+    $result = mysqli_query($conn, $sql);
+
+    // Step 2: Check if there are any products
+    if(mysqli_num_rows($result) > 0) {
+        // Step 3: Store fetched products in a variable
+        $products = [];
+        while($row = mysqli_fetch_array($result)) {
+            $products[] = $row;
+        }
+    } else {
+        echo "<p>Không có dữ liệu</p>";
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +56,49 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link rel="icon" type="image/x-png" href="../../images/logo image/Logo image.png">
     <title>SnakeBoardgame</title>
+    <style>
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+            justify-content: center;
+        }
 
+        .pagination a, .pagination span {
+            display: inline-block;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #007bff;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+
+        .pagination a.current, .pagination span.current {
+            background-color: #007bff;
+            color: white;
+            border: 1px solid #007bff;
+        }
+
+        .pagination a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .pagination a:disabled {
+            color: #ccc;
+            pointer-events: none;
+        }
+
+        /* Thêm CSS cho hiển thị/ẩn menu */
+        .none {
+            display: none;
+        }
+
+        /* CSS cho hiệu ứng hiển thị danh sách */
+        .show {
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
@@ -40,7 +127,8 @@
             <div class="box-menu">
                 <div class="main-text">
                     Danh mục sản phẩm
-                    <a href="#" class="trigger mobile-hide">
+                    <!-- Thêm ID cho nút menu -->
+                    <a href="#" id="menu-toggle" class="trigger mobile-hide">
                         <i class='bx bx-menu'></i>
                     </a>
                 </div>
@@ -54,67 +142,86 @@
         </div>
     </div>
 
+    <!-- Thêm lớp CSS cho danh sách danh mục -->
+    
 
     <div class="menu-list">
         <div class="menu-container">
             <div class="cover">
-                <ul class="menu-link none">
-                    <li>
-                        <a href="../../danhmucsanpham/chienluoc.html">
-                        Chiến lược 
-                    </a>
-                        <a href="../../danhmucsanpham/chienluoc.html"><span>></span></a>
-                    </li>
-                    <li>
-                        <a href="#">
-                        Các loại cờ
-                    </a>
-                        <a href="#"><span>></span></a>
-                    </li>
-                    <li>
-                        <a href="../../danhmucsanpham/giadinh.html">
-                        Gia đình
-                    </a>
-                        <a href="../../danhmucsanpham/giadinh.html"><span>></span></a>
-                    </li>
-                    <li>
-                        <a href="#">
-                        Vận may
-                    </a>
-                        <a href="#"><span>></span></a>
-                    </li>
-                    <li>
-                        <a href="#">
-                        Nhập vai
-                    </a>
-                        <a href="#"><span>></span></a>
-                    </li>
-                    <li>
-                        <a href="#">
-                        Nhóm bạn
-                    </a>
-                        <a href="#"><span>></span></a>
-                    </li>
-                </ul>
+            <ul class="menu-link none" id="menu-list">
+        <?php
+        // Truy vấn để lấy danh sách danh mục từ cơ sở dữ liệu
+        $sql_categories = "SELECT * FROM tbl_category";
+        $result_categories = mysqli_query($conn, $sql_categories);
+
+        // Kiểm tra xem có danh mục nào hay không
+        if (mysqli_num_rows($result_categories) > 0) {
+            // Hiển thị danh sách các danh mục
+            while ($row_category = mysqli_fetch_assoc($result_categories)) {
+                echo "<li><a href='./loaisp.php?cateid=" . $row_category['cateid'] . "'>" . $row_category['categoryName'] . "</a></li>";
+
+            }
+        } else {
+            echo "<li><a href='#'>Không có danh mục</a></li>";
+        }
+        ?>
+    </ul>
             </div>
         </div>
-    </div>
     </div>
 
     <div class="product-container">
-    <div class="row">
-        <?php foreach ($products as $product): ?>
-        <div class="col-md-3 col-sm-6">
-            <div class="product-item">
-                <img src="<?php echo $product['image']; ?>" alt="<?php echo $product['productName']; ?>">
-                <h3><?php echo $product['productName']; ?></h3>
-                <span><?php echo $product['price']; ?></span>
-                <!-- Thêm các phần tử HTML khác để hiển thị thông tin sản phẩm -->
+        <div class="row">
+            <?php foreach ($products as $product): ?>
+            <div class="col-md-3 col-sm-6">
+                <li class="item-a">
+                    <div class="product-box">
+                        <a href="#">
+                            <img alt="" src="../../admin/productAdmin/uploads/<?php echo $product['img']; ?>">
+                        </a>
+                        <div class="product-info">
+                            <div class="product-name">
+                                <a href="#"><?php echo $product['productName']; ?></a>
+                            </div>
+                            <div class="de-font">
+                                Bấm vào hình ảnh để xem thông tin chi tiết.
+                            </div>
+                            <div class="price">
+                                <span><?php echo number_format($product['price'], 0, ',', '.'); ?>đ</span>
+                                <div class="detail-action">
+                                    <button class="d-flex btn btn-outline-danger add-cart-btn fw-bold " type="submit">
+                                        <i class="fas fa-cart-shopping fs-1 me-0"></i>
+                                        THÊM VÀO GIỎ
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
             </div>
+            <?php endforeach; ?>
         </div>
-        <?php endforeach; ?>
     </div>
-</div>
+
+    <!-- Phân trang -->
+    <div class="pagination">
+        <?php
+        if ($page > 1) {
+            echo "<a href='./trangspchinh.php?page=" . ($page - 1) . "'>&laquo; Trang trước</a>";
+        }
+        for ($i = 1; $i <= $total_pages; $i++) {
+            if ($i == $page) {
+                echo "<span class='current'>$i</span>";
+            } else {
+                echo "<a href='./trangspchinh.php?page=$i'>$i</a>";
+            }
+        }
+        if ($page < $total_pages) {
+            echo "<a href='./trangspchinh.php?page=" . ($page + 1) . "'>Trang tiếp &raquo;</a>";
+        }
+        ?>
+    </div>
 
     <footer>
         <div class="footer-container ">
@@ -154,32 +261,29 @@
                     <div class="single-box ">
                         <h2>Snake Boardgame</h2>
                     </div>
-                    <img class="footer-img " src="/WebProject/images/logo image/SnakeBoardgame.png " alt=" ">
+                    <img class="footer-img " src="../../images/logo image/SnakeBoardgame.png " alt=" ">
                 </div>
             </div>
         </div>
     </footer>
 
+    <!-- Đoạn JavaScript -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var menuToggle = document.getElementById('menu-toggle'); // Lấy nút menu
+        var menuList = document.getElementById('menu-list'); // Lấy danh sách danh mục
+        var menuLinks = document.querySelectorAll('.menu-link a'); // Lấy tất cả các liên kết trong menu
 
+        // Thêm sự kiện click cho nút menu
+        menuToggle.addEventListener('click', function(e) {
+            e.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
+            menuList.classList.toggle('show'); // Thêm hoặc loại bỏ lớp 'show' để ẩn hoặc hiển thị danh sách
+        });
+            });
 
-
-
-
+</script>
 
 
 </body>
 
 </html>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js " integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4 " crossorigin="anonymous "></script>
-<script src="../../assets/js/trangspchinh.js "></script>
-<script>
-    const addCartBtns = document.querySelectorAll('.add-cart-btn');
-
-    addCartBtns.forEach(element => {
-        element.addEventListener('click', function cartAdded() {
-            window.location.href = "../../login/html/dangnhap.html"
-            alert('Bạn chưa đăng nhập!')
-        })
-    });
-</script>

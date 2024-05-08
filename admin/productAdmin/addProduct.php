@@ -3,11 +3,16 @@ require "../../require/connect.php"; // Kết nối đến cơ sở dữ liệu
 require "../function.php"; // Import các hàm cần thiết
 
 $quantity = $cid = $p_name = $price = $description = $image = ""; // Khởi tạo các biến
+function formatPrice($price) {
+    return number_format($price, 0, ',', '.') . "đ";
+}
+
 
 // Kiểm tra xem biểu mẫu đã được gửi đi chưa
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["btn_sbm"]) && $_POST["btn_sbm"]) {
-    // Lấy dữ liệu từ biểu mẫu
+    if (empty($_POST["p_name"]) || empty($_POST["price"]) || empty($_POST["description"]) || empty($_POST["quantity"]) || empty($_POST["category"]) || empty($_FILES["image"]["name"])) {
+        echo "<p style='color: red;'>Vui lòng điền đầy đủ thông tin cho tất cả các trường.</p>";
+    } else {
     $p_name = $_POST["p_name"];
     $price = $_POST["price"];
     $description = $_POST["description"];
@@ -16,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $quantity = $_POST["quantity"];
     
     // Đường dẫn lưu trữ ảnh
-    $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/WebProject/admin/productAdmin/uploads/";
+    $target_dir = $_SERVER['DOCUMENT_ROOT'] . "../productAdmin/uploads/";
 
 // Create the uploads directory if it doesn't exist
 if (!file_exists($target_dir)) {
