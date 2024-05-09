@@ -13,15 +13,15 @@
     <title>SnakeBoardgame</title>
 
 </head>
+
 <?php 
-include('page/header-in.php');
-include('page/header-out.php');
-include('page/main.php');
-include('page/footer.php');
+// include('page/header-in.php');
+// // include('page/header-out.php');   
 
-    require 'connect.php';
+
+    require 'require/connect.php';
     session_start();
-
+   
 
         $isLogined = false;
         if (isset($_SESSION['dangnhap'])) {
@@ -33,14 +33,15 @@ include('page/footer.php');
             require_once 'page/header-out.php';
         }
    
-
+include('page/main.php');
+include('page/footer.php');
 
 
 ?>
 
 
 
-</body>
+
 
 </html>
 

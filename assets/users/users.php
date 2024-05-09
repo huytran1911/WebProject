@@ -1,3 +1,24 @@
+
+
+
+
+
+
+<?php
+// Bắt đầu phiên session nếu chưa được bắt đầu
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+// Kiểm tra xem biến $_SESSION['taikhoan'] có tồn tại hay không
+if (isset($_SESSION['dangnhap'])) {
+    // echo $_SESSION['dangnhap'];
+} else {
+    // Xử lý trường hợp nếu $_SESSION['taikhoan'] không tồn tại
+    // echo "Không có tài khoản được đăng nhập";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,8 +50,8 @@
                 </ul>
                 <div class="nav-icon">
                     <a href="../cart/cart.html"><i class='bx bx-cart'></i></a>
-                    <span style="padding-top: 10px; padding-right: 5px;">minh thư</span>
-                    <a href="../users/users.html"><i class='bx bx-user'></i></a>
+                    <!-- <span style="padding-top: 10px; padding-right: 5px;"></span> -->
+                    <a href="#"><i class='bx bx-user'> <?php echo $_SESSION['dangnhap'];?>   </i></a>
                 </div>
             </div>
         </div>
@@ -135,7 +156,7 @@
 
                     <div class="card mb-4 mb-lg-0">
                         <div class="card-body p-0">
-                            <ul>
+                            <!-- <ul>
 
                                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                                     <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
@@ -147,7 +168,7 @@
                                     <p class="mb-0">NV Minh Thư</p>
                                 </li>
 
-                            </ul>
+                            </ul> -->
                         </div>
                     </div>
 
@@ -249,9 +270,10 @@
 
                         </div>
                         <div class="container mt-4 text-center">
-                            <button class="btn btn-success btn btn-danger text-white w-30" type="submit" id="myButton1">Đăng xuất</button>
+                            <a href="../../page/logout.php" >
+                            <button name="dangxuat" class="btn btn-success btn btn-danger text-white w-30" type="submit" >Đăng xuất</button></a>
                         </div>
-                    </div>
+                    </div>  
                 </div>
 
             </div>
@@ -272,7 +294,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js " integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4 " crossorigin="anonymous "></script>
 
-<script>
+<!-- <script>
     var myButton1 = document.getElementById("myButton1");
 
 
@@ -282,4 +304,4 @@
 
 
     });
-</script>
+</script> -->

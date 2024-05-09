@@ -1,3 +1,4 @@
+<body>
 <div class="product-cover">
         <div class="products-slider">
             <div class="product-title">
@@ -309,3 +310,4 @@
             </div>
         </div>
     </div>
+</body>

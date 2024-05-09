@@ -9,13 +9,13 @@ if (!isset($_SESSION)) {
 
 // Kiểm tra xem biến $_SESSION['taikhoan'] có tồn tại hay không
 if (isset($_SESSION['dangnhap'])) {
-    echo $_SESSION['dangnhap'];
+    // echo $_SESSION['dangnhap'];
 } else {
     // Xử lý trường hợp nếu $_SESSION['taikhoan'] không tồn tại
-    echo "Không có tài khoản được đăng nhập";
+    // echo "Không có tài khoản được đăng nhập";
 }
 ?>
-<body>
+
     <div class="header">
         <div class="head-container">
             <div class="top-bar">
@@ -30,8 +30,7 @@ if (isset($_SESSION['dangnhap'])) {
                 </ul>
                 <div class="nav-icon">
                     <a href="login/html/dangnhap.html"><i class='bx bx-cart'></i></a>
-                    <a href="login/php/signin.php"><i class='bx bx-user'> <?php echo $_SESSION['dangnhap'];   ?>  </i></a>
-                                
+                    <a href="assets/users/users.php"><i class='bx bx-user'> <?php echo $_SESSION['dangnhap'];?>  </i></a>
                 </div>
             </div>
         </div>
