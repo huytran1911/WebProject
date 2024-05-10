@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(empty($input_password)){
             $password_err = "Hãy nhập mật khẩu";
         } else {
-            $password = $input_password;
+            $password = password_hash($input_password, PASSWORD_DEFAULT);
         }
     }
 
@@ -139,7 +139,7 @@ mysqli_close($conn);
 
                             <div class="form-group">
                                 <label>Mật khẩu</label>
-                                <input type="text" name="password" id="password" class="form-control">
+                                <input type="password" name="password" id="password" class="form-control">
                                 <span class="text-danger"><?php echo $password_err; ?></span>
                             </div>
 
@@ -151,7 +151,7 @@ mysqli_close($conn);
 
                             <div class="form-group">
                                 <label>Số điện thoại</label>
-                                <input type="text" name="phonenumber" id="phonenumber" class="form-control">
+                                <input type="tel" name="phonenumber" id="phonenumber" class="form-control">
                                 <span class="text-danger"><?php echo $phone_err; ?></span>
                             </div>
 
