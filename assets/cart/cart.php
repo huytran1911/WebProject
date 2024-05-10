@@ -96,6 +96,21 @@ if (isset($_POST['product_id']) && isset($_POST['quantity'])) {
     header('Location: cart.php');
     exit();
 }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Lấy dữ liệu từ form
+    $product_id = $_POST['product_id'];
+    $new_quantity = $_POST['quantity'];
+
+    // Kiểm tra sản phẩm có tồn tại trong giỏ hàng không
+    $product_index = array_search($product_id, array_column($_SESSION['cart'], 'id'));
+
+    if ($product_index !== false) {
+        // Cập nhật số lượng sản phẩm
+        $_SESSION['cart'][$product_index]['quantity'] = $new_quantity;
+    }
+    header('Location: cart.php');
+exit();
+}
 
 function calculateNewPrice($old_price, $new_quantity) {
     $new_price = $old_price * $new_quantity;
@@ -191,25 +206,123 @@ function calculateTotalPrice($cart) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <title>SnakeBoardgame</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+            justify-content: center;
+        }
 
+        .pagination a, .pagination span {
+            display: inline-block;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #007bff;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+
+        .pagination a.current, .pagination span.current {
+            background-color: #007bff;
+            color: white;
+            border: 1px solid #007bff;
+        }
+
+        .pagination a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .pagination a:disabled {
+            color: #ccc;
+            pointer-events: none;
+        }
+
+        /* Thêm CSS cho hiển thị/ẩn menu */
+        .none {
+            display: none;
+        }
+
+        /* CSS cho hiệu ứng hiển thị danh sách */
+        .show {
+            display: block;
+        }
+    </style>
 </head>
 
+
 <body>
-<?php
-// require '../../require/connect.php';
- 
+<body>
+    <div class="header">
+        <div class="head-container">
+            <div class="top-bar">
+                <a href="../../index.html" class="logo">
+                    <img src="../../images/logo image/Logo image.png" alt="boardgame logo">
+                </a>
+                <ul class="nav-bar">
+                    <li><a href="../../index.html">Trang chủ</a></li>
+                    <li><a href="../../trangsp.html/trangspchinh/trangspchinh.html">Cửa Hàng</a></li>
+                    <li><a href="../../Lienhe/Lienhe.html">Liên hệ</a></li>
+
+                </ul>
+                <div class="nav-icon">
+                    <a href="../../assets/cart/cart.php"><i class='bx bx-cart'> </i></a>
+                    <a href="../../assets/users/users.php"><i class='bx bx-user'> <?php echo $_SESSION['dangnhap'];?> </i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="border-top">
+        <div class="border-container">
+            <div class="box-menu">
+                <div class="main-text">
+                    Danh mục sản phẩm
+                    <!-- Thêm ID cho nút menu -->
+                    <a href="#" id="menu-toggle" class="trigger mobile-hide">
+                        <i class='bx bx-menu'></i>
+                    </a>
+                </div>
+            </div>
+            <div class="wrapper">
+                <div class="search-input">
+                    <input type="text" placeholder="Tìm kiếm">
+                    <div class="icon"><a href="../../assets/search/search.html"><i class="fas fa-search"></i></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thêm lớp CSS cho danh sách danh mục -->
+    
+
+    <div class="menu-list">
+        <div class="menu-container">
+            <div class="cover">
+            <ul class="menu-link none" id="menu-list">
+        <?php
+        // Truy vấn để lấy danh sách danh mục từ cơ sở dữ liệu
+        $sql_categories = "SELECT * FROM tbl_category";
+        $result_categories = mysqli_query($conn, $sql_categories);
+
+        // Kiểm tra xem có danh mục nào hay không
+        if (mysqli_num_rows($result_categories) > 0) {
+            // Hiển thị danh sách các danh mục
+            while ($row_category = mysqli_fetch_assoc($result_categories)) {
+                echo "<li><a href='./loaisp.php?cateid=" . $row_category['cateid'] . "'>" . $row_category['categoryName'] . "</a></li>";
+
+            }
+        } else {
+            echo "<li><a href='#'>Không có danh mục</a></li>";
+        }
+        ?>
+    </ul>
+            </div>
+        </div>
+    </div>
    
 
-//         $isLogined = false;
-//         if (isset($_SESSION['dangnhap'])) {
-//             // Người dùng đã đăng nhập
-//             require_once '../../page/header-in.php';
-//             $isLogined = true;
-//         } else {
-//             // Người dùng chưa đăng nhập
-//             require_once '../../page/header-out.php';
-//         }
-//   ?> 
     <div class="container">
         <h2>Giỏ hàng của bạn</h2>
         <?php if (!empty($_SESSION['cart'])): ?>
@@ -226,6 +339,7 @@ function calculateTotalPrice($cart) {
             </thead>
             <tbody>
                 <?php foreach ($_SESSION['cart'] as $product): ?>
+                    <form method="POST">
                 <tr>
                 <td><?php echo $product['id']; ?></td>
                 <td><img src="../../admin/productAdmin/uploads/<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" class="small-image"></td>

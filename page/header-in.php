@@ -41,7 +41,8 @@ if (isset($_SESSION['dangnhap'])) {
             <div class="box-menu">
                 <div class="main-text">
                     Danh mục sản phẩm
-                    <a href="#" class="trigger mobile-hide">
+                    <!-- Thêm ID cho nút menu -->
+                    <a href="#" id="menu-toggle" class="trigger mobile-hide">
                         <i class='bx bx-menu'></i>
                     </a>
                 </div>
@@ -49,57 +50,39 @@ if (isset($_SESSION['dangnhap'])) {
             <div class="wrapper">
                 <div class="search-input">
                     <input type="text" placeholder="Tìm kiếm">
-                    <div class="icon"><a href="assets/search/search.html"><i class="fas fa-search"></i></a></div>
+                    <div class="icon"><a href="../../assets/search/search.html"><i class="fas fa-search"></i></a></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Thêm lớp CSS cho danh sách danh mục -->
+    
+
     <div class="menu-list">
         <div class="menu-container">
             <div class="cover">
-                <ul class="menu-link none">
-                    <li>
-                        <a href="danhmucsanpham/chienluoc.html">
-                        Chiến lược 
-                    </a>
-                        <a href="danhmucsanpham/chienluoc.html"><span>></span></a>
-                    </li>
-                    <li>
-                        <a href="#">
-                        Các loại cờ
-                    </a>
-                        <a href=""><span>></span></a>
-                    </li>
-                    <li>
-                        <a href="danhmucsanpham/giadinh.html">
-                        Gia đình
-                    </a>
-                        <a href=""><span>></span></a>
-                    </li>
-                    <li>
-                        <a href="#">
-                        Vận may
-                    </a>
-                        <a href="#"><span>></span></a>
-                    </li>
-                    <li>
-                        <a href="#">
-                        Nhập vai
-                    </a>
-                        <a href="#"><span>></span></a>
-                    </li>
-                    <li>
-                        <a href="#">
-                        Nhóm bạn
-                    </a>
-                        <a href="#"><span>></span></a>
-                    </li>
-                </ul>
-                <img class="images" src="images/logo image/SnakeBoardgame.png" alt="">
+            <ul class="menu-link none" id="menu-list">
+        <?php
+        // Truy vấn để lấy danh sách danh mục từ cơ sở dữ liệu
+        $sql_categories = "SELECT * FROM tbl_category";
+        $result_categories = mysqli_query($conn, $sql_categories);
+
+        // Kiểm tra xem có danh mục nào hay không
+        if (mysqli_num_rows($result_categories) > 0) {
+            // Hiển thị danh sách các danh mục
+            while ($row_category = mysqli_fetch_assoc($result_categories)) {
+                echo "<li><a href='./loaisp.php?cateid=" . $row_category['cateid'] . "'>" . $row_category['categoryName'] . "</a></li>";
+
+            }
+        } else {
+            echo "<li><a href='#'>Không có danh mục</a></li>";
+        }
+        ?>
+    </ul>
+    <img class="images" src="images/logo image/SnakeBoardgame.png" alt="">
             </div>
         </div>
-    </div>
     </div>
 
     <div class="feature">

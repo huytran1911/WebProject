@@ -32,7 +32,9 @@
             // Người dùng chưa đăng nhập
             require_once 'page/header-out.php';
         }
-   
+
+        
+
 include('page/main.php');
 include('page/footer.php');
 

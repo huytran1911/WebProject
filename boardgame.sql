@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 10, 2024 lúc 05:28 AM
+-- Thời gian đã tạo: Th5 10, 2024 lúc 04:43 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -43,6 +43,39 @@ INSERT INTO `tbl_category` (`cateid`, `categoryName`) VALUES
 (22, 'Nhóm bạn'),
 (23, 'Gia đình'),
 (24, 'May mắn');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `tbl_orderdetail`
+--
+
+CREATE TABLE `tbl_orderdetail` (
+  `OrderID` int(20) NOT NULL,
+  `pid` int(20) NOT NULL,
+  `price` int(20) NOT NULL,
+  `quantity` int(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `tbl_orders`
+--
+
+CREATE TABLE `tbl_orders` (
+  `ordersID` int(100) NOT NULL,
+  `id` int(20) NOT NULL,
+  `receiver` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `street` varchar(50) NOT NULL,
+  `ward` varchar(50) NOT NULL,
+  `district` varchar(50) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `status` int(11) NOT NULL,
+  `order_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -140,6 +173,20 @@ ALTER TABLE `tbl_category`
   ADD PRIMARY KEY (`cateid`);
 
 --
+-- Chỉ mục cho bảng `tbl_orderdetail`
+--
+ALTER TABLE `tbl_orderdetail`
+  ADD PRIMARY KEY (`OrderID`),
+  ADD KEY `fk_orderdetail_product_2` (`pid`);
+
+--
+-- Chỉ mục cho bảng `tbl_orders`
+--
+ALTER TABLE `tbl_orders`
+  ADD PRIMARY KEY (`ordersID`),
+  ADD KEY `fk_oders_users` (`id`);
+
+--
 -- Chỉ mục cho bảng `tbl_products`
 --
 ALTER TABLE `tbl_products`
@@ -163,6 +210,18 @@ ALTER TABLE `tbl_category`
   MODIFY `cateid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
+-- AUTO_INCREMENT cho bảng `tbl_orderdetail`
+--
+ALTER TABLE `tbl_orderdetail`
+  MODIFY `OrderID` int(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `tbl_orders`
+--
+ALTER TABLE `tbl_orders`
+  MODIFY `ordersID` int(100) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT cho bảng `tbl_products`
 --
 ALTER TABLE `tbl_products`
@@ -177,6 +236,19 @@ ALTER TABLE `tbl_users`
 --
 -- Các ràng buộc cho các bảng đã đổ
 --
+
+--
+-- Các ràng buộc cho bảng `tbl_orderdetail`
+--
+ALTER TABLE `tbl_orderdetail`
+  ADD CONSTRAINT `fk_orderdetail_orders_1` FOREIGN KEY (`OrderID`) REFERENCES `tbl_orders` (`ordersID`),
+  ADD CONSTRAINT `fk_orderdetail_product_2` FOREIGN KEY (`pid`) REFERENCES `tbl_products` (`pid`);
+
+--
+-- Các ràng buộc cho bảng `tbl_orders`
+--
+ALTER TABLE `tbl_orders`
+  ADD CONSTRAINT `fk_oders_users` FOREIGN KEY (`id`) REFERENCES `tbl_users` (`id`);
 
 --
 -- Các ràng buộc cho bảng `tbl_products`
