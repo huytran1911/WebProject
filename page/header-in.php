@@ -24,7 +24,7 @@ if (isset($_SESSION['dangnhap'])) {
                 </a>
                 <ul class="nav-bar">
                     <li><a href="index.php">Trang chủ</a></li>
-                    <li><a href="trangsp.html/trangspchinh/trangspchinh.html">Cửa Hàng</a></li>
+                    <li><a href="trangsp/trangspchinh/trangspchinh.php">Cửa Hàng</a></li>
                     <li><a href="Lienhe/Lienhe.html">Liên hệ</a></li>
 
                 </ul>

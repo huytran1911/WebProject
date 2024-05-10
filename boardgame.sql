@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 08, 2024 lúc 05:14 PM
--- Phiên bản máy phục vụ: 10.4.28-MariaDB
--- Phiên bản PHP: 8.2.4
+-- Thời gian đã tạo: Th5 10, 2024 lúc 05:28 AM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -38,7 +38,7 @@ CREATE TABLE `tbl_category` (
 
 INSERT INTO `tbl_category` (`cateid`, `categoryName`) VALUES
 (15, 'Chiến lược'),
-(20, 'cờ'),
+(20, 'Cờ'),
 (21, 'Nhập vai'),
 (22, 'Nhóm bạn'),
 (23, 'Gia đình'),

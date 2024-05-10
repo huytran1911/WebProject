@@ -1,4 +1,70 @@
 <?php
+// Bắt đầu phiên session nếu chưa được bắt đầu
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+// Kiểm tra xem biến $_SESSION['taikhoan'] có tồn tại hay không
+if (isset($_SESSION['dangnhap'])) {
+    // echo $_SESSION['dangnhap'];
+} else {
+    // Xử lý trường hợp nếu $_SESSION['taikhoan'] không tồn tại
+    // echo "Không có tài khoản được đăng nhập";
+}
+// ?>
+
+     <?php
+//     // Kiểm tra trạng thái của session trước khi bắt đầu một session mới
+//     if (session_status() === PHP_SESSION_NONE) {
+//         session_start();
+//     }
+
+//     // Kiểm tra khi người dùng nhấn nút "Thêm vào giỏ"
+//     if (isset($_POST['addtocart'])) {
+//         // Lấy thông tin sản phẩm từ form
+//         $product_id = $_POST['id'];
+//         $product_image = $_POST['image'];
+//         $product_name = $_POST['name'];
+//         $product_price = $_POST['price'];
+
+//         // Kiểm tra xem session giỏ hàng đã được khởi tạo chưa, nếu chưa thì tạo mới
+//         if (!isset($_SESSION['cart'])) {
+//             $_SESSION['cart'] = array();
+//         }
+
+//         // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
+//         $product_index = -1;  
+//         foreach ($_SESSION['cart'] as $index => $product) {
+//             if ($product['id'] == $product_id) {
+//                 $product_index = $index;
+//                 break;
+//             }
+//         }
+
+//         if ($product_index >= 0) {
+//             // Nếu sản phẩm đã tồn tại, tăng số lượng của nó
+//             $_SESSION['cart'][$product_index]['quantity'] += 1;
+//         } else {
+//             // Nếu sản phẩm chưa tồn tại, thêm sản phẩm vào giỏ hàng
+//             $product = array(
+//                 'id' => $product_id,
+//                 'image' => $product_image,
+//                 'name' => $product_name,
+//                 'price' => $product_price,
+//                 'quantity' => 1 // Số lượng ban đầu là 1
+//             );
+//             array_push($_SESSION['cart'], $product);
+//         }
+
+//         // Chuyển hướng người dùng đến trang giỏ hàng
+//         header('Location: ../../assets/cart/cart.php');
+//         exit();
+//     }
+
+//     ?>
+
+
+<?php
     // Step 1: Fetch products from the database
     require_once "../../require/connect.php";
 
@@ -115,8 +181,8 @@
 
                 </ul>
                 <div class="nav-icon">
-                    <a href="../../login/html/dangnhap.html"><i class='bx bx-cart'></i></a>
-                    <a href="../../login/html/dangnhap.html"><i class='bx bx-user'> </i></a>
+                    <a href="../../assets/cart/cart.php"><i class='bx bx-cart'> </i></a>
+                    <a href="../../assets/users/users.php"><i class='bx bx-user'> <?php echo $_SESSION['dangnhap'];?> </i></a>
                 </div>
             </div>
         </div>
@@ -169,7 +235,7 @@
             </div>
         </div>
     </div>
-
+   
     <div class="product-container">
         <div class="row">
             <?php foreach ($products as $product): ?>
@@ -186,16 +252,22 @@
                             <div class="de-font">
                                 Bấm vào hình ảnh để xem thông tin chi tiết.
                             </div>
+                            <form method="post" action="../../assets/cart/cart.php">
                             <div class="price">
                                 <span><?php echo number_format($product['price'], 0, ',', '.'); ?>đ</span>
                                 <div class="detail-action">
-                                    <button class="d-flex btn btn-outline-danger add-cart-btn fw-bold " type="submit">
+                                    <input type="hidden" name="id" value="<?=$product['pid']?>">
+                                    <input type="hidden" name="image" value="<?=$product['img']?>">
+                                    <input type="hidden" name="name" value="<?=$product['productName']?>">
+                                    <input type="hidden" name="price" value="<?=$product['price']?>">
+                                    <button class="d-flex btn btn-outline-danger add-cart-btn fw-bold" type="submit" name="addtocart">
                                         <i class="fas fa-cart-shopping fs-1 me-0"></i>
                                         THÊM VÀO GIỎ
                                     </button>
                                 </div>
                             </div>
-
+                            
+                        </form>
                         </div>
                     </div>
                 </li>
@@ -203,6 +275,7 @@
             <?php endforeach; ?>
         </div>
     </div>
+
 
     <!-- Phân trang -->
     <div class="pagination">

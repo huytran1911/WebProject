@@ -1,3 +1,157 @@
+
+
+<?php
+// Bắt đầu phiên session nếu chưa được bắt đầu
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+// Kiểm tra xem biến $_SESSION['taikhoan'] có tồn tại hay không
+if (isset($_SESSION['dangnhap'])) {
+    // echo $_SESSION['dangnhap'];
+} else {
+    // Xử lý trường hợp nếu $_SESSION['taikhoan'] không tồn tại
+    // echo "Không có tài khoản được đăng nhập";
+}
+?>
+
+
+<?php
+// Kiểm tra trạng thái của session trước khi bắt đầu một session mới
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Kiểm tra khi người dùng nhấn nút "Thêm vào giỏ"
+if (isset($_POST['addtocart'])) {
+    // Lấy thông tin sản phẩm từ form
+    $product_id = $_POST['id'];
+    $product_image = $_POST['image'];
+    $product_name = $_POST['name'];
+    $product_price = $_POST['price'];
+
+    // Kiểm tra xem session giỏ hàng đã được khởi tạo chưa, nếu chưa thì tạo mới
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = array();
+    }
+
+    // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
+    $product_index = -1;  
+    foreach ($_SESSION['cart'] as $index => $product) {
+        if ($product['id'] == $product_id) {
+            $product_index = $index;
+            break;
+        }
+    }
+
+    if ($product_index >= 0) {
+        // Nếu sản phẩm đã tồn tại, tăng số lượng của nó
+        $_SESSION['cart'][$product_index]['quantity'] += 1;
+    } else {
+        // Nếu sản phẩm chưa tồn tại, thêm sản phẩm vào giỏ hàng
+        $product = array(
+            'id' => $product_id,
+            'image' => $product_image,
+            'name' => $product_name,
+            'price' => $product_price,
+            'quantity' => 1 // Số lượng ban đầu là 1
+        );
+        array_push($_SESSION['cart'], $product);
+    }
+
+    // // Chuyển hướng người dùng đến trang giỏ hàng
+    // header('Location: ../../assets/cart/cart.php');
+    // exit();
+}
+
+// Kiểm tra khi người dùng nhấn nút "Xóa sản phẩm khỏi giỏ hàng"
+if (isset($_GET['remove'])) {
+    $product_id = $_GET['remove'];
+    // Tìm vị trí của sản phẩm trong giỏ hàng và xóa nó
+    foreach ($_SESSION['cart'] as $index => $product) {
+        if ($product['id'] == $product_id) {
+            unset($_SESSION['cart'][$index]);
+            break;
+        }
+    }
+    // Chuyển hướng người dùng đến trang giỏ hàng
+    header('Location: cart.php');
+    exit();
+}
+// Kiểm tra khi người dùng cập nhật số lượng sản phẩm
+if (isset($_POST['product_id']) && isset($_POST['quantity'])) {
+    $product_id = $_POST['product_id'];
+    $new_quantity = $_POST['quantity'];
+    // Tìm vị trí của sản phẩm trong giỏ hàng và cập nhật số lượng mới
+    foreach ($_SESSION['cart'] as $index => $product) {
+        if ($product['id'] == $product_id) {
+            $_SESSION['cart'][$index]['quantity'] = $new_quantity;
+            // Tính toán giá tiền mới
+            $_SESSION['cart'][$index]['total_price'] = calculateNewPrice($product['price'], $new_quantity);
+            break;
+        }
+    }
+    // Chuyển hướng người dùng đến trang giỏ hàng
+    header('Location: cart.php');
+    exit();
+}
+
+function calculateNewPrice($old_price, $new_quantity) {
+    return $old_price * $new_quantity;
+}
+?>
+
+
+
+<style>
+        /* Thiết lập CSS cho giao diện */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .remove-btn {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .update-btn {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,6 +160,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.6/css/lightslider.min.css">
     <link rel="stylesheet" href="../cart/cart.css">
+    <!-- <link rel="stylesheet" href="../css/main.css">   -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
@@ -16,386 +171,71 @@
 </head>
 
 <body>
-    <div class="header">
-        <div class="head-container">
-            <div class="top-bar">
-                <a href="../../logined.html" class="logo">
-                    <img src="../../images/logo image/Logo image.png" alt="boardgame logo">
-                </a>
-                <ul class="nav-bar">
-                    <li><a href="../../logined.html">Trang chủ</a></li>
-                    <li><a href="../../trangsp.html/trangspchinh/usertrangsanphamchinh.html">Cửa Hàng</a></li>
-                    <li><a href="../../Lienhe/UserLienhe.html">Liên hệ</a></li>
-                </ul>
-                <div class="nav-icon">
-                    <a href="../cart/cart.html"><i class='bx bx-cart'></i></a>
-                    <span style="padding-top: 10px; padding-right: 5px; ">minh thư</span>
-                    <a href="../users/users.html"><i class='bx bx-user'></i></a>
-                </div>
-            </div>
-        </div>
+<?php
+// require '../../require/connect.php';
+ 
+   
+
+//         $isLogined = false;
+//         if (isset($_SESSION['dangnhap'])) {
+//             // Người dùng đã đăng nhập
+//             require_once '../../page/header-in.php';
+//             $isLogined = true;
+//         } else {
+//             // Người dùng chưa đăng nhập
+//             require_once '../../page/header-out.php';
+//         }
+  ?> 
+    <div class="container">
+        <h2>Giỏ hàng của bạn</h2>
+        <?php if (!empty($_SESSION['cart'])): ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Sản phẩm</th>
+                    <th>Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Hành động</th>
+                    <th>Số lượng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($_SESSION['cart'] as $product): ?>
+                <tr>
+                    <td><?php echo $product['id']; ?></td>
+                    <td><img src="../../imgages/product images/<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>"></td>
+                    <td><?php echo $product['name']; ?></td>
+                    <td>
+                        <form method="POST">
+                            <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+                            <!-- Hiển thị giá tiền mới -->
+                            <?php echo calculateNewPrice($product['price'], $product['quantity']); ?>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="GET">
+                            <input type="hidden" name="remove" value="<?php echo $product['id']; ?>">
+                            <button type="submit" class="remove-btn">Xóa</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="POST">
+                            <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+                            <input type="number" name="quantity" value="<?php echo $product['quantity']; ?>" min="1" max="100">
+                            <button type="submit" class="update-btn">Cập nhật</button>
+                        </form>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php else: ?>
+        <p>Giỏ hàng của bạn trống.</p>
+        <?php endif; ?>
+        <a href="../../trangsp/trangspchinh/trangspchinh.php">Tiếp tục mua sắm</a>
     </div>
-
-    <div class="border-top">
-        <div class="border-container">
-            <div class="box-menu">
-                <div class="main-text">
-                    Danh mục sản phẩm
-                    <a href="#" class="trigger mobile-hide">
-                        <i class='bx bx-menu'></i>
-                    </a>
-                </div>
-            </div>
-            <div class="wrapper">
-                <div class="search-input">
-                    <input type="text" placeholder="Tìm kiếm">
-                    <div class="icon"><a href="../search/usersearch.html"><i class="fas fa-search"></i></a></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-    </div>
-    </div>
-    </div>
-    </div>
-    <section class="h-100" style="background-color: #eee;">
-        <div class="cart-container h-100 py-5">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-10">
-                    <div>
-
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h3 class="fw-normal mb-0 text-black">Giỏ hàng</h3>
-
-                    </div>
-
-                    <div class="card rounded-3 mb-4">
-                        <div class="card-body p-4">
-                            <div class="row d-flex justify-content-between align-items-center">
-                                <div class="col-md-2 col-lg-2 col-xl-2">
-                                    <img src="../../images/product images/chien luoc/alma mater 1tr750.webp" class="img-fluid rounded-3" alt="alma mater">
-                                </div>
-                                <div class="col-md-3 col-lg-3 col-xl-3">
-                                    <p class="lead fw-normal mb-2">Alam Mater</p>
-
-                                </div>
-                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                    <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                        <i class="fas fa-minus"></i>
-                      </button>
-
-                                    <input id="form1" min="0" name="quantity" value="1" type="number" class="form-control form-control-sm" />
-
-                                    <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                        <i class="fas fa-plus"></i>
-                      </button>
-                                </div>
-                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                    <h5 class="mb-0">1.313.000đ</h5>
-                                </div>
-                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                   
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card rounded-3 mb-4">
-                        <div class="card-body p-4">
-                            <div class="row d-flex justify-content-between align-items-center">
-                                <div class="col-md-2 col-lg-2 col-xl-2">
-                                    <img src="../../images/product images/chien luoc/fertility 1tr200.jpg" class="img-fluid rounded-3" alt="Fertility">
-                                </div>
-                                <div class="col-md-3 col-lg-3 col-xl-3">
-                                    <p class="lead fw-normal mb-2">Fertility</p>
-
-                                </div>
-                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                    <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                        <i class="fas fa-minus"></i>
-                      </button>
-
-                                    <input id="form1" min="0" name="quantity" value="1" type="number" class="form-control form-control-sm" />
-
-                                    <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                        <i class="fas fa-plus"></i>
-                      </button>
-                                </div>
-                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                    <h5 class="mb-0">1.020.000đ</h5>
-                                </div>
-                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card rounded-3 mb-4">
-                        <div class="card-body p-4">
-                            <div class="row d-flex justify-content-between align-items-center">
-                                <div class="col-md-2 col-lg-2 col-xl-2">
-                                    <img src="../../images/product images/nhap vai/rick and morty 120k.jpg" class="img-fluid rounded-3" alt="Rick and morty">
-                                </div>
-                                <div class="col-md-3 col-lg-3 col-xl-3">
-                                    <p class="lead fw-normal mb-2">Rick and morty</p>
-
-                                </div>
-                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                    <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                        <i class="fas fa-minus"></i>
-                      </button>
-
-                                    <input id="form1" min="0" name="quantity" value="1" type="number" class="form-control form-control-sm" />
-
-                                    <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                        <i class="fas fa-plus"></i>
-                      </button>
-                                </div>
-                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                    <h5 class="mb-0">120.000đ</h5>
-                                </div>
-                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                   
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-
-            <div class="card shadow-2-strong mb-5 mb-lg-0" style="border-radius: 16px;">
-                <div class="card-body p-4">
-
-                    <div class="row">
-
-                        <div class="col-lg-5 col-xl-5">
-
-                        </div>
-                        <div class="col-lg-8 col-xl-3">
-                            <div class="d-flex justify-content-between" style="font-weight: 500;">
-                                <p class="mb-2">Tổng phụ</p>
-                                <p class="mb-2">2.453.000đ</p>
-                            </div>
-
-                            <div class="d-flex justify-content-between" style="font-weight: 500;">
-                                <p class="mb-0">Thuế</p>
-                                <p class="mb-0">25000đ</p>
-                            </div>
-
-                            <hr class="my-4">
-
-                            <div class="d-flex justify-content-between mb-4" style="font-weight: 500;">
-                                <p class="mb-2">Tạm tính </p>
-                                <p class="mb-2">2.378.000</p>
-                            </div>
-
-                            <button class="btn btn-info text-white fw-bold fw-bold w-100" type="button" data-bs-toggle="modal" data-bs-target="#myModal">
-                               Thanh toán
-                              </button>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- The Modal -->
-            <div class="modal fade" id="myModal">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-
-                        <!-- Modal Header -->
-                        <div class="modal-header fs-4">
-                            <div class="modal-title">Thanh Toán</div>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <!-- Modal body -->
-                        <div class="d-flex modal-body ms-2 me-2">
-                            <div class="w-50 modal-left">
-                                <!-- Thông tin giao hàng -->
-                                <div class="mb-3 d-flex">
-                                    <h5 class="fw-bold me-3">Thông tin giao hàng</h5>
-                                    <div class="deliveryInfoChoice">
-                                        <span class="me-3" onclick="defaultDeliveryInfo(true)">Mặc Định</span>
-                                        <span class="" onclick="defaultDeliveryInfo(false)">Thay Đổi</span>
-                                    </div>
-                                </div>
-                                <div class="deliveryInfo mb-3">
-                                    <div class="input-group mb-2">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="floatingInput" placeholder="Họ và tên" value="Nguyễn Võ Minh Thư" disabled>
-                                            <label for="floatingInput">Họ và tên</label>
-                                        </div>
-                                    </div>
-                                    <div class="input-group mb-2">
-                                        <div class="form-floating me-2 w-50">
-                                            <input type="email" class="form-control" id="floatingInput" placeholder="Email" value="tieuthueolsa@gmail.com" disabled>
-                                            <label for="floatingInput">Email</label>
-                                        </div>
-                                        <div class="form-floating w-25">
-                                            <input type="tel" class="form-control" id="floatingInput" placeholder="Số điện thoại" value="08666008545" disabled>
-                                            <label for="floatingInput">Số điện thoại</label>
-                                        </div>
-                                    </div>
-                                    <div class="input-group mb-2">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="floatingInput" placeholder="Địa chỉ" value="32 sdv q8 thphcm" disabled>
-                                            <label for="floatingInput">Địa chỉ</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Phương thức vận chuyển -->
-                                <h5 class="fw-bold mb-3 mt-3">Phương thức vận chuyển</h5>
-                                <div class="form-check">
-                                    <input type="radio" class="form-check-input" name="radioDelivery" id="radioCheck1">
-                                    <label class="form-check-label d-flex align-items-center" for="radioCheck1">
-                                    <div class="d-flex justify-content-between w-100 ms-3">
-                                        <span class="ship-type">Vận chuyển nhanh</span>
-                                        <span class="ship-price">50000đ</span>
-                                    </div>
-                                </label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="radio" class="form-check-input" name="radioDelivery" id="radioCheck2">
-                                    <label class="form-check-label d-flex align-items-center" for="radioCheck2">
-                                    <div class="d-flex justify-content-between w-100 ms-3">
-                                        <span class="ship-type">Vận chuyển tiết kiệm</span>
-                                        <span class="ship-price">30000đ</span>
-                                    </div>
-                                </label>
-                                </div>
-                            </div>
-                            <div class="w-50 modal-right ms-5 me-2">
-                                <!-- Phương thức thanh toán -->
-                                <h5 class="fw-bold mb-3">Phương thức thanh toán</h5>
-                                <div class="form-check" onclick="showBankList(false)">
-                                    <input type="radio" class="form-check-input" name="radioPayment" id="radioCheck4">
-                                    <label class="form-check-label d-flex align-items-center" for="radioCheck4">
-                                    <div class="w-100 ms-3">
-                                        <span>Thanh toán khi giao hàng (COD)</span>
-                                    </div>
-                                </label>
-                                </div>
-                                <div class="form-check" id="bank-payment" onclick="showBankList(true)">
-                                    <input type="radio" class="form-check-input" name="radioPayment" id="radioCheck5">
-                                    <label class="form-check-label d-flex align-items-center" for="radioCheck5">
-                                    <div class="w-100 ms-3">
-                                        <span>Chuyển khoản qua ngân hàng</span>
-                                    </div>
-                                </label>
-                                </div>
-                                <div class="d-none my-3 bank-list">
-                                    <p>+ Tên tài khoản: Nguyễn Võ Minh Thư <br> + Số tài khoản: 19058165201017 <br> + Ngân hàng Techcombank - Nguyễn Sơn TP HCM
-                                    </p>
-                                </div>
-                                <hr>
-                                <div class="summary-section">
-                                    <div>
-                                        <div class="d-flex justify-content-between mb-2">
-                                            <div>Tổng giá trị sản phẩm</div>
-                                            <div>2.378.000đ</div>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <div>Phí vận chuyển</div>
-                                            <div>30000đ</div>
-                                        </div>
-                                        <hr>
-                                        <div class="d-flex justify-content-between">
-                                            <div><b>Tổng cộng</b></div>
-                                            <div>
-                                                <span>2.408.000</span>đ
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-info text-white fw-bold" onclick="paymentAlert()" data-bs-dismiss="modal">Xác nhận</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
+</body>
+                        
 </html>
-<!-- <script>
-                var myButton = document.getElementById("myButton");
-
-
-                myButton.addEventListener("click", function() {
-                    alert("Bạn đã thanh toán thành công");
-                    window.location.href = "../../../index.html";
-
-                });
-            </script> -->
-<script>
-    const cartBtn = document.querySelector('.js-show-cart')
-    const cartDropDown = document.querySelector('.js-cart-dropdown')
-    const cartTriangle = document.querySelector('.cart-triangle')
-    const main = document.querySelector('main')
-
-
-    function showCartDropDown() {
-        cartDropDown.classList.remove('d-none')
-        cartTriangle.classList.remove('d-none')
-    }
-
-    function hideCartDropDown() {
-        cartDropDown.classList.add('d-none')
-        cartTriangle.classList.add('d-none')
-    }
-
-    cartBtn.addEventListener('click', showCartDropDown)
-    main.addEventListener('click', hideCartDropDown)
-</script>
-<script>
-    var bankList = document.querySelector('.bank-list');
-
-    function showBankList(bool) {
-        if (bool) {
-            bankList.classList.remove('d-none');
-        } else {
-            bankList.classList.add('d-none')
-        }
-    }
-
-    function paymentAlert() {
-        alert('Thanh toán thành công.');
-    }
-
-    function removeProduct() {
-        alert('Đã xóa sản phẩm khỏi giỏ hàng.');
-    }
-    var deliveryInfo = document.querySelector('.deliveryInfo');
-    var inputs = deliveryInfo.querySelectorAll('.form-control');
-
-    function defaultDeliveryInfo(choice) {
-        if (choice) {
-            inputs[0].value = "Nguyễn Võ Minh Thư";
-            inputs[1].value = "tieuthueolsa@gmail.com";
-            inputs[2].value = "08666008545";
-            inputs[3].value = "32 sdv q8 thphcm";
-            for (var i = 0; i < 4; i++) {
-                inputs[i].disabled = true;
-            }
-        } else {
-            inputs[0].value = "";
-            inputs[1].value = "";
-            inputs[2].value = "";
-            inputs[3].value = "";
-            for (var i = 0; i < 4; i++) {
-                inputs[i].disabled = false;
-            }
-        }
-    }
-</script>
+ 
