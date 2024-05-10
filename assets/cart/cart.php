@@ -1,6 +1,7 @@
 
 
 <?php
+require '../../require/connect.php';
 // Bắt đầu phiên session nếu chưa được bắt đầu
 if (!isset($_SESSION)) {
     session_start();
@@ -96,9 +97,11 @@ if (isset($_POST['product_id']) && isset($_POST['quantity'])) {
     exit();
 }
 
-function calculateNewPrice($old_price, $new_quantity) {
-    return $old_price * $new_quantity;
+function calculateNewPrice($price, $quantity) {
+    $new_price = $price * $quantity;
+    return '<td>' . number_format($new_price, 2) . '</td>';
 }
+
 ?>
 
 
@@ -147,6 +150,10 @@ function calculateNewPrice($old_price, $new_quantity) {
             border-radius: 3px;
             cursor: pointer;
         }
+        .small-image {
+    width: 100px; /* Kích thước chiều rộng mới */
+    height: auto; /* Chiều cao tự động tính toán tương ứng */
+}
     </style>
 
 
@@ -185,7 +192,7 @@ function calculateNewPrice($old_price, $new_quantity) {
 //             // Người dùng chưa đăng nhập
 //             require_once '../../page/header-out.php';
 //         }
-  ?> 
+//   ?> 
     <div class="container">
         <h2>Giỏ hàng của bạn</h2>
         <?php if (!empty($_SESSION['cart'])): ?>
@@ -203,9 +210,9 @@ function calculateNewPrice($old_price, $new_quantity) {
             <tbody>
                 <?php foreach ($_SESSION['cart'] as $product): ?>
                 <tr>
-                    <td><?php echo $product['id']; ?></td>
-                    <td><img src="../../imgages/product images/<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>"></td>
-                    <td><?php echo $product['name']; ?></td>
+                <td><?php echo $product['id']; ?></td>
+                <td><img src="../../admin/productAdmin/uploads/<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" class="small-image"></td>
+                <td><?php echo $product['name']; ?></td>
                     <td>
                         <form method="POST">
                             <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
@@ -219,6 +226,7 @@ function calculateNewPrice($old_price, $new_quantity) {
                             <button type="submit" class="remove-btn">Xóa</button>
                         </form>
                     </td>
+                    
                     <td>
                         <form method="POST">
                             <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
