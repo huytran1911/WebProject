@@ -97,11 +97,18 @@ if (isset($_POST['product_id']) && isset($_POST['quantity'])) {
     exit();
 }
 
-function calculateNewPrice($price, $quantity) {
-    $new_price = $price * $quantity;
-    return '<td>' . number_format($new_price, 2) . '</td>';
+function calculateNewPrice($old_price, $new_quantity) {
+    $new_price = $old_price * $new_quantity;
+    $formatted_price = number_format($new_price); // Tách giá trị bằng dấu chấm
+    return $formatted_price;
+} 
+function calculateTotalPrice($cart) {
+    $total_price = 0;
+    foreach ($cart as $product) {
+        $total_price += $product['price'] * $product['quantity'];
+    }
+    return $total_price;
 }
-
 ?>
 
 
@@ -154,6 +161,15 @@ function calculateNewPrice($price, $quantity) {
     width: 100px; /* Kích thước chiều rộng mới */
     height: auto; /* Chiều cao tự động tính toán tương ứng */
 }
+.checkout-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
     </style>
 
 
@@ -174,6 +190,7 @@ function calculateNewPrice($price, $quantity) {
     <link rel="icon" type="image/x-png" href="../../images/logo image/Logo image.png">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <title>SnakeBoardgame</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
 
@@ -235,6 +252,7 @@ function calculateNewPrice($price, $quantity) {
                         </form>
                     </td>
                 </tr>
+                
                 <?php endforeach; ?>
             </tbody>
         </table>
@@ -242,8 +260,40 @@ function calculateNewPrice($price, $quantity) {
         <p>Giỏ hàng của bạn trống.</p>
         <?php endif; ?>
         <a href="../../trangsp/trangspchinh/trangspchinh.php">Tiếp tục mua sắm</a>
+        
+        
     </div>
+    <div class="card shadow-2-strong mb-5 mb-lg-0" style="border-radius: 16px;">
+                <div class="card-body p-4">
+
+                    <div class="row">
+
+                        <div class="col-lg-5 col-xl-5">
+
+                        </div>
+                        <div class="col-lg-8 col-xl-3">
+                            <!-- <div class="d-flex justify-content-between" style="font-weight: 500;">
+                                <p class="mb-2">Tổng phụ</p>
+                                <p class="mb-2">2.453.000đ</p>
+                            </div> -->
+
+
+                            <hr class="my-4">
+
+                            <div class="d-flex justify-content-between mb-4" style="font-weight: 500;">
+                                <p class="mb-2">Tạm tính </p>
+                                <p class="mb-2"><?php echo calculateTotalPrice($_SESSION['cart']); ?> </p>
+                            </div>
+
+                            <button class="btn btn-primary btn-danger text-white fw-bold w-100" type="button" data-bs-toggle="modal" data-bs-target="#myModal">
+                               Thanh toán
+                              </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
 </body>
                         
 </html>
- 
