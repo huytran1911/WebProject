@@ -61,7 +61,9 @@ if (isset($_SESSION['dangnhap'])) {
 //         exit();
 //     }
 
-//     ?>
+//     
+
+?>
 
 
 <?php
@@ -107,7 +109,15 @@ if (isset($_SESSION['dangnhap'])) {
     } else {
         echo "<p>Không có dữ liệu</p>";
     }
+
+    
+// Kiểm tra khi người dùng nhấn nút tìm kiếm
+
 ?>
+
+    
+    
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -200,10 +210,13 @@ if (isset($_SESSION['dangnhap'])) {
                 </div>
             </div>
             <div class="wrapper">
-                <div class="search-input">
-                    <input type="text" placeholder="Tìm kiếm">
-                    <div class="icon"><a href="../../assets/search/search.html"><i class="fas fa-search"></i></a></div>
-                </div>
+            <div class="search-input">
+                <form action="" method="GET"> <!-- Thay đổi action và method -->
+                    <input type="text" name="keyword" placeholder="Tìm kiếm"> <!-- Thêm thuộc tính name để lấy giá trị của ô input -->
+                    <button type="submit" class="icon"><i class="fas fa-search"></i></button> <!-- Thay đổi thành nút submit -->
+                </form>
+            </div>
+
             </div>
         </div>
     </div>
@@ -242,12 +255,13 @@ if (isset($_SESSION['dangnhap'])) {
             <div class="col-md-3 col-sm-6">
                 <li class="item-a">
                     <div class="product-box">
-                        <a href="#">
-                            <img alt="" src="../../admin/productAdmin/uploads/<?php echo $product['img']; ?>">
-                        </a>
+                    <a href="./chitietsp.php?pid=<?php echo $product['pid']; ?>">
+                        <img alt="" src="../../admin/productAdmin/uploads/<?php echo $product['img']; ?>">
+                    </a>
+
                         <div class="product-info">
                             <div class="product-name">
-                                <a href="#"><?php echo $product['productName']; ?></a>
+                            <a href="./chitietsp.php?pid=<?php echo $product['pid']; ?>"><?php echo $product['productName']; ?></a>
                             </div>
                             <div class="de-font">
                                 Bấm vào hình ảnh để xem thông tin chi tiết.

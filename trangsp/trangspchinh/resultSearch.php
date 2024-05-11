@@ -1,61 +1,3 @@
-<?php
-    // Step 1: Lấy sản phẩm từ cơ sở dữ liệu
-    require_once "../../require/connect.php";
-
-    // Số sản phẩm trên mỗi trang
-    $records_per_page = 8;
-
-    // Xác định trang hiện tại
-    if (isset($_GET['page']) && is_numeric($_GET['page'])) {
-        $page = $_GET['page'];
-    } else {
-        $page = 1;
-    }
-
-    // Tính offset cho truy vấn
-    $offset = ($page - 1) * $records_per_page;
-
-    // Truy vấn để lấy tổng số bản ghi trong danh mục được chọn
-    if (isset($_GET['cateid']) && is_numeric($_GET['cateid'])) {
-        $cateid = $_GET['cateid'];
-        $sql_count = "SELECT COUNT(*) AS total FROM tbl_products WHERE cid = $cateid";
-    } else {
-        $sql_count = "SELECT COUNT(*) AS total FROM tbl_products";
-    }
-    $result_count = mysqli_query($conn, $sql_count);
-    $row_count = mysqli_fetch_assoc($result_count);
-    $total_records = $row_count['total'];
-
-    // Tính tổng số trang dựa trên tổng số sản phẩm trong danh mục
-    $total_pages = ceil($total_records / $records_per_page);
-
-    // Truy vấn lấy dữ liệu với phân trang
-    if (isset($_GET['cateid']) && is_numeric($_GET['cateid'])) {
-        $cateid = $_GET['cateid'];
-        $sql = "SELECT p.pid, p.img, p.productName, p.price, p.quantity, p.detail, c.categoryName
-                FROM tbl_products AS p
-                INNER JOIN tbl_category AS c ON p.cid = c.cateid
-                WHERE p.cid = $cateid
-                LIMIT $offset, $records_per_page;";
-    } else {
-        $sql = "SELECT p.pid, p.img, p.productName, p.price, p.quantity, p.detail, c.categoryName
-                FROM tbl_products AS p
-                INNER JOIN tbl_category AS c ON p.cid = c.cateid
-                LIMIT $offset, $records_per_page;";
-    }
-    $result = mysqli_query($conn, $sql);
-
-    // Step 2: Kiểm tra xem có sản phẩm nào không
-    if(mysqli_num_rows($result) > 0) {
-        // Step 3: Lưu sản phẩm đã lấy vào một mảng
-        $products = [];
-        while($row = mysqli_fetch_array($result)) {
-            $products[] = $row;
-        }
-    } else {
-        echo "<p>Không có sản phẩm trong danh mục này.</p>";
-    }
-?>
 
 
 <!DOCTYPE html>
@@ -121,12 +63,12 @@
     <div class="header">
         <div class="head-container">
             <div class="top-bar">
-                <a href="../index.html" class="logo">
+                <a href="../../index.php" class="logo">
                     <img src="../../images/logo image/Logo image.png" alt="boardgame logo">
                 </a>
                 <ul class="nav-bar">
-                    <li><a href="../index.html">Trang chủ</a></li>
-                    <li><a href="../trangsp.html/trangspchinh/trangspchinh.html">Cửa Hàng</a></li>
+                    <li><a href="../../index.php">Trang chủ</a></li>
+                    <li><a href="./trangspchinh.php">Cửa Hàng</a></li>
                     <li><a href="../Lienhe/Lienhe.html">Liên hệ</a></li>
                 </ul>
                 <div class="nav-icon">
@@ -206,59 +148,83 @@
         </div>
     </div>
 
-    <div class="product-container">
-        <div class="row">
-            <?php if (!empty($products)): ?>
-                <?php foreach ($products as $product): ?>
-                    <div class="col-md-3 col-sm-6">
-                        <li class="item-a">
-                            <div class="product-box">
-                            <a href="./chitietsp.php?pid=<?php echo $product['pid']; ?>">
-                                <img alt="" src="../../admin/productAdmin/uploads/<?php echo $product['img']; ?>">
-                            </a>
-                                <div class="product-info">
-                                    <div class="product-name">
-                                    <a href="./chitietsp.php?pid=<?php echo $product['pid']; ?>"><?php echo $product['productName']; ?></a>
-                                    </div>
-                                    <div class="de-font">
-                                        Bấm vào hình ảnh để xem thông tin chi tiết.
-                                    </div>
-                                    <div class="price">
-                                        <span><?php echo number_format($product['price'], 0, ',', '.'); ?>đ</span>
-                                        <div class="detail-action">
-                                            <button class="d-flex btn btn-outline-danger add-cart-btn fw-bold " type="submit">
-                                                <i class="fas fa-cart-shopping fs-1 me-0"></i>
-                                                THÊM VÀO GIỎ
-                                            </button>
+    <?php
+// Kết nối đến cơ sở dữ liệu
+require_once "../../require/connect.php";
+
+// Kiểm tra xem đã có từ khóa tìm kiếm được gửi từ form chưa
+if (isset($_GET['keyword'])) {
+    // Lấy từ khóa tìm kiếm từ URL
+    $keyword = $_GET['keyword'];
+
+    // Thực hiện truy vấn để lấy các sản phẩm phù hợp với từ khóa tìm kiếm
+    $sql_search = "SELECT * FROM tbl_products WHERE productName LIKE '%$keyword%'";
+    $result_search = mysqli_query($conn, $sql_search);
+
+    // Kiểm tra số lượng sản phẩm tìm được
+    if (mysqli_num_rows($result_search) > 0) {
+        // Hiển thị kết quả tìm kiếm
+        ?>
+        <div class='product-container'>
+            <div class='row'>
+                <h3>Kết quả tìm kiếm cho: '<?php echo $keyword; ?>'</h3>
+                <?php
+                while ($row = mysqli_fetch_assoc($result_search)) {
+                    // Hiển thị thông tin của sản phẩm
+                    ?>
+                    <div class='col-md-3 col-sm-6'>
+                        <li class='item-a'>
+                            <div class='product-box'>
+                                <a href='./chitietsp.php?pid=<?php echo $row['pid']; ?>'>
+                                    <img alt='' src='../../admin/productAdmin/uploads/<?php echo $row['img']; ?>'>
+                                </a>
+                                <div class='product-info'>
+                                    <div class='product-name'>
+                                        <a href='./chitietsp.php?pid=<?php echo $row['pid']; ?>'><?php echo $row['productName']; ?></a>
                                         </div>
-                                    </div>
+                                        <div class='de-font'>
+                                            Bấm vào hình ảnh để xem thông tin chi tiết.
+                                        </div>
+                                        <!-- Thêm form để thực hiện thêm sản phẩm vào giỏ hàng -->
+                                        <form method='post' action='../../assets/cart/cart.php'>
+                                            <div class='price'>
+                                                <span><?php echo number_format($row['price'], 0, ',', '.'); ?>đ</span>
+                                                <div class='detail-action'>
+                                                    <input type='hidden' name='id' value='<?php echo $row['pid']; ?>'>
+                                                    <input type='hidden' name='image' value='<?php echo $row['img']; ?>'>
+                                                    <input type='hidden' name='name' value='<?php echo $row['productName']; ?>'>
+                                                    <input type='hidden' name='price' value='<?php echo $row['price']; ?>'>
+                                                    <button class='d-flex btn btn-outline-danger add-cart-btn fw-bold' type='submit' name='addtocart'>
+                                                        <i class='fas fa-cart-shopping fs-1 me-0'></i> THÊM VÀO GIỎ
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    
                                 </div>
                             </div>
                         </li>
                     </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>Không có sản phẩm trong danh mục này.</p>
-            <?php endif; ?>
+                    <?php
+                }
+                ?>
+            </div>
         </div>
-    </div>
+        <?php
+    } else {
+        // Hiển thị thông báo không tìm thấy sản phẩm
+        ?>
+        <div class='no-results'>
+            <p>Không tìm thấy sản phẩm nào cho từ khóa: '<?php echo $keyword; ?>'</p>
+        </div>
+        <?php
+    }
+}
+?>
 
-    <!-- Phân trang -->
-    <div class="pagination">
-        <?php if ($page > 1): ?>
-            <a href='./loaisp.php?cateid=<?php echo $cateid; ?>&page=<?php echo ($page - 1); ?>'>&laquo; Trang trước</a>
-        <?php endif; ?>
-        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-            <?php if ($i == $page): ?>
-                <span class='current'><?php echo $i; ?></span>
-            <?php else: ?>
-                <a href='./loaisp.php?cateid=<?php echo $cateid; ?>&page=<?php echo $i; ?>'><?php echo $i; ?></a>
-            <?php endif; ?>
-        <?php endfor; ?>
-        <?php if ($page < $total_pages): ?>
-            <a href='./loaisp.php?cateid=<?php echo $cateid; ?>&page=<?php echo ($page + 1); ?>'>Trang tiếp &raquo;</a>
-        <?php endif; ?>
-    </div>
+
+
+
 
     <footer>
         <div class="footer-container ">
