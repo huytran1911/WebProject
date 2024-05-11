@@ -19,103 +19,56 @@ if (isset($_SESSION['dangnhap'])) {
 }
 ?>
 
-<?php 
+<?php
+require('../../require/connect.php');
 
-$servername = "localhost";
-$username = "your_username";
-$password = "your_password";
-$dbname = "your_database";
-
-// Tạo kết nối đến cơ sở dữ liệu
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Kiểm tra kết nối
-if ($conn->connect_error) {
-    die("Kết nối không thành công: " . $conn->connect_error);
-}
-
-
-
-function validateData($receiver, $email, $phone, $street, $ward, $district, $city, $order_date) {
-    $errors = array();
-
-    $receiverValue = trim($receiver);
-    $emailValue = trim($email);
-    $phoneValue = trim($phone);
-    $streetValue = trim($street);
-    $wardValue = trim($ward);
-    $districtValue = trim($district);
-    $cityValue = trim($city);
-    $order_dateValue = trim($street);
-   
-    
-
-    if (empty($receiverValue)) {
-        $errors['receiver'] = 'Không được bỏ trống thông tin người nhận ';
-   
-    }
-
-    if (empty($emailValue)) {
-        $errors['email'] = 'Không được bỏ trống email';
-    
-
-    if (empty($phoneValue)) {
-        $errors['phone'] = 'Không được bỏ trống số điện thoại';
-    }
-    
-    if (empty($streetValue)) {
-        $errors['street'] = 'Không được bỏ trống số điện thoại';
-    }
-    if (empty($wardValue)) {
-        $errors['ward'] = 'Không được bỏ trống số điện thoại';
-    }
-    if (empty($districtValue)) {
-        $errors['district'] = 'Không được bỏ trống số điện thoại';
-    }
-    if (empty($cityValue)) {
-        $errors['city'] = 'Không được bỏ trống số điện thoại';
-    }
-    if (empty($order_dateValue)) {
-        $errors['order_date'] = 'Không được bỏ trống số điện thoại';
-    }
-
-    return $errors;
-}
-
+// Check if form data is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $receiver = $_POST['receiver'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $street = $_POST['street'];
-    $ward = $_POST['ward'];
-    $district = $_POST['district'];
-    $city = $_POST['city'];
-    $order_date = $_POST['order_date'];
+    // Check if all required fields are filled
+    if (!empty($_POST['fullname']) && !empty($_POST['email']) && !empty($_POST['phone']) && !empty($_POST['street']) && !empty($_POST['ward']) && !empty($_POST['district']) && !empty($_POST['city']) && !empty($_POST['product']) && !empty($_POST['quantity'])) {
 
-    // Kiểm tra dữ liệu
-    $errors = validateData($receiver, $email, $phone, $street, $ward, $district, $city, $order_date);
+        // Extract form data
+        $fullname = $_POST['fullname'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $street = $_POST['street'];
+        $ward = $_POST['ward'];
+        $district = $_POST['district'];
+        $city = $_POST['city'];
+        $product = $_POST['product'];
+        $quantity = $_POST['quantity'];
+        $note = !empty($_POST['note']) ? $_POST['note'] : "";
 
-    // Biến để kiểm tra xem đã hiển thị thông báo lỗi chưa
- 
+        // Insert order data into tbl_orders
+        $sql_insert_order = "INSERT INTO tbl_orders (id, receiver, email, phone, street, ward, district, city, status, order_date) VALUES (DEFAULT, '$fullname', '$email', '$phone', '$street', '$ward', '$district', '$city', 0, NOW())";
 
-    // Nếu không có lỗi, thêm vào cơ sở dữ liệu
-    if (empty($errors)) {
-        // $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Hash mật khẩu trước khi lưu vào cơ sở dữ liệu
+        if ($conn->query($sql_insert_order) === TRUE) {
+            $order_id = $conn->insert_id;
 
-       $sql = "INSERT INTO `tbl_orders` (`receiver`, `email`, `phone`, `street`, `ward`, `district`, `city`, `order_date`) 
-        VALUES ('$receiver', '$email', '$phone', '$street', '$ward', '$district', '$city', '$order_date')";
-
-
-        if (mysqli_query($conn, $sql)) {
-            echo "Lưu dữ liệu thành công";
-            header('Location:../../index.php');
+            // Insert order detail into tbl_orderdetail
+            $sql_insert_order_detail = "INSERT INTO tbl_orderdetail (OrderID, pid, price, quantity) SELECT '$order_id', pid, price, '$quantity' FROM tbl_products WHERE productName = '$product'";
+            
+            if ($conn->query($sql_insert_order_detail) === TRUE) {
+                echo "Đặt hàng thành công!";
+            } else {
+                echo "Lỗi: " . $sql_insert_order_detail . "<br>" . $conn->error;
+            }
         } else {
-            echo "Lỗi: " . $sql . "<br>" . mysqli_error($conn);
+            echo "Lỗi: " . $sql_insert_order . "<br>" . $conn->error;
         }
+    } else {
+        echo "Vui lòng điền đầy đủ thông tin.";
     }
+} else {
+    echo "Dữ liệu không được gửi qua phương thức POST.";
 }
-}
+
+$conn->close();
 ?>
+
+
+
+
 
 
 
@@ -249,28 +202,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     
-    <h2>Thông tin đặt hàng</h2>
-    <form action="process_order.php" method="post">
-        <label for="receiver">Tên người nhận:</label><br>
-        <input type="text" id="receiver" name="receiver" required><br><br>
-
+    <h2>Form đặt hàng</h2>
+    <form action="users.php" method="post">
+        <h3>Thông tin người đặt hàng</h3>
+        <label for="fullname">Họ và tên:</label><br>
+        <input type="text" id="fullname" name="fullname" required><br>
         <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
-
+        <input type="email" id="email" name="email" required><br>
         <label for="phone">Số điện thoại:</label><br>
-        <input type="tel" id="phone" name="phone" required><br><br>
+        <input type="text" id="phone" name="phone" required><br>
+        <label for="address">Địa chỉ:</label><br>
+        <input type="text" id="street" name="street" placeholder="Số nhà, tên đường" required><br>
+        <input type="text" id="ward" name="ward" placeholder="Phường/Xã" required><br>
+        <input type="text" id="district" name="district" placeholder="Quận/Huyện" required><br>
+        <input type="text" id="city" name="city" placeholder="Thành phố/Tỉnh" required><br>
 
-        <label for="street">Địa chỉ:</label><br>
-        <input type="text" id="street" name="street" required><br><br>
-
-        <label for="ward">Phường/Xã:</label><br>
-        <input type="text" id="ward" name="ward" required><br><br>
-
-        <label for="district">Quận/Huyện:</label><br>
-        <input type="text" id="district" name="district" required><br><br>
-
-        <label for="city">Thành phố:</label><br>
-        <input type="text" id="city" name="city" required><br><br>
+        <h3>Sản phẩm cần đặt hàng</h3>
+        <label for="product">Chọn sản phẩm:</label><br>
+        <select name="product" id="product">
+            <option value="Alma Mater">Alma Mater</option>
+            <option value="Doom Town">Doom Town</option>
+            <!-- Thêm các sản phẩm khác vào đây -->
+        </select><br>
+        <label for="quantity">Số lượng:</label><br>
+        <input type="number" id="quantity" name="quantity" required><br>
+        <label for="note">Ghi chú:</label><br>
+        <textarea id="note" name="note"></textarea><br>
 
         <input type="submit" value="Đặt hàng">
     </form>

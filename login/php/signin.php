@@ -9,17 +9,27 @@ $errors = []; // Khởi tạo mảng lưu trữ các thông báo lỗi
 if(isset($_POST['dangnhap'])){
     $taikhoan = $_POST['username'];
     $matkhau = $_POST['password'];
-    $sql = "SELECT * FROM tbl_users WHERE username='".$taikhoan. "' AND password='".$matkhau. "' ";
-    $row = mysqli_query($conn,$sql); // Sử dụng biến kết nối $conn ở đây
-    $count = mysqli_num_rows($row);
-    if ($count>0){
-        $_SESSION['dangnhap']= $taikhoan;
-        header("Location:./../../index.php");
-        exit(); // Thêm lệnh exit() sau khi chuyển hướng
+    
+    // Sử dụng password_hash() để băm mật khẩu
+    $hashed_password = password_hash($matkhau, PASSWORD_DEFAULT);
+    
+    $sql = "SELECT * FROM tbl_users WHERE username='".$taikhoan. "'";
+    $result = mysqli_query($conn, $sql);
+    if ($result) {
+        $row = mysqli_fetch_assoc($result);
+        if (password_verify($matkhau, $row['password'])) {
+            $_SESSION['dangnhap'] = $taikhoan;
+            header("Location:../../index.php");
+            exit(); // Thêm lệnh exit() sau khi chuyển hướng
+        } else {
+            $errors['login'] = 'Tên đăng nhập hoặc mật khẩu không chính xác';
+        }
     } else {
-        $errors['login'] = 'Tên đăng nhập hoặc mật khẩu không chính xác';
+        echo "Lỗi truy vấn: " . mysqli_error($conn);
     }
 }
+$conn->close();
+
 ?>
 
 <!DOCTYPE html>
