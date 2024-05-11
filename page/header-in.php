@@ -30,7 +30,9 @@ if (isset($_SESSION['dangnhap'])) {
                 </ul>
                 <div class="nav-icon">
                     <a href="login/html/dangnhap.html"><i class='bx bx-cart'></i></a>
-                    <a href="assets/users/users.php"><i class='bx bx-user'> <?php echo $_SESSION['dangnhap'];?>  </i></a>
+                    <a href="assets/users/users.php"><i class='bx bx-user'> <?php echo $_SESSION['dangnhap'];?> </i></a> 
+                    <a href="page/logout.php">dangxuat</a>
+
                 </div>
             </div>
         </div>

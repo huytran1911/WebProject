@@ -19,6 +19,59 @@ if (isset($_SESSION['dangnhap'])) {
 }
 ?>
 
+<?php
+require('../../require/connect.php');
+
+// Check if form data is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if all required fields are filled
+    if (!empty($_POST['fullname']) && !empty($_POST['email']) && !empty($_POST['phone']) && !empty($_POST['street']) && !empty($_POST['ward']) && !empty($_POST['district']) && !empty($_POST['city']) && !empty($_POST['product']) && !empty($_POST['quantity'])) {
+
+        // Extract form data
+        $fullname = $_POST['fullname'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $street = $_POST['street'];
+        $ward = $_POST['ward'];
+        $district = $_POST['district'];
+        $city = $_POST['city'];
+        $product = $_POST['product'];
+        $quantity = $_POST['quantity'];
+        $note = !empty($_POST['note']) ? $_POST['note'] : "";
+
+        // Insert order data into tbl_orders
+        $sql_insert_order = "INSERT INTO tbl_orders (id, receiver, email, phone, street, ward, district, city, status, order_date) VALUES (DEFAULT, '$fullname', '$email', '$phone', '$street', '$ward', '$district', '$city', 0, NOW())";
+
+        if ($conn->query($sql_insert_order) === TRUE) {
+            $order_id = $conn->insert_id;
+
+            // Insert order detail into tbl_orderdetail
+            $sql_insert_order_detail = "INSERT INTO tbl_orderdetail (OrderID, pid, price, quantity) SELECT '$order_id', pid, price, '$quantity' FROM tbl_products WHERE productName = '$product'";
+            
+            if ($conn->query($sql_insert_order_detail) === TRUE) {
+                echo "Đặt hàng thành công!";
+            } else {
+                echo "Lỗi: " . $sql_insert_order_detail . "<br>" . $conn->error;
+            }
+        } else {
+            echo "Lỗi: " . $sql_insert_order . "<br>" . $conn->error;
+        }
+    } else {
+        echo "Vui lòng điền đầy đủ thông tin.";
+    }
+} else {
+    echo "Dữ liệu không được gửi qua phương thức POST.";
+}
+
+$conn->close();
+?>
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -124,167 +177,33 @@ if (isset($_SESSION['dangnhap'])) {
     </div>
 
 
-    <section style="background-color: #eee;">
-        <div class="container py-5">
-            <div class="row">
-                <div class="col">
-                    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
-                        <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="../../logined.html">Home</a></li>
+    
+    <h2>Form đặt hàng</h2>
+    <form action="users.php" method="post">
+        <h3>Thông tin người đặt hàng</h3>
+        <label for="fullname">Họ và tên:</label><br>
+        <input type="text" id="fullname" name="fullname" required><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br>
+        <label for="phone">Số điện thoại:</label><br>
+        <input type="text" id="phone" name="phone" required><br>
+        <label for="address">Địa chỉ:</label><br>
+        <input type="text" id="street" name="street" placeholder="Số nhà, tên đường" required><br>
+        <input type="text" id="ward" name="ward" placeholder="Phường/Xã" required><br>
+        <input type="text" id="district" name="district" placeholder="Quận/Huyện" required><br>
+        <input type="text" id="city" name="city" placeholder="Thành phố/Tỉnh" required><br>
 
-                            <li class="breadcrumb-item active" aria-current="page">User Profile</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="card mb-4">
-                        <div class="card-body text-center">
-                            <img src="../../images/feature images/avatar.jpg" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-                            <h5 class="my-3">Minh Thư</h5>
-                            <p class="text-muted mb-1">Sinh viên năm 2</p>
-                            <p class="text-muted mb-4">Cam Ranh, Khánh Hòa</p>
-                            <li class="list-group-item d-flex justify-content-between align-items-center "></li>
-                            <p class="mb-0">Hạng thành viên:</p>
-                            <img src="../../images/feature images/user.png" alt="" class="img-thumbnail" style="width: 300px; height: 150px   ;">
-
-
-                        </div>
-                    </div>
-
-                    <div class="card mb-4 mb-lg-0">
-                        <div class="card-body p-0">
-                            <!-- <ul>
-
-                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                    <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
-                                    <p class="mb-0">xi.muoi2010</p>
-
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                    <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
-                                    <p class="mb-0">NV Minh Thư</p>
-                                </li>
-
-                            </ul> -->
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-lg-8">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Họ và tên</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">Nguyễn Võ Minh Thư</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Địa chỉ email</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">minhthu20102004@gmail.com</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">SĐT</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">0866600845</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Địa chỉ</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">Cam Ranh, Khánh Hòa</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="card mb-4 mb-md-0">
-                            <div class="card-body">
-                                <p class="mb-4"><span class=" font-italic me-1">Lịch sử đơn hàng:</span>
-                                    <div class="row d-flex align-items-center mb-4">
-                                        <div class="col-md-2">
-                                            <p>Đơn hàng 1:</p>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <p>Ngày đặt: 12/8/2023</p>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <p>Tổng giá tiền: 1.050.000đ</p>
-                                        </div>
-                                        <div class="col-md-3">
-
-                                            <p>
-                                                <a href="../users/chitietdonhang1.html">Chi tiết đơn hàng</a>
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="row d-flex align-items-center mb-4">
-                                        <div class="col-md-2">
-                                            <p>Đơn hàng 2:</p>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <p>Ngày đặt: </p>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <p>Tổng giá tiền: 1.920.000đ</p>
-                                        </div>
-                                        <div class="col-md-3">
-
-                                            <p>
-                                                <a href="../users/chitietdonhang2.html">Chi tiết đơn hàng</a>
-                                            </p>
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col-md-9"><span class=" font-italic me-1">Tổng tiền đơn hàng khách đã mua:</span>
-                                        </div>
-
-                                        <div class="col-md-3"><span class=" font-italic me-1">Tổng: 1.740.000</span>
-
-                                        </div>
-                                    </div>
-
-                            </div>
-
-
-                        </div>
-                        <div class="container mt-4 text-center">
-                            <a href="../../page/logout.php" >
-                            <button name="dangxuat" class="btn btn-success btn btn-danger text-white w-30" type="submit" >Đăng xuất</button></a>
-                        </div>
-                    </div>  
-                </div>
-
-            </div>
-
-        </div>
-
-        </div>
-
-        </div>
-
-    </section>
+        <h3>Sản phẩm cần đặt hàng</h3>
+        <label for="product">Chọn sản phẩm:</label><br>
+        <select name="product" id="product">
+            <option value="Alma Mater">Alma Mater</option>
+            <option value="Doom Town">Doom Town</option>
+            <!-- Thêm các sản phẩm khác vào đây -->
+        </select><br>
+        <label for="quantity">Số lượng:</label><br>
+        <input type="number" id="quantity" name="quantity" required><br>
+        <label for="note">Ghi chú:</label><br>
+        <textarea id="note" name="note"></textarea><br>
 
 
 

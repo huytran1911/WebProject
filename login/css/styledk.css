@@ -1,10 +1,9 @@
 @import url("..//css/reset.css");
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Poppins:wght@400;600&display=swap');
-
 body {
     font-family: 'Poppins', sans-serif;
     min-height: 100vh;
-    background-image: linear-gradient(95.2deg, rgba(173,252,234,1) 26.8%, rgba(192,229,246,1) 64%); 
+    background-image: linear-gradient(95.2deg, rgba(173, 252, 234, 1) 26.8%, rgba(192, 229, 246, 1) 64%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,12 +35,11 @@ body {
 }
 
 .register-card-logo,
-.register-card-header
- {
+.register-card-header {
     text-align: center;
 }
 
-.register-card a   {
+.register-card a {
     text-decoration: none;
     color: #35339a;
 }
@@ -60,7 +58,7 @@ body {
     margin-bottom: .5rem;
 }
 
-.register-card-header h1 + div {
+.register-card-header h1+div {
     font-size: calc(1rem * .8);
     opacity: .8;
 }
@@ -83,13 +81,11 @@ body {
 
 #register .form-item .form-item-icon {
     position: absolute;
-    top:.82rem;
+    top: .82rem;
     left: 1.4rem;
     font-size: 1.3rem;
     opacity: .4;
 }
-
-
 
 #register .form-item-other {
     display: flex;
@@ -99,10 +95,8 @@ body {
     margin-bottom: .5rem;
 }
 
-
-
-.form-container input[type="text"], 
-.form-container input[type="password"], 
+.form-container input[type="text"],
+.form-container input[type="password"],
 .form-container input[type="email"] {
     border: none;
     outline: none;
@@ -118,9 +112,6 @@ body {
     background: white;
 }
 
-
-
-
 #register button {
     background: black;
     color: white;
@@ -133,21 +124,48 @@ body {
 
 #register button:hover {
     background-color: rgba(0, 0, 0, .85);
-    cursor: pointer;    
+    cursor: pointer;
 }
-
 
 
 /* Responsive */
 
 @media (max-width: 768px) {
-    body{
+    body {
         padding: 2rem 0;
     }
-
     .form-container {
         width: 280px;
         padding: 2rem;
     }
 }
 
+
+/* Thêm phần CSS cho ô địa chỉ */
+
+.address-item {
+    position: relative;
+}
+
+.address-item .form-item-icon {
+    position: absolute;
+    top: .82rem;
+    left: 1.4rem;
+    font-size: 1.3rem;
+    opacity: .4;
+}
+
+.address-item input[type="text"] {
+    border: none;
+    outline: none;
+    background: rgba(255, 255, 255, .3);
+    padding: 1rem 1.5rem;
+    padding-left: calc(1rem * 3.5);
+    border-radius: 100px;
+    width: 100%;
+    transition: background .5s;
+}
+
+.address-item input:focus {
+    background: white;
+}
