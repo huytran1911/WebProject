@@ -5,7 +5,7 @@ if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
     $keyword = $_GET['keyword'];
 
     // Chuyển hướng người dùng đến trang kết quả tìm kiếm với từ khóa đã nhập
-    header("Location: resultSearch.php?keyword=$keyword");
+    header("Location:./resultSearch.php?keyword=$keyword");
     exit(); // Đảm bảo không có mã HTML hoặc mã PHP nào được thực thi sau header
 }
 

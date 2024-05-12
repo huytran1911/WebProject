@@ -2,8 +2,8 @@
 require "../../require/connect.php";
 require "../function.php";
 
-$id = $name = $email = $phonenumber = $password = $address = "";
-$name_err = $email_err = $phone_err = $password_err = $address_err ="";
+$id = $name = $email = $phonenumber = $password = $street = $ward = $district = $city = "";
+$name_err = $email_err = $phone_err = $password_err = $street_err = $ward_err = $district_err = $city_err = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -63,30 +63,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    if(isset($_POST['address'])){
-        $input_address = trim($_POST["address"]);
+    if(isset($_POST['street'])){
+        $input_street = trim($_POST["street"]);
 
-        if(empty($input_address)){
-            $address_err = "Hãy nhập địa chỉ";
+        if(empty($input_street)){
+            $street_err = "Hãy nhập số nhà";
         } else {
-            $address = $input_address;
+            $street = $input_street;
+        }
+    }
+
+    if(isset($_POST['ward'])){
+        $input_ward = trim($_POST["ward"]);
+
+        if(empty($input_ward)){
+            $ward_err = "Hãy nhập phường";
+        } else {
+            $ward = $input_ward;
+        }
+    }
+
+    if(isset($_POST['district'])){
+        $input_district = trim($_POST["district"]);
+
+        if(empty($input_district)){
+            $district_err = "Hãy nhập quận/huyện";
+        } else {
+            $district = $input_district;
+        }
+    }
+
+    if(isset($_POST['city'])){
+        $input_city = trim($_POST["city"]);
+
+        if(empty($input_city)){
+            $city_err = "Hãy nhập thành phố";
+        } else {
+            $city = $input_city;
         }
     }
 
     // check lỗi input trước khi insert vào database
-    if (empty($name_err) && empty($email_err) && empty($phone_err) && empty($address_err) && empty($password_err)) {
+    if (empty($name_err) && empty($email_err) && empty($phone_err) && empty($street_err) && empty($password_err) && empty($ward_err) && empty($district_err)&& empty($city_err)) {
         // insert vào database
-        $sql = "INSERT INTO tbl_users (id, username, password, email, phonenumber, address) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO tbl_users (id, username, password, email, phonenumber, street, ward, disctrict, city) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         if ($stmt = mysqli_prepare($conn, $sql)) {
-            mysqli_stmt_bind_param($stmt, "isssss", $param_id, $param_name, $param_password, $param_email, $param_phonenumber, $param_address);
+            mysqli_stmt_bind_param($stmt, "isssss", $param_id, $param_name, $param_password, $param_email, $param_phonenumber, $param_street, $param_ward, $param_district, $param_city);
 
             $param_uid = $id;
             $param_name = $name;
             $param_password = $password;
             $param_email = $email;
             $param_phonenumber = $phonenumber;
-            $param_address = $address;
+            $param_street = $street;
+            $param_ward = $ward;
+            $param_district = $district;
+            $param_city = $city;
 
             // Tiến hành thực thi
             if (mysqli_stmt_execute($stmt)) {
@@ -156,10 +189,31 @@ mysqli_close($conn);
                             </div>
 
                             <div class="form-group">
-                                <label>Địa chỉ</label>
-                                <input type="text" name="address" id="address" class="form-control">
-                                <span class="text-danger"><?php echo $address_err; ?></span>
+                                <label>Số nhà</label>
+                                <input type="text" name="street" id="street" class="form-control">
+                                <span class="text-danger"><?php echo $street_err; ?></span>
                             </div>
+
+                            <div class="form-group">
+                                <label>Phường</label>
+                                <input type="text" name="ward" id="ward" class="form-control">
+                                <span class="text-danger"><?php echo $ward_err; ?></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Quận/huyện</label>
+                                <input type="text" name="district" id="district" class="form-control">
+                                <span class="text-danger"><?php echo $district_err; ?></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Thành phố</label>
+                                <input type="text" name="city" id="city" class="form-control">
+                                <span class="text-danger"><?php echo $city_err; ?></span>
+                            </div>
+
+
+
                             <input type="submit" class="btn btn-primary" value="Thêm">
                             <a href="admin-user.php" class="btn btn-default">Huỷ</a>
                         </form>

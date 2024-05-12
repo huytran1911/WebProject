@@ -1,3 +1,38 @@
+<?php
+// Kết nối đến cơ sở dữ liệu
+require_once "../../require/connect.php";
+
+// Kiểm tra xem có dữ liệu được gửi từ form không
+if(isset($_POST['IDorders'])) {
+    // Lấy ID đơn hàng từ form
+    $order_id = $_POST['IDorders'];
+
+    // Cập nhật trạng thái của sản phẩm sau khi đặt hàng thành công
+    $sql = "UPDATE tbl_products 
+            SET status = 1 
+            WHERE pid IN (SELECT pid FROM tbl_order_details WHERE IDorders = $order_id)";
+    
+    $result_update = mysqli_query($conn, $sql);
+
+    // Kiểm tra kết quả của câu truy vấn
+    if($result_update) {
+        echo "Cập nhật trạng thái sản phẩm thành công!";
+    } else {
+        echo "Lỗi: " . mysqli_error($conn);
+    }
+} else {
+    echo "Không có dữ liệu được gửi từ form!";
+}
+
+// Truy vấn lấy dữ liệu sản phẩm
+$sql_products = "SELECT tbl_products.*, tbl_category.*
+                FROM tbl_products
+                JOIN tbl_category ON tbl_products.cid = tbl_category.cateid
+                ORDER BY pid ASC";
+$result_products = mysqli_query($conn, $sql_products);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,17 +61,11 @@
     <div class="side-header"></div>
     <div class="side-content" style="background-color: #f3f8ff; border-right: 1px solid #000;">
         <div class="profile">
-            <img src="/asset/images/1.png" alt="Logo" style="width: 100%; height: auto;">
+            <img src="/asset/images/1.png" alt="Logo" height: auto;">
             <h3 style="color: #74767d; font-weight: bold;">PET FOOD</h3>
         </div>
         <div class="side-menu">
             <ul>
-                <li style="margin-bottom: 15px;">
-                    <a href="./admin.php">
-                        <span class="las la-address-card" style="color: #74767d;"></span>
-                        <h3 style="color: #74767d; font-weight: bold;">Người Quản Trị</h3>
-                    </a>
-                </li>
                 <li style="margin-bottom: 15px;">
                     <a href="../userAdmin/admin-user.php">
                         <span class="las la-user-alt" style="color:#74767d;"></span>
@@ -113,40 +142,8 @@
                     </thead>
                     <tbody>
                     <?php
-                    require_once "../../require/connect.php";
-                    $records_per_page = 10;
-
-                    // Xác định trang hiện tại
-                    if (isset($_GET['page']) && is_numeric($_GET['page'])) {
-                        $page = $_GET['page'];
-                    } else {
-                        $page = 1;
-                    }
-
-                    // Tính offset cho truy vấn
-                    $offset = ($page - 1) * $records_per_page;
-
-                    // Truy vấn để lấy tổng số bản ghi
-                    $sql_count = "SELECT COUNT(*) AS total FROM tbl_products";
-                    $result_count = mysqli_query($conn, $sql_count);
-                    $row_count = mysqli_fetch_assoc($result_count);
-                    $total_records = $row_count['total'];
-
-                    // Tính tổng số trang
-                    $total_pages = ceil($total_records / $records_per_page);
-
-                    // Truy vấn lấy dữ liệu với phân trang
-                    $sql = "SELECT tbl_products.*, tbl_category.*
-                            FROM tbl_products
-                            JOIN tbl_category ON tbl_products.cid = tbl_category.cateid
-                            ORDER BY pid ASC
-                            LIMIT $offset, $records_per_page";
-
-
-                    $result = mysqli_query($conn, $sql);
-
-                    if(mysqli_num_rows($result) > 0) {
-                        while($row = mysqli_fetch_array($result)) {
+                    if(mysqli_num_rows($result_products) > 0) {
+                        while($row = mysqli_fetch_array($result_products)) {
                             // Code hiển thị dữ liệu
                             echo "<tr>";
                             echo "<td style='text-align: center'>" . $row['pid'] . "</td>";
@@ -158,8 +155,8 @@
                             echo "<td style='text-align: center'>" . $row['quantity'] . "</td>";
                             echo '<td style="text-align: center;">
                                     <a href="./updateProduct.php?pid=' . $row['pid'] . '"><button class="btn btn-primary">Sửa</button></a>
-                                    <a onclick="return confirm(\'Bạn có chắc chắn muốn xóa ?\')" href="./deleteProduct.php?pid=' . $row['pid'] . '">
-                                        <button class="btn btn-danger">Xóa</button>
+                                    <a onclick="return confirmDeleteProduct(' . $row['pid'] . ')" href="./deleteProduct.php?pid=' . $row['pid'] . '">
+                                        <button class="btn btn-danger">Xoá</button>
                                     </a>
                                 </td>';
                             echo "</tr>";
@@ -168,6 +165,7 @@
                         echo "<tr><td colspan='8'>Không có dữ liệu</td></tr>";
                     }
                     ?>
+                    
                     </tbody>
                 </table>
             </div>
@@ -197,3 +195,16 @@
 </div>
 </body>
 </html>
+<script>
+    function confirmDeleteProduct(productId) {
+        // Kiểm tra trạng thái của sản phẩm
+        var result = confirm("Bạn có chắc chắn muốn xoá sản phẩm này?");
+        if (result) {
+            // Nếu người dùng đồng ý xoá, tiến hành xoá sản phẩm
+            return true;
+        } else {
+            // Người dùng không đồng ý, ngăn không cho xoá sản phẩm
+            return false;
+        }
+    }
+</script>

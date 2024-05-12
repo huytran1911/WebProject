@@ -1,20 +1,39 @@
-
-
-
 <?php
 // Bắt đầu phiên session nếu chưa được bắt đầu
 if (!isset($_SESSION)) {
     session_start();
 }
 
-// Kiểm tra xem biến $_SESSION['taikhoan'] có tồn tại hay không
+// Kiểm tra xem biến $_SESSION['dangnhap'] có tồn tại hay không
 if (isset($_SESSION['dangnhap'])) {
-    // echo $_SESSION['dangnhap'];
+    // Lấy thông tin người dùng từ session
+    $username = $_SESSION['dangnhap'];
+
+    // Truy vấn để lấy thông tin người dùng từ cơ sở dữ liệu
+    $sql_user = "SELECT * FROM tbl_users WHERE username = '$username'";
+    $result_user = mysqli_query($conn, $sql_user);
+
+    // Kiểm tra kết quả truy vấn
+    if ($result_user) {
+        // Kiểm tra xem có dòng nào được trả về hay không
+        if (mysqli_num_rows($result_user) > 0) {
+            // Gán giá trị cho biến $row từ kết quả truy vấn
+            $row = mysqli_fetch_assoc($result_user);
+        } else {
+            // Xử lý trường hợp không có dòng nào được trả về từ truy vấn
+            echo "Không có thông tin người dùng được tìm thấy.";
+        }
+    } else {
+        // Xử lý trường hợp truy vấn không thành công
+        echo "Lỗi truy vấn cơ sở dữ liệu";
+    }
 } else {
-    // Xử lý trường hợp nếu $_SESSION['taikhoan'] không tồn tại
-    // echo "Không có tài khoản được đăng nhập";
+    // Xử lý trường hợp nếu $_SESSION['dangnhap'] không tồn tại
+    echo "Không có tài khoản được đăng nhập";
 }
 ?>
+
+
 
     <div class="header">
         <div class="head-container">
@@ -30,7 +49,7 @@ if (isset($_SESSION['dangnhap'])) {
                 </ul>
                 <div class="nav-icon">
                     <a href="login/html/dangnhap.html"><i class='bx bx-cart'></i></a>
-                    <a href="assets/users/users.php"><i class='bx bx-user'> <?php echo $_SESSION['dangnhap'];?> </i></a> 
+                    <a href="page/user.php?id=<?php echo $row["id"]; ?>"><i class='bx bx-user'></i> <?php echo $_SESSION['dangnhap']; ?></a>
                     <a href="page/logout.php">dangxuat</a>
 
                 </div>

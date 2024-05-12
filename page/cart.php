@@ -389,9 +389,9 @@ function calculateTotalPrice($cart) {
                             </div>
                             <div>
                             <?php if (calculateTotalPrice($_SESSION['cart']) > 0): ?>
-                                    <a href="checkout.php" class="btn btn-primary btn-danger text-white fw-bold w-100">proceed to checkout</a>
+                                    <a href="checkout.php" class="btn btn-primary btn-danger text-white fw-bold w-100">Thanh toán</a>
                                 <?php else: ?>
-                                    <button class="btn btn-primary btn-danger text-white fw-bold w-100" disabled>proceed to checkout</button>
+                                    <button class="btn btn-primary btn-danger text-white fw-bold w-100" disabled>Thanh toán</button>
                                 <?php endif; ?>
                             </div>
                               
