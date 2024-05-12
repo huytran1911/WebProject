@@ -226,7 +226,15 @@ if(isset($_SESSION['dangnhap'])) {
     $row = $result->fetch_assoc();
     $user_id = $row['id']; // Lấy id của người dùng từ session
 }
-
+if ($result->num_rows > 0) {
+    // Lấy dữ liệu từ hàng đầu tiên của kết quả truy vấn
+    $row = $result->fetch_assoc();
+    // Tiếp tục xử lý
+    $user_id = $row['id']; // Lấy id của người dùng từ session
+} else {
+    // Xử lý trường hợp không có hàng nào được trả về
+    echo "Không có dữ liệu được trả về từ cơ sở dữ liệu.";
+}
 // Khởi tạo biến $total_price
 $total_price = 0;
 
@@ -276,10 +284,6 @@ if(isset($_POST['thanhtoan'])){
 ?>
 
 
-
-
-   
-
 <!--container-->    
 <div class="container">
   <form action="checkout.php" method="POST">
@@ -293,53 +297,55 @@ if(isset($_POST['thanhtoan'])){
           <h2>Thông tin giao hàng</h2>
         </div>
         <div>
-          <!-- Form nhập thông tin giao hàng -->
           <div class="form-floating field">
             <select class="form-select" id="floatingSelect" aria-label="Floating label select example" onchange="selectAddress()">
-              <option value="1">Địa chỉ hiện tại</option>
-              <option value="2">Nhập địa chỉ mới</option>
+              <option value="1" selected>Địa chỉ của tài khoản</option>
+              <option value="2">Địa chỉ mới</option>
             </select>
-            <label for="floatingSelect">Chọn địa chỉ</label>
+            <label for="floatingSelect">Chọn địa chỉ...</label>
           </div>
-          <script>
-            function selectAddress() {
-              var address = document.getElementById("floatingSelect").value;
-              if (address == "2") {
-                document.getElementById("new-address").style.display = "block";
-              } else {
-                document.getElementById("new-address").style.display = "none";
-              }
-            }
-          </script>
+<?php
+require('../require/connect.php')
 
-          <div id="new-address" style="display: none;">
-            <div class="form-floating field">
-              <input type="text" class="form-control" id="hoten" name="hoten" required>
-              <label for="hoten">Họ và tên</label>
+
+?>
+          <div id="accountAddressInfo">
+            <!-- Các trường thông tin khi chọn địa chỉ của tài khoản -->
+            <div class=" form-floating mb-3">
+              <input type="text" class="form-control" id="floatingInputName" placeholder="" value="" name="hoten" required>
+              <label for="floatingInputName">Họ và tên</label>
             </div>
-            <div class="form-floating field">
-              <input type="text" class="form-control" id="sodt" name="sodt" required>
-              <label for="sodt">Số điện thoại</label>
+            <div class=" form-floating mb-3">
+              <input type="text" class="form-control" id="floatingInputPhone" placeholder="" value="" name="sodt" required>
+              <label for="floatingInputPhone">Số điện thoại</label>
             </div>
-            <div class="form-floating field">
-              <input type="text" class="form-control" id="sonha_tenduong" name="sonha_tenduong" required>
-              <label for="sonha_tenduong">Số nhà, tên đường</label>
-            </div>
-            <div class="form-floating field">
-              <input type="text" class="form-control" id="phuong" name="phuong" required>
-              <label for="phuong">Phường/Xã</label>
-            </div>
-            <div class="form-floating field">
-              <input type="text" class="form-control" id="quan" name="quan" required>
-              <label for="quan">Quận/Huyện</label>
-            </div>
-            <div class="form-floating field">
-              <input type="text" class="form-control" id="thanhpho" name="thanhpho" required>
-              <label for="thanhpho">Tỉnh/Thành phố</label>
-            </div>
+            <div class="form-group" style="padding:0 0 25px 0">
+                  <label class="form-label" for="sonha_tenduong">Địa chỉ</label>
+                  <div class="form-floating mb-3" style="width: 50%">   
+                      <input type="text" class="form-control" id="sonha_tenduong" value="" name="sonha_tenduong" required>
+                      <label for="sonha_tenduong">Số nhà, Tên đường</label>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                      <div class="form-floating">
+                          <input type="text" class="form-control" id="phuong" value="" name="phuong" required>
+                          <label for="phuong">Xã/Phường</label>
+                      </div>
+                      <div class="form-floating">
+                          <input type="text" class="form-control" id="quan" value="" name="quan" required>
+                          <label for="quan">Quận/Huyện</label>
+                      </div>
+                      <div class="form-floating">
+                          <input type="text" class="form-control" id="thanhpho" value="" name="thanhpho" required>
+                          <label for="thanhpho">Tỉnh/Thành phố</label>
+                      </div>
+                  </div>
+              </div>
           </div>
-        </div>
-      </div>
+      
+
+   
+
+
       <div class="section-header">
         <h2>Phương thức thanh toán</h2>
       </div>
@@ -398,6 +404,6 @@ if(isset($_POST['thanhtoan'])){
 </div>
 
 <!--footer-->
-<!--  -->
+
 
 </html>
