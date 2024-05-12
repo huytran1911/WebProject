@@ -67,7 +67,7 @@ if (isset($_SESSION['dangnhap'])) {
     <div class="menu-list">
         <div class="menu-container">
             <div class="cover">
-            <ul class="menu-link" id="menu-list">
+            <ul class="menu-link none" id="menu-list">
         <?php
         // Truy vấn để lấy danh sách danh mục từ cơ sở dữ liệu
         $sql_categories = "SELECT * FROM tbl_category";
@@ -85,9 +85,8 @@ if (isset($_SESSION['dangnhap'])) {
         }
         ?>
     </ul>
-    <div class="images">
-        <img src="./images/logo image/SnakeBoardgame.png" alt="">
-    </div>
+        <img class="images" src="./images/logo image/SnakeBoardgame.png" alt="">
+
         
             </div>
         </div>
@@ -95,7 +94,7 @@ if (isset($_SESSION['dangnhap'])) {
 
     
 
-    <!-- <div class="feature">
+    <div class="feature">
         <div class="ft-cover">
             <div class="ft-box">
                 <a><img class="feature-img" src="images/feature images/f1.png" alt=""></a>
@@ -118,4 +117,4 @@ if (isset($_SESSION['dangnhap'])) {
                 <h5>Hỗ trợ 24/7</h5>
             </div>
         </div>
-    </div> -->
+    </div>

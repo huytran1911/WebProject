@@ -266,7 +266,7 @@ if (isset($_SESSION['dangnhap'])) {
                             <div class="de-font">
                                 Bấm vào hình ảnh để xem thông tin chi tiết.
                             </div>
-                            <form method="post" action="../../assets/cart/cart.php">
+                            <form method="post" action="../../page/cart.php">
                             <div class="price">
                                 <span><?php echo number_format($product['price'], 0, ',', '.'); ?>đ</span>
                                 <div class="detail-action">

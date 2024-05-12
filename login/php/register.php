@@ -1,14 +1,17 @@
 <?php
 include "../../require/connect.php";
 
-function validateData($username, $password, $email, $phoneNumber, $address) {
+function validateData($username, $password, $email, $phoneNumber,$street,$ward,$district, $city) {
     $errors = array();
 
     $usernameValue = trim($username);
     $passwordValue = trim($password);
     $emailValue = trim($email);
     $phoneNumberValue = trim($phoneNumber);
-    $addressValue = trim($address); // Thêm biến địa chỉ vào hàm
+    $streetValue = trim($street);
+    $wardValue = trim($ward);
+    $districtValue = trim($district);
+    $cityValue = trim($city);
 
     $usernamePattern = '/^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/';
     $emailPattern = '/^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/';
@@ -42,22 +45,37 @@ function validateData($username, $password, $email, $phoneNumber, $address) {
         $errors['phoneNumber'] = 'Số điện thoại không hợp lệ';
     }
 
-    if (empty($addressValue)) { // Kiểm tra nếu địa chỉ trống
-        $errors['address'] = 'Không được bỏ trống địa chỉ';
+    if (empty($streetValue)) {
+        $errors['street'] = 'Không được bỏ trống địa chỉ';
+    }
+
+    if (empty($wardValue)) {
+        $errors['ward'] = 'Không được bỏ trống phường/xã';
+    }
+
+    if (empty($districtValue)) {
+        $errors['district'] = 'Không được bỏ trống quận/huyện';
+    }
+
+    if (empty($cityValue)) {
+        $errors['city'] = 'Không được bỏ trống thành phố/tỉnh';
     }
 
     return $errors;
 }
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password1'];
     $email = $_POST['email'];
     $phoneNumber = $_POST['phoneNumber'];
-    $address = $_POST['address']; // Lấy giá trị địa chỉ từ form
-
+    $street = $_POST ['street'];
+    $ward = $_POST ['ward'];
+    $district = $_POST ['district'];
+    $city = $_POST ['city'];
     // Kiểm tra dữ liệu
-    $errors = validateData($username, $password, $email, $phoneNumber, $address);
+    $errors = validateData($username, $password, $email, $phoneNumber,$street,$ward,$district,$city );
 
     // Biến để kiểm tra xem đã hiển thị thông báo lỗi chưa
  
@@ -66,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($errors)) {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Hash mật khẩu trước khi lưu vào cơ sở dữ liệu
 
-        $sql = "INSERT INTO `tbl_users` (`username`, `password`, `email`, `phoneNumber`, `address`) VALUES ('$username', '$hashedPassword', '$email', '$phoneNumber', '$address') ";
+        $sql = "INSERT INTO `tbl_users` (`username`, `password`, `email`, `phoneNumber`, `street`,`ward`,`district`,`city` ) VALUES ('$username', '$hashedPassword', '$email', '$phoneNumber', '$street','$ward','$district','$city') ";
 
         if (mysqli_query($conn, $sql)) {
             echo "Lưu dữ liệu thành công";
@@ -123,11 +141,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="text" placeholder="Số điện thoại" id="phoneNumber" name="phoneNumber">
                     <span class="text-danger"><?php if(isset($errors['phoneNumber'])) echo $errors['phoneNumber']; ?></span>
                 </div>
-                <div class="form-item address-item">
-                    <span class="form-item-icon material-symbols-rounded"></span>
-                    <input type="text" placeholder="Địa chỉ" id="address" name="address">
-                    <span class="text-danger"><?php if(isset($errors['address'])) echo $errors['address']; ?></span> <!-- Hiển thị thông báo lỗi địa chỉ -->
+                <div class="form-item">
+                    <span class="form-item-icon material-symbols-rounded">location_on</span>
+                    <input type="text" placeholder="Địa chỉ" id="street" name="street">
+                    <span class="text-danger"><?php if(isset($errors['street'])) echo $errors['street']; ?></span>
                 </div>
+                <div class="form-item">
+                    <span class="form-item-icon material-symbols-rounded">location_on</span>
+                    <input type="text" placeholder="Phường/Xã" id="ward" name="ward">
+                    <span class="text-danger"><?php if(isset($errors['ward'])) echo $errors['ward']; ?></span>
+                </div>
+                <div class="form-item">
+                    <span class="form-item-icon material-symbols-rounded">location_on</span>
+                    <input type="text" placeholder="Quận/Huyện" id="district" name="district">
+                    <span class="text-danger"><?php if(isset($errors['district'])) echo $errors['district']; ?></span>
+                </div>
+                
+                <div class="form-item">
+                    <span class="form-item-icon material-symbols-rounded">location_on</span>
+                    <input type="text" placeholder="Thành phố/Tỉnh" id="city" name="city">
+                    <span class="text-danger"><?php if(isset($errors['city'])) echo $errors['city']; ?></span>
+                </div>
+
                 <button class="btn" type="submit" id="myButton"> Đăng ký </button>
             </form>
         </div>
@@ -139,32 +174,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </html>
 
-<style>
-    /* Thêm phần CSS cho ô địa chỉ */
-.address-item {
-    position: relative;
-}
-
-.address-item .form-item-icon {
-    position: absolute;
-    top: .82rem;
-    left: 1.4rem;
-    font-size: 1.3rem;
-    opacity: .4;
-}
-
-.address-item input[type="text"] {
-    border: none;
-    outline: none;
-    background: rgba(255, 255, 255, .3);
-    padding: 1rem 1.5rem;
-    padding-left: calc(1rem * 3.5);
-    border-radius: 100px;
-    width: 100%;
-    transition: background .5s;
-}
-
-.address-item input:focus {
-    background: white;
-}
-</style>
