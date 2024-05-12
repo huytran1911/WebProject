@@ -64,24 +64,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
        <div class="side-menu">
              <ul>
-                 <li style="margin-bottom: 15px;">
-                     <a href="./admin.php">
-                          <span class="las la-address-card" style="color: #74767d;"></span>
-                          <h3 style="color: #74767d; font-weight: bold;">Người Quản Trị</h3>
-                      </a>
-                  </li>
+                 
                  <li style="margin-bottom: 15px;" >
-                    <a href="./admin-user.php">
+                    <a href="../userAdmin/admin-user.php">
                          <span class="las la-user-alt" style="color:#74767d;"></span>
                          <h3 style="color: #74767d; font-weight: bold;">Khách Hàng</h3>
                      </a>
                  </li>
+
                  <li style="margin-bottom: 15px;">
-                     <a href="./admin.php">
-                          <span class="las la-address-card" style="color: #74767d;"></span>
-                          <h3 style="color: #74767d; font-weight: bold;">Người Quản Trị</h3>
-                      </a>
-                  </li>
+                    <a href="./Category.php">
+                        <span class="las la-address-card" style="color: #74767d;"></span>
+                        <h3 style="color: #74767d; font-weight: bold;">Danh Mục</h3>
+                    </a>
+                </li>
               
                  <li style="margin-bottom: 15px;">
                     <a href="./admin-product.php">

@@ -21,6 +21,10 @@ if (isset($_GET['pid'])) {
 }    
 ?>
 
+<?php
+    include_once "./search.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

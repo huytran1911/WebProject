@@ -4,23 +4,26 @@ include "../../require/connect.php";
 
 $errors = []; // Khởi tạo mảng lưu trữ các thông báo lỗi
 
-
-
-if(isset($_POST['dangnhap'])){
+if (isset($_POST['dangnhap'])) {
     $taikhoan = $_POST['username'];
     $matkhau = $_POST['password'];
-    
-    // Sử dụng password_hash() để băm mật khẩu
-    $hashed_password = password_hash($matkhau, PASSWORD_DEFAULT);
-    
-    $sql = "SELECT * FROM tbl_users WHERE username='".$taikhoan. "'";
+
+    $sql = "SELECT * FROM tbl_users WHERE username='$taikhoan'";
     $result = mysqli_query($conn, $sql);
     if ($result) {
         $row = mysqli_fetch_assoc($result);
-        if (password_verify($matkhau, $row['password'])) {
-            $_SESSION['dangnhap'] = $taikhoan;
-            header("Location:../../index.php");
-            exit(); // Thêm lệnh exit() sau khi chuyển hướng
+        if ($row) {
+            if ($row['action'] == 1) {
+                $errors['login'] = 'Tài khoản của bạn đã bị khoá và không thể đăng nhập vào trang web.';
+            } else {
+                if (password_verify($matkhau, $row['password'])) {
+                    $_SESSION['dangnhap'] = $taikhoan;
+                    header("Location:../../index.php");
+                    exit(); // Thêm lệnh exit() sau khi chuyển hướng
+                } else {
+                    $errors['login'] = 'Tên đăng nhập hoặc mật khẩu không chính xác';
+                }
+            }
         } else {
             $errors['login'] = 'Tên đăng nhập hoặc mật khẩu không chính xác';
         }
@@ -29,6 +32,7 @@ if(isset($_POST['dangnhap'])){
     }
 }
 $conn->close();
+
 
 ?>
 

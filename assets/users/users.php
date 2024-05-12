@@ -178,32 +178,7 @@ $conn->close();
 
 
     
-    <h2>Form đặt hàng</h2>
-    <form action="users.php" method="post">
-        <h3>Thông tin người đặt hàng</h3>
-        <label for="fullname">Họ và tên:</label><br>
-        <input type="text" id="fullname" name="fullname" required><br>
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br>
-        <label for="phone">Số điện thoại:</label><br>
-        <input type="text" id="phone" name="phone" required><br>
-        <label for="address">Địa chỉ:</label><br>
-        <input type="text" id="street" name="street" placeholder="Số nhà, tên đường" required><br>
-        <input type="text" id="ward" name="ward" placeholder="Phường/Xã" required><br>
-        <input type="text" id="district" name="district" placeholder="Quận/Huyện" required><br>
-        <input type="text" id="city" name="city" placeholder="Thành phố/Tỉnh" required><br>
-
-        <h3>Sản phẩm cần đặt hàng</h3>
-        <label for="product">Chọn sản phẩm:</label><br>
-        <select name="product" id="product">
-            <option value="Alma Mater">Alma Mater</option>
-            <option value="Doom Town">Doom Town</option>
-            <!-- Thêm các sản phẩm khác vào đây -->
-        </select><br>
-        <label for="quantity">Số lượng:</label><br>
-        <input type="number" id="quantity" name="quantity" required><br>
-        <label for="note">Ghi chú:</label><br>
-        <textarea id="note" name="note"></textarea><br>
+   
 
 
 

@@ -56,6 +56,9 @@
         echo "<p>Không có sản phẩm trong danh mục này.</p>";
     }
 ?>
+<?php
+    include_once "./search.php";
+?>
 
 
 <!DOCTYPE html>

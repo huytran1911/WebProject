@@ -115,6 +115,9 @@ if (isset($_SESSION['dangnhap'])) {
 
 ?>
 
+<?php
+    include_once "./search.php";
+?>
     
     
 
@@ -181,13 +184,13 @@ if (isset($_SESSION['dangnhap'])) {
     <div class="header">
         <div class="head-container">
             <div class="top-bar">
-                <a href="../../index.html" class="logo">
+                <a href="../../index.php" class="logo">
                     <img src="../../images/logo image/Logo image.png" alt="boardgame logo">
                 </a>
                 <ul class="nav-bar">
-                    <li><a href="../../index.html">Trang chủ</a></li>
-                    <li><a href="../../trangsp.html/trangspchinh/trangspchinh.html">Cửa Hàng</a></li>
-                    <li><a href="../../Lienhe/Lienhe.html">Liên hệ</a></li>
+                    <li><a href="../../index.php">Trang chủ</a></li>
+                    <li><a href="./trangspchinh.php">Cửa Hàng</a></li>
+                    <li><a href="../../Lienhe/Lienhe.php">Liên hệ</a></li>
 
                 </ul>
                 <div class="nav-icon">

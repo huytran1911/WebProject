@@ -1,3 +1,50 @@
+<?php
+    // Đảm bảo kết nối CSDL đã được thiết lập
+    require_once '../../require/connect.php';
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
+        $action = $_POST['action'];
+        $userId = $_POST['user_id'];
+
+        if ($action == 'lock') {
+            // Cập nhật trạng thái người dùng thành 1 (khoá)
+            $action = 1;
+            $sql = "UPDATE tbl_users SET action = ? WHERE id = ?";
+            $stmt = mysqli_prepare($conn, $sql);
+            mysqli_stmt_bind_param($stmt, "ii", $action, $userId);
+            if (mysqli_stmt_execute($stmt)) {
+                // Cập nhật thành công
+                echo '<script>alert("Khoá người dùng thành công!");</script>'; // Thêm thông báo JavaScript ở đây
+                header("Location: admin-user.php");
+                exit; // Đảm bảo không có mã HTML khác được xuất ra sau khi chuyển hướng
+            } else {
+                // Lỗi khi cập nhật
+                echo "Đã xảy ra lỗi khi cập nhật trạng thái!";
+            }
+            mysqli_stmt_close($stmt);
+        } elseif ($action == 'unlock') {
+            // Mở khoá người dùng
+            $action = 0;
+            $sql = "UPDATE tbl_users SET action = ? WHERE id = ?";
+            $stmt = mysqli_prepare($conn, $sql);
+            mysqli_stmt_bind_param($stmt, "ii", $action, $userId);
+            if (mysqli_stmt_execute($stmt)) {
+                // Cập nhật thành công
+                echo '<script>alert("Mở khoá người dùng thành công!");</script>'; // Thêm thông báo JavaScript ở đây
+                header("Location: admin-user.php");
+                exit; // Đảm bảo không có mã HTML khác được xuất ra sau khi chuyển hướng
+            } else {
+                // Lỗi khi cập nhật
+                echo "Đã xảy ra lỗi khi cập nhật trạng thái!";
+            }
+            mysqli_stmt_close($stmt);
+        } else {
+            // Hành động không hợp lệ
+            echo "Hành động không hợp lệ!";
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,21 +73,22 @@
 
         <div class="side-menu">
              <ul>
-                 <li style="margin-bottom: 15px;">
-                     <a href="./admin.php">
-                          <span class="las la-address-card" style="color: #74767d;"></span>
-                          <h3 style="color: #74767d; font-weight: bold;">Người Quản Trị</h3>
-                      </a>
-                  </li>
                  <li style="margin-bottom: 15px;" >
                     <a href="./admin-user.php">
                          <span class="las la-user-alt" style="color:#74767d;"></span>
                          <h3 style="color: #74767d; font-weight: bold;">Khách Hàng</h3>
                      </a>
                  </li>
+
+                 <li style="margin-bottom: 15px;">
+                    <a href="./Category.php">
+                        <span class="las la-address-card" style="color: #74767d;"></span>
+                        <h3 style="color: #74767d; font-weight: bold;">Danh Mục</h3>
+                    </a>
+                </li>
               
                  <li style="margin-bottom: 15px;">
-                    <a href="./admin-product.php">
+                    <a href="../productAdmin/admin-product.php">
                          <span class="las la-clipboard-list" style="color:#74767d;"></span>
                          <h3 style="color: #74767d; font-weight: bold;">Sản Phẩm</h3>
                      </a>
@@ -141,7 +189,10 @@
                                     echo "<th> Mật khẩu </th>";
                                     echo "<th> Email </th>";
                                     echo "<th> Số điện thoại </th>";
-                                    echo "<th> Địa chỉ </th>";
+                                    echo "<th> Số nhà </th>";
+                                    echo "<th> Phường </th>";
+                                    echo "<th> Quận/huyện </th>";
+                                    echo "<th> Thành phố </th>";
                                     echo "<th> Vai trò </th>";
                                     echo "<th> Hành động </th>";
                                 echo "</tr>";
@@ -156,7 +207,10 @@
                                     echo "<td>" . $row['password'] . "</td>";
                                     echo "<td>" . $row['email'] . "</td>";
                                     echo "<td>" . $row['phonenumber'] . "</td>";
-                                    echo "<td>" . $row['address'] . "</td>";
+                                    echo "<td>" . $row['street'] . "</td>";
+                                    echo "<td>" . $row['ward'] . "</td>";
+                                    echo "<td>" . $row['district'] . "</td>";
+                                    echo "<td>" . $row['city'] . "</td>";
                                     echo "<td>";
                                     if ($row['role'] == 0) {
                                         echo "Khách hàng";
@@ -165,11 +219,16 @@
                                     }                                       
                                     echo "</td>";
                                     echo '<td>
-                                            <a href="./updateUser.php?id=' . $row['id'] . '"><button class="btn btn-primary">Sửa</button></a>
-                                            <a onclick="return confirm(\'Bạn có chắc chắn muốn xóa ?\')" href="./deleteUser.php?id=' . $row['id'] . '">
-                                                <button class="btn btn-danger">Xóa</button>
-                                            </a>
-                                        </td>';
+                                    <form id="lockForm_' . $row['id'] . '" method="post" action="' . $_SERVER['PHP_SELF'] . '">
+                                        <input type="hidden" name="user_id" value="' . $row['id'] . '">
+                                        <input type="hidden" name="action" value="' . ($row['action'] == 0 ? 'lock' : 'unlock') . '">
+                                        <button type="button" onclick="confirmAction(' . $row['id'] . ')">' . ($row['action'] == 0 ? 'Khoá' : 'Mở khoá') . '</button>
+                                    </form>
+                                    <a href="./updateUser.php?id=' . $row['id'] . '"><button class="btn btn-primary">Sửa</button></a>
+                                    <a onclick="return confirm(\'Bạn có chắc chắn muốn xóa ?\')" href="./deleteUser.php?id=' . $row['id'] . '">
+                                        <button class="btn btn-danger">Xóa</button>
+                                    </a>
+                                </td>';                            
                                 echo "</tr>";
                         }
                             echo "</tbody>";
@@ -207,7 +266,25 @@
     
 
 </main>
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+    function showAlert(message) {
+        alert(message);
+    }
+</script>
+<script>
+    function confirmAction(userId) {
+        var action = document.getElementById('lockForm_' + userId).action.value;
+        var message = action == 'lock' ? "Bạn có muốn khoá người dùng này không?" : "Bạn có muốn mở khoá người dùng này không?";
+        var result = confirm(message);
+        if (result) {
+            // Nếu người dùng đồng ý, submit form để thực hiện hành động
+            document.getElementById('lockForm_' + userId).submit();
+        }
+    }
+</script>
+
+
+
+
 </body>
 </html>
